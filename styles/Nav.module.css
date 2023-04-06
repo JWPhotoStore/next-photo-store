@@ -1,0 +1,21 @@
+.signIn {
+  background-color: #4dc0b5;
+  color: #fff;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-radius: 0.375rem;
+}
+
+.image {
+  border-radius: 9999px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
