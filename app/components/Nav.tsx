@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Session } from 'next-auth';
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
-import styles from '@/styles/Nav.module.css';
+import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import styles from "@/styles/Nav.module.css";
 
 export default function Nav({ user }: Session) {
   return (
