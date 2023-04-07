@@ -21,6 +21,7 @@ export default function Nav({ user }: Session) {
           <>
             <li>
               <Image
+                //TODO: Add a default image if the user doesn't have one
                 src={user?.image as string}
                 alt={user.name as string}
                 width={48}
