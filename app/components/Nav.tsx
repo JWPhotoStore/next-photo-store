@@ -10,7 +10,6 @@ export default function Nav({ user }: Session) {
     <nav className={styles.nav}>
       <h1>Styled</h1>
       <ul>
-        {/* If the user is not signed in */}
         {!user && (
           <li className={styles.signIn}>
             <button className={styles.button} onClick={() => signIn()}>
