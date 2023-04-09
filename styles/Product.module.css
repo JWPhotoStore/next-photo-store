@@ -1,15 +1,14 @@
 .productContainer {
-  font-weight: 500;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
 .priceInfo {
-  font-size: 0.875rem;
   color: #007aff;
 }
 
 .imageInfo {
+  /* TODO: we want to avoid setting px for responsive design */
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -17,6 +16,7 @@
 }
 
 .productDetails {
+  /* TODO: we want to avoid setting px for responsive design */
   display: flex;
   justify-content: space-between;
   gap: 24px;

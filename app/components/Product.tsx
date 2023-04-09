@@ -34,9 +34,9 @@ export default function Product({
         />
         <div className={styles.productContainer}>
           <h2>{name}</h2>
-          <h2 className={styles.priceInfo}>
+          <p className={styles.priceInfo}>
             {price !== null ? formatPrice(price) : "N/A"}
-          </h2>
+          </p>
         </div>
         {/* <p>{description}</p> */}
       </div>
