@@ -1,5 +1,5 @@
 .signIn {
-  background-color: #4dc0b5;
+  background-color: var(--tertiary-color);
   color: #fff;
   padding-top: 0.5rem;
   padding-right: 1rem;

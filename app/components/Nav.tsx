@@ -4,11 +4,14 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
+import Link from "next/link";
 
 export default function Nav({ user }: Session) {
   return (
     <nav className={styles.nav}>
-      <h1>Styled</h1>
+      <Link href="/">
+        <h1>Styled</h1>
+      </Link>
       <ul>
         {!user && (
           <li className={styles.signIn}>

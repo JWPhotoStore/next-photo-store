@@ -6,7 +6,7 @@ type SearchParams = {
   name: string;
   description: string;
   image: string;
-  unit_amount: string;
+  unit_amount: number;
   id: string;
 };
 
