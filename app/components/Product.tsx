@@ -9,14 +9,14 @@ export default function Product({
   name,
   description,
   image,
-  price,
+  unit_amount,
   currency,
 }: ProductTypes) {
   return (
     <Link
       href={{
         pathname: `/product/${id}`,
-        query: { name, image, price, id, description },
+        query: { name, image, unit_amount, id, description },
       }}
     >
       <div>
@@ -30,7 +30,7 @@ export default function Product({
         <div className={styles.productContainer}>
           <h2>{name}</h2>
           <p className={styles.priceInfo}>
-            {price !== null ? formatPrice(price) : "N/A"}
+            {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
           </p>
         </div>
         {/* <p>{description}</p> */}
