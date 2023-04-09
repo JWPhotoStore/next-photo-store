@@ -1,7 +1,7 @@
-import styles from '@/styles/Product.module.css';
-import Image from 'next/image';
-import formatPrice from '@/util/PriceFormat';
-import Link from 'next/link';
+import styles from "@/styles/Product.module.css";
+import Image from "next/image";
+import formatPrice from "@/util/PriceFormat";
+import Link from "next/link";
 
 type ProductProps = {
   id: string;
@@ -35,7 +35,7 @@ export default function Product({
         <div className={styles.productContainer}>
           <h2>{name}</h2>
           <h2 className={styles.priceInfo}>
-            {price !== null ? formatPrice(price) : 'N/A'}
+            {price !== null ? formatPrice(price) : "N/A"}
           </h2>
         </div>
         {/* <p>{description}</p> */}
