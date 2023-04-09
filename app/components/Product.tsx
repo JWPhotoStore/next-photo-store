@@ -2,15 +2,7 @@ import styles from "@/styles/Product.module.css";
 import Image from "next/image";
 import formatPrice from "@/util/PriceFormat";
 import Link from "next/link";
-
-type ProductProps = {
-  id: string;
-  name: string;
-  description: string | null;
-  image: string;
-  currency: string;
-  price: number | null;
-};
+import { ProductTypes } from "@/types/ProductTypes";
 
 export default function Product({
   id,
@@ -19,10 +11,13 @@ export default function Product({
   image,
   price,
   currency,
-}: ProductProps) {
+}: ProductTypes) {
   return (
     <Link
-      href={{ pathname: `/product/${id}`, query: { name, image, price, id } }}
+      href={{
+        pathname: `/product/${id}`,
+        query: { name, image, price, id, description },
+      }}
     >
       <div>
         <Image
