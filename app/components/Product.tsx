@@ -33,7 +33,6 @@ export default function Product({
             {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
           </p>
         </div>
-        {/* <p>{description}</p> */}
       </div>
     </Link>
   );
