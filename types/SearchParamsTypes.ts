@@ -8,6 +8,7 @@ type SearchParams = {
   image: string;
   unit_amount: number;
   id: string;
+  currency: string;
 };
 
 export type SearchParamTypes = {
