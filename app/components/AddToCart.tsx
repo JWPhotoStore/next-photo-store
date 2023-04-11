@@ -1,12 +1,19 @@
-"use client";
+'use client';
 
-import styles from "@/styles/Product.module.css";
-import { SearchParamTypes } from "@/types/SearchParamsTypes";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/store/store";
-import { incrementQuantity, addCartItem } from "@/app/store/cartSlice";
+import styles from '@/styles/Product.module.css';
+import { ProductTypes } from '@/types/ProductTypes';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/app/store/store';
+import { incrementQuantity, addCartItem } from '@/app/store/cartSlice';
 
-function AddToCart({ searchParams }: SearchParamTypes) {
+function AddToCart({
+  id,
+  name,
+  description,
+  image,
+  currency,
+  unit_amount,
+}: ProductTypes) {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
   const dispatch = useDispatch();
 
@@ -14,7 +21,7 @@ function AddToCart({ searchParams }: SearchParamTypes) {
     let cartItemToAdd = null;
     let isProductInCart = false;
     for (const cartItem of cartItems) {
-      if (cartItem.id === searchParams.id) {
+      if (cartItem.id === id) {
         isProductInCart = true;
         cartItemToAdd = cartItem;
         break;
@@ -24,7 +31,17 @@ function AddToCart({ searchParams }: SearchParamTypes) {
     if (isProductInCart && cartItemToAdd !== null) {
       dispatch(incrementQuantity(cartItemToAdd));
     } else {
-      dispatch(addCartItem({ ...searchParams, quantity: 1 }));
+      dispatch(
+        addCartItem({
+          id,
+          name,
+          description,
+          image,
+          currency,
+          unit_amount,
+          quantity: 1,
+        })
+      );
     }
   };
 

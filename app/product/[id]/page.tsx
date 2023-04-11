@@ -1,9 +1,9 @@
-import styles from "@/styles/Product.module.css";
-import Image from "next/image";
-import { SearchParamTypes } from "@/types/SearchParamsTypes";
-import formatPrice from "@/util/PriceFormat";
-import AddToCart from "@/app/components/AddToCart";
-import Providers from "@/app/components/Providers";
+import styles from '@/styles/Product.module.css';
+import Image from 'next/image';
+import { SearchParamTypes } from '@/types/SearchParamsTypes';
+import formatPrice from '@/util/PriceFormat';
+import AddToCart from '@/app/components/AddToCart';
+import Providers from '@/app/components/Providers';
 
 export default async function Product({ searchParams }: SearchParamTypes) {
   return (
@@ -21,11 +21,11 @@ export default async function Product({ searchParams }: SearchParamTypes) {
           <p>
             {searchParams.unit_amount !== null
               ? formatPrice(searchParams.unit_amount)
-              : "N/A"}
+              : 'N/A'}
           </p>
         </div>
         <Providers>
-          <AddToCart searchParams={searchParams} />
+          <AddToCart {...searchParams} />
         </Providers>
       </div>
     </div>
