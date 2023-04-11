@@ -1,6 +1,8 @@
 import Stripe from "stripe";
 import Product from "./components/Product";
 import styles from "@/styles/Product.module.css";
+import Providers from "./components/Providers";
+import CartBar from "@/app/components/CartBar";
 
 const getProducts = async () => {
   if (!process.env.STRIPE_SECRET_KEY)
@@ -30,9 +32,14 @@ export default async function Home() {
 
   return (
     <main className={styles.productsGrid}>
-      {products.map((product) => (
-        <Product key={product.id} {...product} />
-      ))}
+      <div>
+        {products.map((product) => (
+          <Product key={product.id} {...product} />
+        ))}
+      </div>
+      <Providers>
+        <CartBar />
+      </Providers>
     </main>
   );
 }

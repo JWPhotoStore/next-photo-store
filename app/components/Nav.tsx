@@ -5,14 +5,22 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
+import { AiFillShopping } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { toggleCart } from "../store/cartSlice";
 
 export default function Nav({ user }: Session) {
+  const dispatch = useDispatch();
+
   return (
     <nav className={styles.nav}>
       <Link href="/">
         <h1>Styled</h1>
       </Link>
       <ul>
+        <li>
+          <AiFillShopping onClick={() => dispatch(toggleCart())} />
+        </li>
         {!user && (
           <li className={styles.signIn}>
             <button className={styles.button} onClick={() => signIn()}>

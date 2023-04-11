@@ -2,6 +2,7 @@ import "./globals.css";
 import Nav from "./components/Nav";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import Providers from "@/app/components/Providers";
 
 export const metadata = {
   title: "JW Photos",
@@ -18,7 +19,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Nav user={session?.user} expires={session?.expires as string} />
+        <Providers>
+          <Nav user={session?.user} expires={session?.expires as string} />
+        </Providers>
         {children}
       </body>
     </html>
