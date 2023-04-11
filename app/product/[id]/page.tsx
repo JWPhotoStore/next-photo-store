@@ -31,9 +31,9 @@ export default async function Product({ searchParams }: SearchParamTypes) {
           </Providers>
         </div>
       </div>
-      <Providers>
+      {/* <Providers>
         <CartBar />
-      </Providers>
+      </Providers> */}
     </div>
   );
 }
