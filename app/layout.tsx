@@ -1,5 +1,6 @@
 import "./globals.css";
 import Nav from "./components/Nav";
+import CartBar from "./components/CartBar";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Providers from "@/app/components/Providers";
@@ -21,6 +22,7 @@ export default async function RootLayout({
       <body>
         <Providers>
           <Nav user={session?.user} expires={session?.expires as string} />
+          <CartBar />
         </Providers>
         {children}
       </body>

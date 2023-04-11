@@ -1,18 +1,18 @@
-.cartItem {
+.cartContainer {
+  width: 50%;
+}
+
+.cartItemsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartItemContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100px;
   width: 100px;
-}
-
-.itemContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.cartBar {
-  width: 50%;
 }
 
 .item {

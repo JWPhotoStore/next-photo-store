@@ -7,7 +7,7 @@ import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 
 // Need to set isOpen back to false whenever I click back to home page or back
-export default function CartBar() {
+export default function CartContainer() {
   const { isOpen, cartItems } = useSelector(
     (state: RootState) => state.cartReducer
   );
@@ -15,7 +15,7 @@ export default function CartBar() {
   return (
     <>
       {isOpen && (
-        <div className={styles.cartBar}>
+        <div className={styles.cartContainer}>
           <CartItems />
           <CartSummary cartItems={cartItems} />
         </div>

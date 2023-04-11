@@ -12,7 +12,7 @@ export default function CartItems() {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
 
   return (
-    <div className={styles.itemContainer}>
+    <div className={styles.cartItemsContainer}>
       {cartItems.map((cartItem) => (
         <CartItem cartItem={cartItem} key={cartItem.id} />
       ))}
