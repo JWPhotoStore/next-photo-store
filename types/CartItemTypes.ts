@@ -4,6 +4,6 @@ export type CartItemTypes = {
   description: string | null;
   image: string;
   currency: string;
-  unit_amount: number | null;
+  unit_amount: number;
   quantity: number;
 };
