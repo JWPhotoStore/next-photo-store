@@ -2,6 +2,8 @@ import styles from "@/styles/Product.module.css";
 import Image from "next/image";
 import { SearchParamTypes } from "@/types/SearchParamsTypes";
 import formatPrice from "@/util/PriceFormat";
+import AddToCart from "@/app/components/AddToCart";
+import Providers from "@/app/components/Providers";
 
 export default async function Product({ searchParams }: SearchParamTypes) {
   return (
@@ -22,7 +24,9 @@ export default async function Product({ searchParams }: SearchParamTypes) {
               : "N/A"}
           </p>
         </div>
-        <button className={styles.addToCart}>Add to Cart</button>
+        <Providers>
+          <AddToCart {...searchParams} />
+        </Providers>
       </div>
     </div>
   );

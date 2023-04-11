@@ -1,16 +1,10 @@
-type Params = {
-  id: string;
-};
+import { ProductTypes } from './ProductTypes';
 
-type SearchParams = {
-  name: string;
-  description: string;
-  image: string;
-  unit_amount: number;
+type Params = {
   id: string;
 };
 
 export type SearchParamTypes = {
   params: Params;
-  searchParams: SearchParams;
+  searchParams: ProductTypes;
 };
