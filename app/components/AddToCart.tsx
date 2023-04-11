@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import styles from '@/styles/Product.module.css';
-import { ProductTypes } from '@/types/ProductTypes';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/app/store/store';
-import { incrementQuantity, addCartItem } from '@/app/store/cartSlice';
+import styles from "@/styles/Product.module.css";
+import { ProductTypes } from "@/types/ProductTypes";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { incrementQuantity, addCartItem } from "@/app/store/cartSlice";
 
 function AddToCart({
   id,
