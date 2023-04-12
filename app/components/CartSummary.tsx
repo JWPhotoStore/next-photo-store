@@ -17,13 +17,7 @@ export default function CartSummary({
 
   return (
     <div>
-      <p>Total</p>
-      <p>
-        {/* {cartItems.reduce((acc: number, item: CartItemTypes) => {
-          return acc + Number(formatPrice(item.unit_amount * item.quantity));
-        }, 0)} */}
-        {formatPrice(calculateSum())}
-      </p>
+      <p>Total: {formatPrice(calculateSum())}</p>
     </div>
   );
 }
