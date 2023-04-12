@@ -17,7 +17,7 @@ export default function CartContainer() {
       {isOpen && (
         <div className={styles.cartContainer}>
           <CartItems />
-          <CartSummary cartItems={cartItems} />
+          {cartItems.length > 0 && <CartSummary cartItems={cartItems} />}
         </div>
       )}
     </>
