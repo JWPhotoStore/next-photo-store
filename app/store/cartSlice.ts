@@ -38,7 +38,14 @@ export const cartSlice = createSlice({
     decrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
-          cartItem.quantity -= 1;
+          if (cartItem.quantity > 1) {
+            cartItem.quantity -= 1;
+          } else {
+            const updatedCart = state.cartItems.filter(
+              (cartItem) => cartItem.id !== action.payload.id
+            );
+            state.cartItems = updatedCart;
+          }
           return;
         }
       }
