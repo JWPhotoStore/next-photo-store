@@ -40,7 +40,7 @@ export const cartSlice = createSlice({
     },
     removeCartItem: (state, action: PayloadAction<CartItemTypes>) => {
       const filteredCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.id === action.payload.id
+        (cartItem) => cartItem.id !== action.payload.id
       );
       state.cartItems = filteredCartItems;
     },
