@@ -30,11 +30,9 @@ export default async function Home() {
 
   return (
     <main className={styles.productsGrid}>
-      <div>
-        {products.map((product) => (
-          <Product key={product.id} {...product} />
-        ))}
-      </div>
+      {products.map((product) => (
+        <Product key={product.id} {...product} />
+      ))}
     </main>
   );
 }
