@@ -5,11 +5,16 @@ import { CartItemTypes } from "@/types/CartItemTypes";
 export interface CartState {
   isOpen: boolean;
   cartItems: CartItemTypes[];
+  paymentIntent: string;
+  // setPaymentIntent: (val:string) => void
+  onCheckout: string;
 }
 
 const initialState: CartState = {
   isOpen: false,
   cartItems: [],
+  paymentIntent: "",
+  onCheckout: "",
 };
 
 export const cartSlice = createSlice({
@@ -43,6 +48,12 @@ export const cartSlice = createSlice({
         (cartItem) => cartItem.id !== action.payload.id
       );
       state.cartItems = filteredCartItems;
+    },
+    setPaymentIntent: (state, action: PayloadAction<string>) => {
+      state.paymentIntent = action.payload;
+    },
+    setCheckout: (state, action: PayloadAction<string>) => {
+      state.onCheckout = action.payload;
     },
   },
 });
