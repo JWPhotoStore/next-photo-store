@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import Product from "./components/Product";
+import styles from "@/styles/Product.module.css";
 
 const getProducts = async () => {
   if (!process.env.STRIPE_SECRET_KEY)
@@ -28,7 +29,7 @@ export default async function Home() {
   const products = await getProducts();
 
   return (
-    <main>
+    <main className={styles.productsGrid}>
       {products.map((product) => (
         <Product key={product.id} {...product} />
       ))}
