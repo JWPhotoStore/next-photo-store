@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
-import { isModuleBody } from "typescript";
+import { useRouter } from "next/navigation";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!
@@ -14,6 +14,7 @@ export default function Checkout() {
   const { cartItems, paymentIntent } = useSelector(
     (state: RootState) => state.cartReducer
   );
+  const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -26,7 +27,9 @@ export default function Checkout() {
         payment_intent_id: paymentIntent,
       }),
     }).then((res) => {
-      console.log(res);
+      if (res.status === 403) {
+        return router.push("/api/auth/signin");
+      }
       // SET CLIENT SECRET and the payment intent associated with it
     });
   }, []);
