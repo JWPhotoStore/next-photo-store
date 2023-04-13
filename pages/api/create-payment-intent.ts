@@ -1,6 +1,5 @@
 import Stripe from "stripe";
 import { NextApiRequest, NextApiResponse } from "next";
-// import { authOptions } from "./auth/[...nextauth]";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
