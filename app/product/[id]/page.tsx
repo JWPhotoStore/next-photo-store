@@ -4,7 +4,6 @@ import { SearchParamTypes } from "@/types/SearchParamsTypes";
 import formatPrice from "@/util/PriceFormat";
 import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
-import CartBar from "@/app/components/CartBar";
 
 export default async function Product({ searchParams }: SearchParamTypes) {
   return (
@@ -26,14 +25,12 @@ export default async function Product({ searchParams }: SearchParamTypes) {
                 : "N/A"}
             </p>
           </div>
+          {/* TODO - Providers here to the children may not actually give access to updated store */}
           <Providers>
             <AddToCart {...searchParams} />
           </Providers>
         </div>
       </div>
-      {/* <Providers>
-        <CartBar />
-      </Providers> */}
     </div>
   );
 }

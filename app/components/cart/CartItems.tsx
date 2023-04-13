@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "@/app/store/store";
 import styles from "@/styles/CartItem.module.css";
 import CartItem from "./CartItem";
 
