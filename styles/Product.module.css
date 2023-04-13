@@ -1,14 +1,7 @@
-/* .productsGrid {
+.productsGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 1rem;
 }
-
-@media screen and (max-width: 768px) {
-  .productsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-} */
 
 @media screen and (min-width: 768px) {
   .productsGrid {
