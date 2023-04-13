@@ -13,27 +13,28 @@ export default function ProductCard({
   currency,
 }: ProductTypes) {
   return (
-    <Link
-      href={{
-        pathname: `/product/${id}`,
-        query: { name, image, unit_amount, id, description, currency },
-      }}
-    >
-      <div className="productCard">
-        <Image
-          src={image}
-          alt={name}
-          width={400}
-          height={400}
-          className={styles.imageInfo}
-        />
-        <div className={styles.productContainer}>
-          <h2>{name}</h2>
-          <p className={styles.priceInfo}>
+    <div className={styles.productCardContainer}>
+      <Link
+        href={{
+          pathname: `/product/${id}`,
+          query: { name, image, unit_amount, id, description, currency },
+        }}
+      >
+        <div className={styles.productCardImageContainer}>
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className={styles.productCardImage}
+          />
+        </div>
+        <div className={styles.productCardDetails}>
+          <h2 className={styles.productCardName}>{name}</h2>
+          <p className={styles.productCardPrice}>
             {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
           </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }

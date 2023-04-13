@@ -30,10 +30,10 @@ export default async function Home() {
   const products = await getProducts();
 
   return (
-    <main className={styles.productsGrid}>
+    <div className={styles.productsGrid}>
       {products.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
-    </main>
+    </div>
   );
 }

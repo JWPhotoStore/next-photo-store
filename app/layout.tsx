@@ -24,7 +24,7 @@ export default async function RootLayout({
           <Nav user={session?.user} expires={session?.expires as string} />
           <CartContainer />
         </Providers>
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
