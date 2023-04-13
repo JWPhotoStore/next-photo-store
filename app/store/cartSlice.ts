@@ -5,11 +5,16 @@ import { CartItemTypes } from "@/types/CartItemTypes";
 export interface CartState {
   isOpen: boolean;
   cartItems: CartItemTypes[];
+  paymentIntent: string;
+  // setPaymentIntent: (val:string) => void
+  onCheckout: string;
 }
 
 const initialState: CartState = {
   isOpen: false,
   cartItems: [],
+  paymentIntent: "",
+  onCheckout: "cart",
 };
 
 export const cartSlice = createSlice({
@@ -33,16 +38,29 @@ export const cartSlice = createSlice({
     decrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
-          cartItem.quantity -= 1;
+          if (cartItem.quantity > 1) {
+            cartItem.quantity -= 1;
+          } else {
+            const updatedCart = state.cartItems.filter(
+              (cartItem) => cartItem.id !== action.payload.id
+            );
+            state.cartItems = updatedCart;
+          }
           return;
         }
       }
     },
     removeCartItem: (state, action: PayloadAction<CartItemTypes>) => {
       const filteredCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.id === action.payload.id
+        (cartItem) => cartItem.id !== action.payload.id
       );
       state.cartItems = filteredCartItems;
+    },
+    setPaymentIntent: (state, action: PayloadAction<string>) => {
+      state.paymentIntent = action.payload;
+    },
+    setCheckout: (state, action: PayloadAction<string>) => {
+      state.onCheckout = action.payload;
     },
   },
 });
@@ -54,6 +72,8 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeCartItem,
+  setPaymentIntent,
+  setCheckout,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

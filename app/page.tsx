@@ -29,9 +29,11 @@ export default async function Home() {
 
   return (
     <main>
-      {products.map((product) => (
-        <Product key={product.id} {...product} />
-      ))}
+      <div>
+        {products.map((product) => (
+          <Product key={product.id} {...product} />
+        ))}
+      </div>
     </main>
   );
 }
