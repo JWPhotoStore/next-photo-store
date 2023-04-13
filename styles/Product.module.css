@@ -11,7 +11,6 @@
   .productsGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 3vw 5vw;
-    /* gap: 3rem 4.5rem; */
   }
   .productCardContainer {
     aspect-ratio: 4/5;
