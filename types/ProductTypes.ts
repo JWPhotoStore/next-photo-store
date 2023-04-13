@@ -4,5 +4,5 @@ export type ProductTypes = {
   description: string | null;
   image: string;
   currency: string;
-  unit_amount: number | null;
+  unit_amount: number;
 };

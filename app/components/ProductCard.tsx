@@ -4,7 +4,7 @@ import formatPrice from "@/util/PriceFormat";
 import Link from "next/link";
 import { ProductTypes } from "@/types/ProductTypes";
 
-export default function Product({
+export default function ProductCard({
   id,
   name,
   description,

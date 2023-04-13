@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import Product from "./components/Product";
+import ProductCard from "./components/ProductCard";
 import styles from "@/styles/Product.module.css";
 
 const getProducts = async () => {
@@ -31,7 +31,7 @@ export default async function Home() {
   return (
     <main className={styles.productsGrid}>
       {products.map((product) => (
-        <Product key={product.id} {...product} />
+        <ProductCard key={product.id} {...product} />
       ))}
     </main>
   );

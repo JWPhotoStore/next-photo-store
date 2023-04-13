@@ -34,12 +34,12 @@ export const authOptions = {
         });
       }
     },
-    // callbacks: {
-    //   async session({ session, token, user }) {
-    //     session.user = user;
-    //     return session;
-    //   },
-    // },
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user = user;
+      return session;
+    },
   },
 };
 
