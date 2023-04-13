@@ -1,6 +1,4 @@
 "use client";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import { CartItemTypes } from "@/types/CartItemTypes";
 import formatPrice from "@/util/PriceFormat";
 

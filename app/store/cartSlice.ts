@@ -14,7 +14,7 @@ const initialState: CartState = {
   isOpen: false,
   cartItems: [],
   paymentIntent: "",
-  onCheckout: "",
+  onCheckout: "cart",
 };
 
 export const cartSlice = createSlice({
@@ -72,6 +72,8 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeCartItem,
+  setPaymentIntent,
+  setCheckout,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
