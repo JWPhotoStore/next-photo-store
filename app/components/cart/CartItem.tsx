@@ -8,7 +8,7 @@ import {
   incrementQuantity,
   decrementQuantity,
   removeCartItem,
-} from "../store/cartSlice";
+} from "@/app/store/cartSlice";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { CiTrash } from "react-icons/ci";
 

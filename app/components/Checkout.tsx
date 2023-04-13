@@ -26,12 +26,17 @@ export default function Checkout() {
         items: cartItems,
         payment_intent_id: paymentIntent,
       }),
-    }).then((res) => {
-      if (res.status === 403) {
-        return router.push("/api/auth/signin");
-      }
-      // SET CLIENT SECRET and the payment intent associated with it
-    });
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          return router.push("/api/auth/signin");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // SET CLIENT SECRET and the payment intent associated with it
+        console.log(data);
+      });
   }, []);
 
   return (
