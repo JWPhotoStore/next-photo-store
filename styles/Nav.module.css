@@ -1,3 +1,21 @@
+.nav {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: var(--nav-bar-height);
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (min-width: 640px) {
+  .nav {
+    /* TODO: Shrink the options from Nav bar */
+  }
+}
+
 .signIn {
   background-color: var(--tertiary-color);
   color: #fff;
@@ -10,12 +28,4 @@
 
 .image {
   border-radius: 9999px;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }

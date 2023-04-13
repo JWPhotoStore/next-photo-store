@@ -19,7 +19,7 @@ export default function Product({
         query: { name, image, unit_amount, id, description, currency },
       }}
     >
-      <div>
+      <div className="productCard">
         <Image
           src={image}
           alt={name}

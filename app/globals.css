@@ -5,6 +5,7 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --tertiary-color: #4fd1c5;
+  --nav-bar-height: 4rem;
 }
 
 * {
@@ -45,4 +46,9 @@ button:hover {
 
 li {
   list-style: none;
+}
+
+main {
+  position: fixed;
+  top: var(--nav-bar-height);
 }
