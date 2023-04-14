@@ -1,5 +1,5 @@
 "use client";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import styles from "@/styles/CartItem.module.css";
 import CartItem from "./CartItem";
