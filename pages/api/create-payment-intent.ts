@@ -42,8 +42,8 @@ export default async function handler(
     products: {
       create: items.map((item) => ({
         name: item.name,
-        description: item.description,
-        unit_amount: item.unit_amount,
+        description: item.description || null,
+        unit_amount: parseFloat(item.unit_amount),
         image: item.image,
         quantity: item.quantity,
       })),
@@ -62,7 +62,6 @@ export default async function handler(
         { amount: calculateOrderAmount(items) }
       );
       //Fetch order with product ids
-      // TODO - check why paymentIntentID is erroring out here
       const existing_order = await prisma.order.findFirst({
         where: { paymentIntentID: updated_intent.id },
         include: { products: true },
@@ -80,8 +79,8 @@ export default async function handler(
             deleteMany: {},
             create: items.map((item) => ({
               name: item.name,
-              description: item.description,
-              unit_amount: item.unit_amount,
+              description: item.description || null,
+              unit_amount: parseFloat(item.unit_amount),
               image: item.image,
               quantity: item.quantity,
             })),
@@ -103,9 +102,6 @@ export default async function handler(
     const newOrder = await prisma.order.create({
       data: orderData,
     });
+    res.status(200).json({ paymentIntent });
   }
-
-  //Data necessary for the order
-  res.status(200).json({ payment_intent_id });
-  return;
 }

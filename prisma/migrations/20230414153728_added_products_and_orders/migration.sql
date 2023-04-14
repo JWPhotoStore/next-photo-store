@@ -6,7 +6,7 @@ CREATE TABLE "Order" (
     "currency" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "createdDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "paymentIntentId" TEXT,
+    "paymentIntentID" TEXT,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -30,7 +30,7 @@ CREATE TABLE "_OrderToProduct" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Order_paymentIntentId_key" ON "Order"("paymentIntentId");
+CREATE UNIQUE INDEX "Order_paymentIntentID_key" ON "Order"("paymentIntentID");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_OrderToProduct_AB_unique" ON "_OrderToProduct"("A", "B");

@@ -27,7 +27,7 @@ model Order {
   currency String
   status String
   createdDate DateTime @default(now())
-  paymentIntentId String? @unique
+  paymentIntentID String? @unique
   products Product[]
 }
 
