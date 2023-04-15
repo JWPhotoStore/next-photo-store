@@ -11,8 +11,14 @@
   .productsGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 3vw 5vw;
+    max-width: 1800px;
+    padding: 0 4vw;
+    margin: 0 auto;
   }
   .productCardContainer {
+    /* TODO: productCards get smaller after window gets too big. 
+    Probably has to do with the growing gap size (based on vw) 
+    + restricted width set above + hard coded aspect ratio */
     aspect-ratio: 4/5;
   }
 
