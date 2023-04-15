@@ -16,35 +16,37 @@ export default function Nav({ user }: Session) {
 
   return (
     <nav className={styles.nav}>
-      <Link href="/">
-        <h1>Styled</h1>
-      </Link>
-      <ul>
-        <li>
-          <AiFillShopping onClick={() => dispatch(toggleCart())} />
-        </li>
-        {!user && (
-          <li className={styles.signIn}>
-            <button className={styles.button} onClick={() => signIn()}>
-              Sign in
-            </button>
+      <div className={styles.navContent}>
+        <Link href="/">
+          <h1>Styled</h1>
+        </Link>
+        <ul>
+          <li>
+            <AiFillShopping onClick={() => dispatch(toggleCart())} />
           </li>
-        )}
-        {user && (
-          <>
-            <li>
-              <Image
-                //TODO: Add a default image if the user doesn't have one
-                src={user?.image as string}
-                alt={user.name as string}
-                width={48}
-                height={48}
-                className={styles.image}
-              />
+          {!user && (
+            <li className={styles.signIn}>
+              <button className={styles.button} onClick={() => signIn()}>
+                Sign in
+              </button>
             </li>
-          </>
-        )}
-      </ul>
+          )}
+          {user && (
+            <>
+              <li>
+                <Image
+                  //TODO: Add a default image if the user doesn't have one
+                  src={user?.image as string}
+                  alt={user.name as string}
+                  width={48}
+                  height={48}
+                  className={styles.image}
+                />
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }
