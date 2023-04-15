@@ -38,6 +38,14 @@
   padding-bottom: 0.5rem;
 }
 
+@media screen and (min-width: 768px),
+  screen and (max-width: calc(1943px)) and (orientation: landscape) {
+  .productCardName,
+  .productCardPrice {
+    font-size: calc((1.2 - 1) * 1.2vw + 1rem);
+  }
+}
+
 .productCardImage {
   position: absolute;
   object-fit: cover;
