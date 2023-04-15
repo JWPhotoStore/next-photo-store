@@ -1,31 +1,63 @@
+/* HOME PAGE */
 .productsGrid {
   display: grid;
-  gap: 1rem;
+  height: 100%;
+  row-gap: 1rem;
+  padding: 3rem;
+  border: var(--debug-border) red solid;
 }
 
 @media screen and (min-width: 768px) {
   .productsGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3vw 5vw;
+    max-width: 1800px;
+    padding: 0 4vw;
+    margin: 0 auto;
+  }
+  .productCardContainer {
+    /* TODO: productCards get smaller after window gets too big. 
+    Probably has to do with the growing gap size (based on vw) 
+    + restricted width set above + hard coded aspect ratio */
+    aspect-ratio: 4/5;
+  }
+
+  .productCardImageContainer {
+    aspect-ratio: 3/4;
   }
 }
 
-.productContainer {
+.productCardContainer {
+  border: var(--debug-border) orange solid;
+  width: 100%;
+  aspect-ratio: 4/6;
+}
+
+.productCardImageContainer {
+  position: relative;
+  aspect-ratio: 4/5;
+}
+
+.productCardDetails {
+  border: var(--debug-border) green solid;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-.priceInfo {
-  color: #007aff;
+@media screen and (min-width: 768px),
+  screen and (max-width: calc(1943px)) and (orientation: landscape) {
+  .productCardName,
+  .productCardPrice {
+    font-size: calc((1.2 - 1) * 1.2vw + 1rem);
+  }
 }
 
-.imageInfo {
-  /* TODO: we want to avoid setting px for responsive design */
-  width: 200px;
-  height: 200px;
+.productCardImage {
+  position: absolute;
   object-fit: cover;
-  border-radius: 0.5rem;
 }
 
+/* INVIDUAL PRODUCT PAGE */
 .productDetails {
   /* TODO: we want to avoid setting px for responsive design */
   display: flex;
