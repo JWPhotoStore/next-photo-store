@@ -4,8 +4,11 @@
   width: 100%;
   left: 0;
   top: 0;
+  padding: var(--nav-top-bottom-padding) 4vw;
+}
+
+.navContent {
   height: var(--nav-bar-height);
-  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

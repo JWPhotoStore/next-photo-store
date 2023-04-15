@@ -14,6 +14,7 @@
   --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
+  --nav-top-bottom-padding: 3vw;
 }
 
 * {
@@ -63,6 +64,6 @@ li {
 
 main {
   position: absolute;
-  top: var(--nav-bar-height);
+  top: calc(var(--nav-top-bottom-padding) * 2 + var(--nav-bar-height));
   width: 100%;
 }
