@@ -16,12 +16,12 @@ export default function Nav({ user }: Session) {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.navContent}>
+      <div className={styles.navContentContainer}>
         <Link href="/">
           <h1>Styled</h1>
         </Link>
-        <ul>
-          <li>
+        <ul className={styles.navContentRight}>
+          <li className={styles.cartIcon}>
             <AiFillShopping onClick={() => dispatch(toggleCart())} />
           </li>
           {!user && (
