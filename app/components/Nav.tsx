@@ -17,16 +17,14 @@ export default function Nav({ user }: Session) {
   return (
     <nav>
       <div className={styles.navContentContainer}>
+        <ul className={styles.navContentLeft}>
+          <Link href="/products">photos</Link>
+          <Link href="/contact">contact</Link>
+        </ul>
         <Link href="/">
-          <h1>Styled</h1>
+          <h1>PlaceholderForTitle</h1>
         </Link>
         <ul className={styles.navContentRight}>
-          <li className={styles.cartIcon}>
-            <RiShoppingCartLine
-              size={25}
-              onClick={() => dispatch(toggleCart())}
-            />
-          </li>
           {!user && (
             <li className={styles.signIn}>
               <button className={styles.button} onClick={() => signIn()}>
@@ -48,6 +46,12 @@ export default function Nav({ user }: Session) {
               </li>
             </>
           )}
+          <li className={styles.cartIcon}>
+            <RiShoppingCartLine
+              size={25}
+              onClick={() => dispatch(toggleCart())}
+            />
+          </li>
         </ul>
       </div>
     </nav>
