@@ -1,12 +1,3 @@
-.nav {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  left: 0;
-  top: 0;
-  padding: var(--nav-top-bottom-padding) 4vw;
-}
-
 .navContentContainer {
   height: var(--nav-bar-height);
   display: flex;

@@ -15,7 +15,7 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   return (
-    <nav className={styles.nav}>
+    <nav>
       <div className={styles.navContentContainer}>
         <Link href="/">
           <h1>Styled</h1>
