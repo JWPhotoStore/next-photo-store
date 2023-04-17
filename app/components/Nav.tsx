@@ -35,14 +35,15 @@ export default function Nav({ user }: Session) {
           {user && (
             <>
               <li>
-                <Image
+                {/* <Image
                   //TODO: Add a default image if the user doesn't have one
                   src={user?.image as string}
                   alt={user.name as string}
                   width={48}
                   height={48}
                   className={styles.image}
-                />
+                /> */}
+                hello <span>{user.name}</span>
               </li>
             </>
           )}
