@@ -15,18 +15,16 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   return (
-    <nav className={styles.nav}>
+    <nav>
       <div className={styles.navContentContainer}>
+        <ul className={styles.navContentLeft}>
+          <Link href="/products">photos</Link>
+          <Link href="/contact">contact</Link>
+        </ul>
         <Link href="/">
-          <h1>Styled</h1>
+          <h1>PlaceholderForTitle</h1>
         </Link>
         <ul className={styles.navContentRight}>
-          <li className={styles.cartIcon}>
-            <RiShoppingCartLine
-              size={25}
-              onClick={() => dispatch(toggleCart())}
-            />
-          </li>
           {!user && (
             <li className={styles.signIn}>
               <button className={styles.button} onClick={() => signIn()}>
@@ -37,17 +35,26 @@ export default function Nav({ user }: Session) {
           {user && (
             <>
               <li>
-                <Image
+                {/* <Image
                   //TODO: Add a default image if the user doesn't have one
                   src={user?.image as string}
                   alt={user.name as string}
                   width={48}
                   height={48}
                   className={styles.image}
-                />
+                /> */}
+                hello <span>{user.name}</span>
               </li>
             </>
           )}
+          <Link href="/cart">
+            <li className={styles.cartIcon}>
+              <RiShoppingCartLine
+                size={25}
+                // onClick={() => dispatch(toggleCart())}
+              />
+            </li>
+          </Link>
         </ul>
       </div>
     </nav>

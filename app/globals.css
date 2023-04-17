@@ -7,7 +7,7 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-  --tertiary-color: #4fd1c5;
+  --tertiary-color: #1a73e8;
   --nav-bar-height: 4rem;
   /* COMMENT IN --debug-border: 1px; to debug CSS */
   /* --debug-border: 1px;  */
@@ -62,8 +62,27 @@ li {
   list-style: none;
 }
 
+nav {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding: var(--nav-top-bottom-padding) 4vw;
+}
+
 main {
   position: absolute;
   top: calc(var(--nav-top-bottom-padding) * 2 + var(--nav-bar-height));
   width: 100%;
+}
+
+:global(.primaryButton) {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  background-color: var(--tertiary-color);
 }

@@ -1,28 +1,22 @@
-.nav {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  left: 0;
-  top: 0;
-  padding: var(--nav-top-bottom-padding) 4vw;
-}
-
-.navContentContainer {
-  height: var(--nav-bar-height);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navContentRight {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.navContentLeft {
+  display: none;
 }
 
 @media screen and (min-width: 640px) {
-  .nav {
-    /* TODO: Shrink the options from Nav bar */
+  /* TODO: Shrink the options from Nav bar */
+  .navContentContainer {
+    height: var(--nav-bar-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navContentRight,
+  .navContentLeft {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.875rem;
   }
 }
 
