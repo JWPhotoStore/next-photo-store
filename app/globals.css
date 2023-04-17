@@ -76,3 +76,13 @@ main {
   top: calc(var(--nav-top-bottom-padding) * 2 + var(--nav-bar-height));
   width: 100%;
 }
+
+:global(.primaryButton) {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  background-color: var(--tertiary-color);
+}

@@ -46,7 +46,7 @@ function AddToCart({
   };
 
   return (
-    <button onClick={handleAddToCart} className={styles.addToCart}>
+    <button onClick={handleAddToCart} className={styles.primaryButton}>
       Add to Cart
     </button>
   );

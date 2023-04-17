@@ -47,12 +47,14 @@ export default function Nav({ user }: Session) {
               </li>
             </>
           )}
-          <li className={styles.cartIcon}>
-            <RiShoppingCartLine
-              size={25}
-              onClick={() => dispatch(toggleCart())}
-            />
-          </li>
+          <Link href="/cart">
+            <li className={styles.cartIcon}>
+              <RiShoppingCartLine
+                size={25}
+                // onClick={() => dispatch(toggleCart())}
+              />
+            </li>
+          </Link>
         </ul>
       </div>
     </nav>
