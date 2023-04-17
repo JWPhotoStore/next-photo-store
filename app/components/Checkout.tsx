@@ -7,10 +7,16 @@ import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import { setPaymentIntent } from "../store/cartSlice";
 import CheckoutForm from "./CheckoutForm";
+import Stripe from "stripe";
 
 const stripePromise = loadStripe(
   `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
+  // process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!
 );
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2022-11-15",
+});
 
 export default function Checkout() {
   const { cartItems, paymentIntent } = useSelector(
@@ -53,14 +59,16 @@ export default function Checkout() {
 
   return (
     <div>
-      {/* {clientSecret && (
-        <div>
-          <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm clientSecret={clientSecret} />
-          </Elements>
-        </div>
-      )} */}
-      <p>is this working</p>
+      {clientSecret && (
+        // <div>
+        //   <Elements options={options} stripe={stripePromise}>
+        //     {/* <Elements options={options} stripe={stripePromise}> */}
+        //     <CheckoutForm clientSecret={clientSecret} />
+        //   </Elements>
+
+        // </div>
+        <div>Checkout</div>
+      )}
     </div>
   );
 }

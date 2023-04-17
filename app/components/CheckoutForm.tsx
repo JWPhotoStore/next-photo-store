@@ -50,11 +50,20 @@ export default function CheckoutForm({
         redirect: "if_required",
       })
       .then((result) => {
+        console.log("did this hit");
         if (!result.error) {
           dispatch(setCheckout("success"));
         }
         setIsLoading(false);
       });
+
+    // const { error } = await stripe.confirmPayment({
+    //   //`Elements` instance that was used to create the Payment Element
+    //   elements,
+    //   confirmParams: {
+    //     return_url: "https://localhost:3000/success",
+    //   },
+    // });
   };
 
   return (
