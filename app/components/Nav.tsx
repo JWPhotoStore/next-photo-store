@@ -2,13 +2,14 @@
 
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCart } from "../store/cartSlice";
+// import { toggleCart } from "../store/cartSlice";
 import { RootState } from "../store/store";
+import { setCheckout } from "../store/cartSlice";
 
 export default function Nav({ user }: Session) {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
@@ -21,7 +22,7 @@ export default function Nav({ user }: Session) {
           <Link href="/products">photos</Link>
           <Link href="/contact">contact</Link>
         </ul>
-        <Link href="/">
+        <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
           <h1>PlaceholderForTitle</h1>
         </Link>
         <ul className={styles.navContentRight}>
