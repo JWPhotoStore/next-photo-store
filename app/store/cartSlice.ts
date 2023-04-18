@@ -6,7 +6,6 @@ export interface CartState {
   isOpen: boolean;
   cartItems: CartItemTypes[];
   paymentIntent: string;
-  // setPaymentIntent: (val:string) => void
   onCheckout: string;
 }
 
@@ -61,6 +60,9 @@ export const cartSlice = createSlice({
     },
     setCheckout: (state, action: PayloadAction<string>) => {
       state.onCheckout = action.payload;
+    },
+    clearCart: (state) => {
+      state.cartItems = [];
     },
   },
 });
