@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import { setPaymentIntent } from "../store/cartSlice";
+import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!
 );
 
 export default function Checkout() {
@@ -42,9 +43,23 @@ export default function Checkout() {
       });
   }, []);
 
+  const options: StripeElementsOptions = {
+    clientSecret,
+    appearance: {
+      theme: "stripe",
+      labels: "floating",
+    },
+  };
+
   return (
     <div>
-      <h1>Checkout</h1>
+      {clientSecret && (
+        <div>
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm clientSecret={clientSecret} />
+          </Elements>
+        </div>
+      )}
     </div>
   );
 }

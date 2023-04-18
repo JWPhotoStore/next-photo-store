@@ -6,7 +6,6 @@ export interface CartState {
   isOpen: boolean;
   cartItems: CartItemTypes[];
   paymentIntent: string;
-  // setPaymentIntent: (val:string) => void
   onCheckout: string;
 }
 
@@ -17,6 +16,7 @@ const initialState: CartState = {
   onCheckout: "cart",
 };
 
+//TODO: potentially break out certain reducers into their own slice
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -62,6 +62,9 @@ export const cartSlice = createSlice({
     setCheckout: (state, action: PayloadAction<string>) => {
       state.onCheckout = action.payload;
     },
+    clearCart: (state) => {
+      state.cartItems = [];
+    },
   },
 });
 
@@ -74,6 +77,7 @@ export const {
   removeCartItem,
   setPaymentIntent,
   setCheckout,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
