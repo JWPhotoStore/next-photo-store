@@ -16,6 +16,7 @@ const initialState: CartState = {
   onCheckout: "cart",
 };
 
+//TODO: potentially break out certain reducers into their own slice
 export const cartSlice = createSlice({
   name: "cart",
   initialState,

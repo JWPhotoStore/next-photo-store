@@ -56,7 +56,15 @@ export default function CheckoutForm({
       .then((result) => {
         if (!result.error) {
           dispatch(setCheckout("success"));
+        } else {
+          // TODO: validate how to handle errors
+          throw Error(result.error.message);
         }
+        setIsLoading(false);
+      })
+      // TODO: validate how to handle errors
+      .catch((err) => {
+        console.log(err);
         setIsLoading(false);
       });
   };
