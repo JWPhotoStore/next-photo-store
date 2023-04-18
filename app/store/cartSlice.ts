@@ -76,6 +76,7 @@ export const {
   removeCartItem,
   setPaymentIntent,
   setCheckout,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

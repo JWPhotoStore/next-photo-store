@@ -18,13 +18,22 @@ export default function CartContainer() {
   return (
     <>
       <div className={styles.cartContainer}>
+        {/* TODO: create a component for when the cart is empty */}
         {onCheckout === "cart" && (
           <>
-            <CartItems />
-            {cartItems.length > 0 && <CartSummary cartItems={cartItems} />}
-            <button onClick={() => dispatch(setCheckout("checkout"))}>
-              Checkout
-            </button>
+            {cartItems.length > 0 ? (
+              <>
+                <CartItems />
+                {cartItems.length > 0 && <CartSummary cartItems={cartItems} />}
+                <button onClick={() => dispatch(setCheckout("checkout"))}>
+                  Checkout
+                </button>
+              </>
+            ) : (
+              <>
+                <h1>Your cart is empty</h1>
+              </>
+            )}
           </>
         )}
         {onCheckout === "checkout" && (

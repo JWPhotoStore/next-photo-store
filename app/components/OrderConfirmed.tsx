@@ -5,8 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import stewie from "@/public/stewie.gif";
+import { useEffect } from "react";
+import { clearCart, setPaymentIntent, setCheckout } from "../store/cartSlice";
 
 export default function OrderConfirmed() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearCart());
+    dispatch(setPaymentIntent(""));
+  }, []);
+
   return (
     <motion.div
       initial={{ scale: 0.5, opacity: 0 }}
@@ -18,9 +27,14 @@ export default function OrderConfirmed() {
         <Image src={stewie} alt="stewie" />
         <div>
           <Link href={"/dashboard"}>
-            <button>Check your Order</button>
+            <button
+              onClick={() => {
+                dispatch(setCheckout("cart"));
+              }}
+            >
+              Check your Order
+            </button>
           </Link>
-          <button onClick={() => {}}>Create a new Order</button>
         </div>
       </div>
     </motion.div>
