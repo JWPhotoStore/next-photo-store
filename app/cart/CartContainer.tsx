@@ -26,7 +26,14 @@ export default function CartContainer() {
             </button>
           </>
         )}
-        {onCheckout === "checkout" && <Checkout />}
+        {onCheckout === "checkout" && (
+          <>
+            <button onClick={() => dispatch(setCheckout("cart"))}>
+              Back to Store
+            </button>
+            <Checkout />
+          </>
+        )}
       </div>
     </>
   );
