@@ -47,15 +47,15 @@ export default function CheckoutForm({
     stripe
       .confirmPayment({
         elements,
-        // redirect: "if_required",
+        redirect: "if_required",
         //TODO: fix this redirect link
-        confirmParams: {
-          return_url: "http://localhost:3000/success",
-        },
+        // confirmParams: {
+        //   return_url: "http://localhost:3000/success",
+        // },
       })
       .then((result) => {
         if (!result.error) {
-          dispatch(setCheckout("cart"));
+          dispatch(setCheckout("success"));
         }
         setIsLoading(false);
       });

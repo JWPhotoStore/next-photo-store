@@ -6,6 +6,7 @@ import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import Checkout from "../components/Checkout";
 import { setCheckout } from "../store/cartSlice";
+import OrderConfirmed from "../components/OrderConfirmed";
 
 // Need to set isOpen back to false whenever I click back to home page or back
 export default function CartContainer() {
@@ -34,6 +35,7 @@ export default function CartContainer() {
             <Checkout />
           </>
         )}
+        {onCheckout === "success" && <OrderConfirmed />}
       </div>
     </>
   );
