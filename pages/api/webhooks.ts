@@ -35,6 +35,7 @@ export default async function handler(
       signature,
       process.env.STRIPE_WEBHOOK_SECRET as string
     );
+    console.log("stripe webhook event");
   } catch (err) {
     return res.status(400).send(`Webhook error: ${err}`);
   }
