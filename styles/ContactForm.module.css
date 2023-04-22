@@ -30,4 +30,5 @@
 
 .messageTextArea {
   height: 150px;
+  resize: none;
 }
