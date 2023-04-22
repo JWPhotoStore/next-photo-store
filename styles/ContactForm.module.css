@@ -18,9 +18,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* input[type="text"],
-input[type="email"],
-input[type="tel"], */
 .formGroup > input,
 .messageTextArea {
   font-size: 1.2rem;
@@ -34,17 +31,3 @@ input[type="tel"], */
 .messageTextArea {
   height: 150px;
 }
-/* 
-button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #0069d9;
-} */
