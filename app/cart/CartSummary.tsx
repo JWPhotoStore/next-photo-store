@@ -20,10 +20,14 @@ export default function CartSummary({
 
   return (
     <div className={styles.cartSummaryContainer}>
+      <h2>Summary</h2>
       <div>
         <p>Total: {formatPrice(calculateSum())}</p>
       </div>
-      <button onClick={() => dispatch(setCheckout("checkout"))}>
+      <button
+        className={styles.primaryButton}
+        onClick={() => dispatch(setCheckout("checkout"))}
+      >
         Checkout
       </button>
     </div>

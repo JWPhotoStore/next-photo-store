@@ -55,7 +55,10 @@ export default function Checkout() {
 
   return (
     <div>
-      <button onClick={() => dispatch(setCheckout("cart"))}>
+      <button
+        className={styles.primaryButton}
+        onClick={() => dispatch(setCheckout("cart"))}
+      >
         Back to Store
       </button>
       {clientSecret && (

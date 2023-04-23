@@ -13,7 +13,7 @@ function _CartPage() {
   const { onCheckout } = useSelector((state: RootState) => state.cartReducer);
 
   return (
-    <div className={styles.cartContainer}>
+    <div className={styles.cartPageContainer}>
       {onCheckout === "cart" && <Cart />}
       {onCheckout === "checkout" && <Checkout />}
       {onCheckout === "success" && <OrderConfirmed />}

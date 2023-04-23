@@ -18,14 +18,14 @@ export default function CartItem({ cartItem }: { cartItem: CartItemTypes }) {
 
   return (
     <div className={styles.cartItemContainer} key={id}>
-      <div className={styles.cartItem}>
-        <Image src={image} alt={name} width={40} height={40} />
-        {/* TODO: Remove inline styling */}
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h3>Quantity</h3>
-          <h3>{quantity}</h3>
-        </div>
+      <Image src={image} alt={name} width={150} height={150} />
+      <div className={styles.cartItemDetails}>
+        <h3>{name}</h3>
         <div>
+          <span>Quantity: </span>
+          <span>{quantity}</span>
+        </div>
+        <div className={styles.cartActionIcons}>
           <AiOutlineMinus
             onClick={() => dispatch(decrementQuantity(cartItem))}
           />
@@ -35,7 +35,9 @@ export default function CartItem({ cartItem }: { cartItem: CartItemTypes }) {
           <CiTrash onClick={() => dispatch(removeCartItem(cartItem))} />
         </div>
       </div>
-      <h5>{formatPrice(unit_amount * quantity)}</h5>
+      <div>
+        <h3>{formatPrice(unit_amount * quantity)}</h3>
+      </div>
     </div>
   );
 }
