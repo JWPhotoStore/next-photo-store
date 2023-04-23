@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "@/styles/ContactForm.module.css";
 
 export default function EmailForm() {
   const [name, setName] = useState("");
@@ -11,11 +12,12 @@ export default function EmailForm() {
 
   function handleSubmit(event: React.SyntheticEvent) {
     console.log("Form is not functional yet.");
+    //TODO: add email string validation and then show warning message next to input
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form onSubmit={handleSubmit} className={styles.contactFormContainer}>
+      <div className={styles.formGroup}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -24,7 +26,7 @@ export default function EmailForm() {
           onChange={(event) => setName(event.target.value)}
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="phoneNumber">Phone Number</label>
         <input
           type="tel"
@@ -33,8 +35,8 @@ export default function EmailForm() {
           onChange={(event) => setPhoneNumber(event.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="email">Email Address</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
@@ -42,7 +44,7 @@ export default function EmailForm() {
           onChange={(event) => setEmail(event.target.value)}
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -51,11 +53,12 @@ export default function EmailForm() {
           onChange={(event) => setTitle(event.target.value)}
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="message">Message</label>
         <textarea
           id="message"
           value={message}
+          className={styles.messageTextArea}
           onChange={(event) => setMessage(event.target.value)}
         />
       </div>
