@@ -9,8 +9,9 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --tertiary-color: #1a73e8;
   --nav-bar-height: 4rem;
+  /* TODO: Remove all unnecessary borders */
   /* COMMENT IN --debug-border: 1px; to debug CSS */
-  /* --debug-border: 1px;  */
+  /* --debug-border: 1px; */
   --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
@@ -40,7 +41,7 @@ h2 {
 }
 
 h3 {
-  font-size: 0.875rem;
+  font-size: 1.25rem;
 }
 
 a {
