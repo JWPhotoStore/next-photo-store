@@ -19,7 +19,8 @@ export default function Nav({ user }: Session) {
     <nav>
       <div className={styles.navContentContainer}>
         <ul className={styles.navContentLeft}>
-          <Link href="/products">photos</Link>
+          {/* TODO: create new route for photos */}
+          <Link href="/">photos</Link>
           <Link href="/contact">contact</Link>
         </ul>
         <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
