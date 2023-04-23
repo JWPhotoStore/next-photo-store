@@ -5,26 +5,26 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import Providers from "@/app/components/Providers";
 import styles from "@/styles/Cart.module.css";
-import CartSummary from "./CartSummary";
+import Cart from "./Cart";
 import Checkout from "../components/Checkout";
 import OrderConfirmed from "../components/OrderConfirmed";
 
-function _Cart() {
+function _CartPage() {
   const { onCheckout } = useSelector((state: RootState) => state.cartReducer);
 
   return (
     <div className={styles.cartContainer}>
-      {onCheckout === "cart" && <CartSummary />}
+      {onCheckout === "cart" && <Cart />}
       {onCheckout === "checkout" && <Checkout />}
       {onCheckout === "success" && <OrderConfirmed />}
     </div>
   );
 }
 
-export default function Cart() {
+export default function CartPage() {
   return (
     <Providers>
-      <_Cart />
+      <_CartPage />
     </Providers>
   );
 }

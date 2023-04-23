@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { setPaymentIntent } from "../store/cartSlice";
 import CheckoutForm from "./CheckoutForm";
 import { setCheckout } from "../store/cartSlice";
+import styles from "@/styles/Cart.module.css";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!

@@ -18,7 +18,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemTypes }) {
 
   return (
     <div className={styles.cartItemContainer} key={id}>
-      <div className={styles.item}>
+      <div className={styles.cartItem}>
         <Image src={image} alt={name} width={40} height={40} />
         {/* TODO: Remove inline styling */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>

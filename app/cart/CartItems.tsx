@@ -1,12 +1,14 @@
 "use client";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
 import styles from "@/styles/Cart.module.css";
 import CartItem from "./CartItem";
+import { CartItemTypes } from "@/types/CartItemTypes";
 
-export default function CartItems() {
-  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
-
+export default function CartItems({
+  cartItems,
+}: {
+  cartItems: CartItemTypes[];
+}) {
   return (
     <div className={styles.cartItemsContainer}>
       {cartItems.map((cartItem) => (
