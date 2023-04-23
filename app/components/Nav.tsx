@@ -55,6 +55,7 @@ export default function Nav({ user }: Session) {
                 size={25}
                 // onClick={() => dispatch(toggleCart())}
               />
+              {cartItems.length}
             </li>
           </Link>
         </ul>
