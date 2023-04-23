@@ -4,7 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import Providers from "@/app/components/Providers";
-import styles from "@/styles/CartItem.module.css";
+import styles from "@/styles/Cart.module.css";
 import CartSummary from "./CartSummary";
 import Checkout from "../components/Checkout";
 import OrderConfirmed from "../components/OrderConfirmed";

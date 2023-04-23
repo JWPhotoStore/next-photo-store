@@ -1,7 +1,7 @@
 "use client";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import styles from "@/styles/CartItem.module.css";
+import styles from "@/styles/Cart.module.css";
 import CartItem from "./CartItem";
 
 export default function CartItems() {
