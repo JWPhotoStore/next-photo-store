@@ -2,6 +2,24 @@
   width: 50%;
 }
 
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .cartContainer {
+    flex-direction: row;
+  }
+  .mobileHeaderContainer {
+    display: none;
+  }
+}
+
+/* Cart Mobile Header */
+.mobileHeaderContainer {
+}
+
 /* CartSummary */
 .cartItemsContainer {
   display: flex;

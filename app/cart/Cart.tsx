@@ -4,6 +4,7 @@ import { RootState } from "@/app/store/store";
 import styles from "@/styles/Cart.module.css";
 import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
+import CartMobileHeader from "../components/CartMobileHeader";
 
 export default function Cart() {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
@@ -11,7 +12,8 @@ export default function Cart() {
   return (
     <>
       {cartItems.length > 0 ? (
-        <div className={styles.cartSummaryContainer}>
+        <div className={styles.cartContainer}>
+          <CartMobileHeader cartItems={cartItems} />
           <CartItems cartItems={cartItems} />
           <CartSummary cartItems={cartItems} />
         </div>
