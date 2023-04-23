@@ -51,7 +51,6 @@ a {
 /* HACK: Refactor button */
 button {
   background-color: inherit;
-  color: inherit;
   border: inherit;
 }
 button:hover {
