@@ -7,6 +7,8 @@ import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import { setPaymentIntent } from "../store/cartSlice";
 import CheckoutForm from "./CheckoutForm";
+import { setCheckout } from "../store/cartSlice";
+import styles from "@/styles/Cart.module.css";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!
@@ -53,6 +55,12 @@ export default function Checkout() {
 
   return (
     <div>
+      <button
+        className={styles.primaryButton}
+        onClick={() => dispatch(setCheckout("cart"))}
+      >
+        Back to Store
+      </button>
       {clientSecret && (
         <div>
           <Elements options={options} stripe={stripePromise}>

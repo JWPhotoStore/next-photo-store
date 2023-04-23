@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
 import formatPrice from "@/util/PriceFormat";
+import styles from "@/styles/Cart.module.css";
 
 export default function CheckoutForm({
   clientSecret,
@@ -76,7 +77,7 @@ export default function CheckoutForm({
         <h1>Total: {formattedPrice}</h1>
         <button id="submit" disabled={isLoading || !stripe || !elements}>
           <span id="button=text">
-            {isLoading ? <span>Processing</span> : <span>Pay now</span>}
+            {isLoading ? <span>Processing</span> : <span>Place Order</span>}
           </span>
         </button>
       </form>
