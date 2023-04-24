@@ -7,11 +7,10 @@ import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import { setPaymentIntent } from "../store/cartSlice";
 import CheckoutForm from "./CheckoutForm";
-import { setCheckout } from "../store/cartSlice";
-import styles from "@/styles/Cart.module.css";
+import { PaymentIntentResType } from "@/types/PaymentIntentResType";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
 export default function Checkout() {
@@ -38,10 +37,10 @@ export default function Checkout() {
         }
         return res.json();
       })
-      .then((data) => {
+      .then((data: PaymentIntentResType) => {
         // SET CLIENT SECRET and the payment intent associated with it
-        setClientSecret(data.paymentIntent.client_secret);
-        dispatch(setPaymentIntent(data.paymentIntent.id));
+        setClientSecret(data.client_secret);
+        dispatch(setPaymentIntent(data.id));
       });
   }, []);
 
