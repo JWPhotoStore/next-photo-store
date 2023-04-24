@@ -54,6 +54,12 @@ export default function Checkout() {
 
   return (
     <div>
+      <button
+        className={styles.primaryButton}
+        onClick={() => dispatch(setCheckout("cart"))}
+      >
+        Back to Store
+      </button>
       {clientSecret && (
         <div>
           <Elements options={options} stripe={stripePromise}>

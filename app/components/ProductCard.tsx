@@ -29,10 +29,10 @@ export default function ProductCard({
           />
         </div>
         <div className={styles.productCardDetails}>
-          <h3 className={styles.productCardName}>{name}</h3>
-          <h3 className={styles.productCardPrice}>
+          <p className={styles.productCardName}>{name}</p>
+          <p className={styles.productCardPrice}>
             {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
-          </h3>
+          </p>
         </div>
       </Link>
     </div>
