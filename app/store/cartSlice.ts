@@ -41,6 +41,7 @@ export const cartSlice = createSlice({
           if (cartItem.quantity > 1) {
             cartItem.quantity -= 1;
           } else {
+            //TODO: The experience of the item being removed (when decrementing from 1) from the cart feels very abrupt
             const updatedCart = state.cartItems.filter(
               (cartItem) => cartItem.id !== action.payload.id
             );
