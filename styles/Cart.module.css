@@ -1,3 +1,14 @@
+.emptyCartContainer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emptyCartContainer h2 {
+  margin-bottom: 2rem;
+}
+
 @media screen and (min-width: 768px) {
   /* ... MAIN CONTAINER FOR ALL THREE COMPONENTS ... */
   .cartPageContainer {
