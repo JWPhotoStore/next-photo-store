@@ -24,10 +24,7 @@ export default function CartSummary({
       <div>
         <p>Total: {formatPrice(calculateSum())}</p>
       </div>
-      <button
-        className={styles.primaryButton}
-        onClick={() => dispatch(setCheckout("checkout"))}
-      >
+      <button onClick={() => dispatch(setCheckout("checkout"))}>
         Checkout
       </button>
     </div>

@@ -1,7 +1,7 @@
 /* ... MAIN CONTAINER FOR ALL THREE COMPONENTS ... */
 .cartPageContainer {
   width: 100%;
-  padding: 2rem;
+  padding: 1.25rem;
   display: flex;
   justify-content: center;
 }
@@ -33,7 +33,21 @@
   margin-bottom: 2rem;
 }
 
+.cartItemQuantity {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.backToStore {
+  margin-bottom: 2rem;
+}
+
 @media screen and (min-width: 768px) {
+  .cartPageContainer {
+    padding: 2rem;
+  }
+
   .mobileHeaderContainer {
     display: none;
   }
@@ -50,6 +64,11 @@
 
   .cartItemContainer {
     border: var(--debug-border) red solid;
+  }
+
+  .cartItemContainer > img {
+    height: 150px;
+    width: 150px;
   }
 
   .cartSummaryContainer {
@@ -69,15 +88,23 @@
 .cartItemContainer {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 2rem;
+  border-bottom: 0.9px solid rgb(221, 221, 221);
 }
 
 .cartItemDetails {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 0.25rem 1rem;
 }
-.cartItemContainer > div {
-  padding: 0.5rem;
+.cartItemPrice {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.25rem;
 }
 
 .cartActionIcons:hover {
@@ -94,7 +121,7 @@
 
 /* Utils */
 /* TODO: This is not DRY. Need to figure out how to get access to this globally */
-.primaryButton {
+/* .primaryButton {
   margin-top: 3rem;
   margin-bottom: 3rem;
   color: #fff;
@@ -103,4 +130,4 @@
   border-radius: 0.25rem;
   background-color: var(--tertiary-color);
   width: 100%;
-}
+} */

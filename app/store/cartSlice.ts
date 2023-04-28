@@ -14,16 +14,16 @@ const initialState: CartState = {
   cartItems: [
     // TODO: Remove this before deploying to Prod.
     // Purpose is to initialize with one item in cart for debugging
-    // {
-    //   id: "prod_NiQnnE5MIzmWI2",
-    //   name: "Container",
-    //   description: "Got it from the Container Store",
-    //   image:
-    //     "https://files.stripe.com/links/MDB8YWNjdF8xTXRjSXdLUUthaGFFR1hXfGZsX3Rlc3RfbjlUVjU0MzZhTFV6bVExR2NVMUY1S3FZ00pVXhmM2A",
-    //   currency: "usd",
-    //   unit_amount: 999,
-    //   quantity: 1,
-    // },
+    {
+      id: "prod_NiQnnE5MIzmWI2",
+      name: "Container",
+      description: "Got it from the Container Store",
+      image:
+        "https://files.stripe.com/links/MDB8YWNjdF8xTXRjSXdLUUthaGFFR1hXfGZsX3Rlc3RfbjlUVjU0MzZhTFV6bVExR2NVMUY1S3FZ00pVXhmM2A",
+      currency: "usd",
+      unit_amount: 999,
+      quantity: 1,
+    },
   ],
   paymentIntent: "",
   onCheckout: "cart",
