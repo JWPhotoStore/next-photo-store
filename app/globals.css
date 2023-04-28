@@ -40,20 +40,31 @@ h2 {
   font-weight: 500;
 }
 
-h3 {
-  font-size: 1.25rem;
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
 /* HACK: Refactor button */
-button {
+/* button {
   background-color: inherit;
   border: inherit;
+} */
+
+button {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  background-color: var(--tertiary-color);
+  width: 100%;
+  height: 3rem;
+  border-style: none;
+  font-size: 1rem;
 }
+
 button:hover {
   cursor: pointer;
 }
