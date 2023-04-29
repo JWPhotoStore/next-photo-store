@@ -27,8 +27,8 @@ export default function ProductCard({
             alt={name}
             fill
             className={styles.productCardImage}
-            placeholder="blur"
             // TODO: Figure out how to use blurDataURL
+            // placeholder="blur"
             // blurDataURL={stewie.src}
           />
         </div>
