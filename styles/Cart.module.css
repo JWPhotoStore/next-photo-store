@@ -108,6 +108,10 @@
   padding: 0.25rem;
 }
 
+.cartItemPrice svg:hover {
+  cursor: pointer;
+}
+
 .cartActionIcons:hover {
   cursor: pointer;
 }
