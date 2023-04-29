@@ -21,8 +21,9 @@ export default function CartSummary({
   return (
     <div className={styles.cartSummaryContainer}>
       <h2>Summary</h2>
-      <div>
-        <p>Total: {formatPrice(calculateSum())}</p>
+      <div className={styles.inlinePriceContainer}>
+        <h3>Subtotal: </h3>
+        <h3>{formatPrice(calculateSum())}</h3>
       </div>
       <button onClick={() => dispatch(setCheckout("checkout"))}>
         Checkout

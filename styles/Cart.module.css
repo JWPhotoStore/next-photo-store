@@ -55,6 +55,7 @@
   /* onCheckout === "cart" */
   .cartContainer {
     flex-direction: row;
+    gap: 5rem;
   }
 
   .cartItemsContainer {
@@ -88,7 +89,7 @@
 .cartItemContainer {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 2rem;
+  padding-bottom: 1.75rem;
   border-bottom: 0.9px solid rgb(221, 221, 221);
 }
 
@@ -112,10 +113,36 @@
 }
 
 /* onCheckout === "cart" ... Cart Summary */
-.cartSummaryContainer {
+.cartSummaryContainer h2 {
+  margin-bottom: 1rem;
+}
+
+.inlinePriceContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* onCheckout === "checkout" Checkout */
+.checkoutForm h2 {
+  margin-top: 1rem;
+}
+
+.checkoutContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.backToCart {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.backToCart:hover {
+  text-decoration: underline darkgrey;
+  text-underline-offset: 0.3rem;
+}
 
 /* onCheckout === "success" Order Confirmed */
 
