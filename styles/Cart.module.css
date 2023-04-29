@@ -149,6 +149,12 @@
 }
 
 /* onCheckout === "success" Order Confirmed */
+.orderConfirmedContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
 /* Utils */
 /* TODO: This is not DRY. Need to figure out how to get access to this globally */
