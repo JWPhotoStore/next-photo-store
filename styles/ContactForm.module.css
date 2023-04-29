@@ -14,7 +14,7 @@
 }
 
 .formGroup > label {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -24,7 +24,7 @@
   padding: 0.5rem;
   border: none;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #f8f8f8;
   box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
 

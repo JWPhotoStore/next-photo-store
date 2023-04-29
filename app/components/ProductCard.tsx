@@ -3,6 +3,7 @@ import Image from "next/image";
 import formatPrice from "@/util/PriceFormat";
 import Link from "next/link";
 import { ProductTypes } from "@/types/ProductTypes";
+// import stewie from "@/public/stewie.gif";
 
 export default function ProductCard({
   id,
@@ -26,6 +27,9 @@ export default function ProductCard({
             alt={name}
             fill
             className={styles.productCardImage}
+            // TODO: Figure out how to use blurDataURL
+            // placeholder="blur"
+            // blurDataURL={stewie.src}
           />
         </div>
         <div className={styles.productCardDetails}>

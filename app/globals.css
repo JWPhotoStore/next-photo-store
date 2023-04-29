@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&family=Work+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Work+Sans:wght@300&display=swap");
 
 :root {
@@ -15,6 +15,7 @@
   --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
+  --header-weight: 500;
   --nav-top-bottom-padding: 3vw;
 }
 
@@ -32,16 +33,22 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--primary-font);
+}
+
+h1 {
+  font-weight: 300;
 }
 
 h2 {
   font-weight: 500;
 }
 
-h3 {
-  font-size: 1.25rem;
+h3,
+h4 {
+  font-weight: 400;
 }
 
 a {
@@ -50,10 +57,25 @@ a {
 }
 
 /* HACK: Refactor button */
-button {
+/* button {
   background-color: inherit;
   border: inherit;
+} */
+
+button {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  background-color: var(--tertiary-color);
+  width: 100%;
+  height: 3rem;
+  border-style: none;
+  font-size: 1.25rem;
 }
+
 button:hover {
   cursor: pointer;
 }

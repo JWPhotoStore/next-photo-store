@@ -5,6 +5,7 @@ import styles from "@/styles/Cart.module.css";
 import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import CartMobileHeader from "../components/CartMobileHeader";
+import Link from "next/link";
 
 export default function Cart() {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
@@ -18,8 +19,12 @@ export default function Cart() {
           <CartSummary cartItems={cartItems} />
         </div>
       ) : (
-        <div>
-          <h1>Your cart is empty</h1>
+        <div className={styles.emptyCartContainer}>
+          <h2>Your cart is empty</h2>
+          <button>
+            {/* TODO: Button styling */}
+            <Link href="/">Return to Shop</Link>
+          </button>
         </div>
       )}
     </>
