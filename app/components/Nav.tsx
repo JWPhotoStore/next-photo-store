@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 // import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
@@ -42,9 +42,11 @@ export default function Nav({ user }: Session) {
                   height={48}
                   className={styles.image}
                 /> */}
-                <li className={styles.authAction} onClick={() => signOut()}>
-                  hello <span>{user.name}</span>
-                </li>
+                <Link href="/api/auth/signout">
+                  <li className={styles.authAction}>
+                    hello <span>{user.name}</span>
+                  </li>
+                </Link>
               </li>
             </>
           )}
