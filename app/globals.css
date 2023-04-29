@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&family=Work+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Work+Sans:wght@300&display=swap");
 
 :root {
@@ -15,6 +15,7 @@
   --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
+  --header-weight: 500;
   --nav-top-bottom-padding: 3vw;
 }
 
@@ -32,12 +33,22 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--primary-font);
+}
+
+h1 {
+  font-weight: 300;
 }
 
 h2 {
   font-weight: 500;
+}
+
+h3,
+h4 {
+  font-weight: 400;
 }
 
 a {
@@ -62,7 +73,7 @@ button {
   width: 100%;
   height: 3rem;
   border-style: none;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 button:hover {
