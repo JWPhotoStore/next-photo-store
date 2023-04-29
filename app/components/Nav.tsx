@@ -1,13 +1,12 @@
 "use client";
 
 import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 // import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-// import { toggleCart } from "../store/cartSlice";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
 
@@ -24,14 +23,12 @@ export default function Nav({ user }: Session) {
           <Link href="/contact">contact</Link>
         </ul>
         <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
-          <h1>PlaceholderForTitle</h1>
+          <h1>will ku photos</h1>
         </Link>
         <ul className={styles.navContentRight}>
           {!user && (
-            <li className={styles.signIn}>
-              <button className={styles.button} onClick={() => signIn()}>
-                Sign in
-              </button>
+            <li className={styles.authAction} onClick={() => signIn()}>
+              <span>Sign in</span>
             </li>
           )}
           {user && (
@@ -45,16 +42,15 @@ export default function Nav({ user }: Session) {
                   height={48}
                   className={styles.image}
                 /> */}
-                hello <span>{user.name}</span>
+                <li className={styles.authAction} onClick={() => signOut()}>
+                  hello <span>{user.name}</span>
+                </li>
               </li>
             </>
           )}
           <Link href="/cart">
             <li className={styles.cartIcon}>
-              <RiShoppingCartLine
-                size={25}
-                // onClick={() => dispatch(toggleCart())}
-              />
+              <RiShoppingCartLine size={25} />
               {cartItems.length}
             </li>
           </Link>
