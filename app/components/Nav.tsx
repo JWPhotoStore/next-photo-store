@@ -8,10 +8,16 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
+import { openMobileMenu } from "../store/uiSlice";
+import { useWindowSize } from "@/util/hooks";
 
 export default function Nav({ user }: Session) {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+
   const dispatch = useDispatch();
+
+  const { width } = useWindowSize();
+  const mobileBreakpoint = 640;
 
   return (
     <nav>
@@ -25,7 +31,7 @@ export default function Nav({ user }: Session) {
           <h1>will ku photos</h1>
         </Link>
         <ul className={styles.navContentRight}>
-          {!user && (
+          {width && width >= mobileBreakpoint && !user && (
             <li className={styles.authAction} onClick={() => signIn()}>
               <span>Sign in</span>
             </li>
@@ -43,6 +49,14 @@ export default function Nav({ user }: Session) {
               {cartItems.length}
             </li>
           </Link>
+          {width && width < mobileBreakpoint && (
+            <div
+              className={styles.mobileMenuIcon}
+              onClick={() => dispatch(openMobileMenu())}
+            >
+              =
+            </div>
+          )}
         </ul>
       </div>
     </nav>
