@@ -71,16 +71,24 @@ export default function CheckoutForm({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} id="payment-form">
+    <>
+      <form
+        className={styles.checkoutForm}
+        onSubmit={handleSubmit}
+        id="payment-form"
+      >
         <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
-        <h1>Total: {formattedPrice}</h1>
-        <button id="submit" disabled={isLoading || !stripe || !elements}>
+        <h2>Total: {formattedPrice}</h2>
+        <button
+          className={styles.checkoutFormSubmit}
+          id="submit"
+          disabled={isLoading || !stripe || !elements}
+        >
           <span id="button=text">
             {isLoading ? <span>Processing</span> : <span>Place Order</span>}
           </span>
         </button>
       </form>
-    </div>
+    </>
   );
 }
