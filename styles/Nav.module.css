@@ -1,3 +1,10 @@
+.navContentRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
 .navContentLeft {
   display: none;
 }
@@ -10,13 +17,18 @@
     justify-content: space-between;
     align-items: center;
   } */
+  .mobileMenuIcon {
+    display: none;
+  }
 
-  .navContentRight,
   .navContentLeft {
     display: flex;
     align-items: center;
+  }
+
+  .navContentLeft,
+  .navContentRight {
     gap: 1.5rem;
-    font-size: 0.875rem;
   }
 }
 
