@@ -7,13 +7,19 @@
   border: var(--debug-border) red solid;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3vw 5vw;
+    max-width: 1500px;
+    padding: 3vw 4vw;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 800px) {
   .productsGrid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 3vw 5vw;
-    max-width: 1800px;
-    padding: 0 4vw;
-    margin: 0 auto;
   }
   .productCardContainer {
     /* TODO: productCards get smaller after window gets too big. 
@@ -30,7 +36,6 @@
 .productCardContainer {
   border: var(--debug-border) orange solid;
   width: 100%;
-  aspect-ratio: 4/6;
 }
 
 .productCardImageContainer {
