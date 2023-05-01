@@ -21,6 +21,7 @@ export default function Nav({ user }: Session) {
 
   return (
     <nav>
+<<<<<<< HEAD
       <div className={styles.navContentContainer}>
         <ul className={styles.navContentLeft}>
           {/* TODO: create new route for photos */}
@@ -59,6 +60,44 @@ export default function Nav({ user }: Session) {
           )}
         </ul>
       </div>
+=======
+      <ul className={styles.navContentLeft}>
+        {/* TODO: create new route for photos */}
+        <Link href="/">prints</Link>
+        <Link href="/contact">contact</Link>
+      </ul>
+      <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
+        <h1>will ku photos</h1>
+      </Link>
+      <ul className={styles.navContentRight}>
+        {width && width >= mobileBreakpoint && !user && (
+          <li className={styles.authAction} onClick={() => signIn()}>
+            <span>Sign in</span>
+          </li>
+        )}
+        {user && (
+          <li className={styles.authAction}>
+            <Link href="/api/auth/signout">
+              hello <span>{user.name}</span>
+            </Link>
+          </li>
+        )}
+        <Link href="/cart">
+          <li className={styles.cartIcon}>
+            <RiShoppingCartLine size={25} />
+            {cartItems.length}
+          </li>
+        </Link>
+        {width && width < mobileBreakpoint && (
+          <div
+            className={styles.mobileMenuIcon}
+            onClick={() => dispatch(openMobileMenu())}
+          >
+            =
+          </div>
+        )}
+      </ul>
+>>>>>>> 9991800 (auth action ui fix)
     </nav>
   );
 }

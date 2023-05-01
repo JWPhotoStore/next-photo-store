@@ -9,6 +9,10 @@
   display: none;
 }
 
+.authAction {
+  display: none;
+}
+
 @media screen and (min-width: 640px) {
   /* TODO: Shrink the options from Nav bar */
   /* .navContentContainer {
@@ -29,6 +33,10 @@
   .navContentLeft,
   .navContentRight {
     gap: 1.5rem;
+  }
+
+  .authAction {
+    display: list-item;
   }
 }
 
