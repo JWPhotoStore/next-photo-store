@@ -32,23 +32,11 @@ export default function Nav({ user }: Session) {
             </li>
           )}
           {user && (
-            <>
-              <li>
-                {/* <Image
-                  //TODO: Add a default image if the user doesn't have one
-                  src={user?.image as string}
-                  alt={user.name as string}
-                  width={48}
-                  height={48}
-                  className={styles.image}
-                /> */}
-                <Link href="/api/auth/signout">
-                  <li className={styles.authAction}>
-                    hello <span>{user.name}</span>
-                  </li>
-                </Link>
+            <Link href="/api/auth/signout">
+              <li className={styles.authAction}>
+                hello <span>{user.name}</span>
               </li>
-            </>
+            </Link>
           )}
           <Link href="/cart">
             <li className={styles.cartIcon}>
