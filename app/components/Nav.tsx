@@ -88,6 +88,7 @@ export default function Nav({ user }: Session) {
             {cartItems.length}
           </li>
         </Link>
+        {/* TODO: menu icon is slow to load */}
         {width && width < mobileBreakpoint && (
           <div
             className={styles.mobileMenuIcon}
