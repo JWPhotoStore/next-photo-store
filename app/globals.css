@@ -13,13 +13,14 @@
   --nav-bar-height: 3vw;
   /* TODO: Remove all unnecessary borders */
   /* COMMENT IN --debug-border: 1px; to debug CSS */
-  --debug-border: 1px;
-  /* --debug-border: 0px; */
+  /* --debug-border: 1px; */
+  --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
   --header-weight: 500;
   --nav-top-bottom-padding: 3vw;
   --nav-top-bottom-padding-mobile: 1.5rem;
+  --primary-background-color: white;
 }
 
 * {
@@ -93,6 +94,7 @@ nav {
   top: 0;
   padding: var(--nav-top-bottom-padding-mobile) 6vw;
   border: var(--debug-border) goldenrod solid;
+  background-color: var(--primary-background-color);
 }
 
 main {
