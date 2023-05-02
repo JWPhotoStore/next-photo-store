@@ -21,46 +21,6 @@ export default function Nav({ user }: Session) {
 
   return (
     <nav>
-<<<<<<< HEAD
-      <div className={styles.navContentContainer}>
-        <ul className={styles.navContentLeft}>
-          {/* TODO: create new route for photos */}
-          <Link href="/">prints</Link>
-          <Link href="/contact">contact</Link>
-        </ul>
-        <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
-          <h1>will ku photos</h1>
-        </Link>
-        <ul className={styles.navContentRight}>
-          {width && width >= mobileBreakpoint && !user && (
-            <li className={styles.authAction} onClick={() => signIn()}>
-              <span>Sign in</span>
-            </li>
-          )}
-          {user && (
-            <Link href="/api/auth/signout">
-              <li className={styles.authAction}>
-                hello <span>{user.name}</span>
-              </li>
-            </Link>
-          )}
-          <Link href="/cart">
-            <li className={styles.cartIcon}>
-              <RiShoppingCartLine size={25} />
-              {cartItems.length}
-            </li>
-          </Link>
-          {width && width < mobileBreakpoint && (
-            <div
-              className={styles.mobileMenuIcon}
-              onClick={() => dispatch(openMobileMenu())}
-            >
-              =
-            </div>
-          )}
-        </ul>
-      </div>
-=======
       <ul className={styles.navContentLeft}>
         {/* TODO: create new route for photos */}
         <Link href="/">prints</Link>
@@ -76,11 +36,11 @@ export default function Nav({ user }: Session) {
           </li>
         )}
         {user && (
-          <li className={styles.authAction}>
-            <Link href="/api/auth/signout">
+          <Link href="/api/auth/signout">
+            <li className={styles.authAction}>
               hello <span>{user.name}</span>
-            </Link>
-          </li>
+            </li>
+          </Link>
         )}
         <Link href="/cart">
           <li className={styles.cartIcon}>
@@ -88,7 +48,6 @@ export default function Nav({ user }: Session) {
             {cartItems.length}
           </li>
         </Link>
-        {/* TODO: menu icon is slow to load */}
         {width && width < mobileBreakpoint && (
           <div
             className={styles.mobileMenuIcon}
@@ -98,7 +57,6 @@ export default function Nav({ user }: Session) {
           </div>
         )}
       </ul>
->>>>>>> 9991800 (auth action ui fix)
     </nav>
   );
 }
