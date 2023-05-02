@@ -20,7 +20,7 @@ export default function Nav({ user }: Session) {
 
   //Fetch current user's paymentIntent and cart Items
   useEffect(() => {
-    fetch("/api/fetch-payment-intent")
+    fetch("/api/fetch-active-order")
       .then((res) => res.json())
       .then((data) => {
         if (data.paymentIntentID) {
