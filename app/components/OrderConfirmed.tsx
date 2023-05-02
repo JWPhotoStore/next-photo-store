@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import stewie from "@/public/stewie.gif";
 import { useEffect } from "react";
-import { clearCart, setPaymentIntent, setCheckout } from "../store/cartSlice";
+import { clearCart, setCheckout } from "../store/cartSlice";
+import { setPaymentIntent } from "../store/stripeSlice";
 import styles from "@/styles/Cart.module.css";
 
 export default function OrderConfirmed() {

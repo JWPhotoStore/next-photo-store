@@ -1,5 +1,5 @@
 export type CartItemTypes = {
-  id: string;
+  id: string | null;
   name: string;
   description: string | null;
   image: string;

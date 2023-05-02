@@ -3,7 +3,7 @@
 import { ProductTypes } from "@/types/ProductTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { setPaymentIntent } from "@/app/store/cartSlice";
+import { setPaymentIntent } from "../store/stripeSlice";
 
 interface AddToCart_newType extends ProductTypes {
   quantity: number;
@@ -17,15 +17,13 @@ export default function AddToCart_new({
   currency,
   quantity,
 }: AddToCart_newType) {
-  const { paymentIntentID, onCheckout } = useSelector(
-    (state: RootState) => state.cartReducer
+  const { paymentIntentID } = useSelector(
+    (state: RootState) => state.stripeReducer
   );
   const dispatch = useDispatch();
 
   const handleAdd = (e) => {
     e.preventDefault();
-
-    console.log(onCheckout);
 
     fetch("/api/add-to-cart", {
       method: "POST",
@@ -44,6 +42,7 @@ export default function AddToCart_new({
       .then((data) => {
         console.log(data);
         dispatch(setPaymentIntent(data.id));
+        console.log(data.product);
       });
   };
 

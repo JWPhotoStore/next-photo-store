@@ -14,7 +14,6 @@ export default async function handler(
   //TODO: discuss whether we need this for user thats not signed in
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
-    return;
   } else {
     //Fetch the active order and include the products
     const activeOrder = await prisma.order.findFirst({
@@ -39,9 +38,8 @@ export default async function handler(
 
     if (activeOrder) {
       res.status(200).json(activeOrder);
+    } else {
+      res.status(200).json({ message: "No active orders" });
     }
-    // else {
-    //   res.status(200).json({ activeOrder: false });
-    // }
   }
 }
