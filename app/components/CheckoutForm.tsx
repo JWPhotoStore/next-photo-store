@@ -9,7 +9,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import styles from "@/styles/Cart.module.css";
 
 export default function CheckoutForm({
