@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { calculateOrderAmount } from "@/util/PriceFormat";
 
 const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -47,8 +46,6 @@ export default async function handler(
     },
   };
 
-  console.log("did this hit add-to-cart");
-
   if (paymentIntentID) {
     console.log("there is a paymentIntentID here", paymentIntentID);
 
@@ -70,8 +67,6 @@ export default async function handler(
         products: true,
       },
     });
-
-    console.log(products, " this is the products");
 
     //Find the ID of the item being added to cart
     const productID = products.filter((product) => {
@@ -119,19 +114,31 @@ export default async function handler(
     //Updating the paymentIntentID on the order
     orderData.paymentIntentID = paymentIntent.id;
 
-    // Create a new order in prisma
-    const newOrder = await prisma.order.create({
+    // Create a new order in prisma and returns the array of products
+    const { products } = await prisma.order.create({
       data: orderData,
       select: {
-        products: true,
+        products: {
+          select: {
+            name: true,
+            description: true,
+            unit_amount: true,
+            image: true,
+            quantity: true,
+          },
+        },
       },
     });
 
-    console.log(newOrder);
+    //Store the newly added product and return to client
+    const addedItem = products[0];
+    console.log(addedItem);
 
     res.status(200).json({
       client_secret: paymentIntent.client_secret,
       id: paymentIntent.id,
+      //Added currency property for CartItemTypes requirement
+      product: { ...addedItem, currency: currency },
     });
   }
 }
