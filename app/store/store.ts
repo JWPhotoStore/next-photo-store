@@ -11,9 +11,9 @@ export const store = configureStore({
     stripeReducer,
     [cartItemsApi.reducerPath]: cartItemsApi.reducer,
   },
-  // TODO: Set devTools to false in prod
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat(cartItemsApi.middleware),
+  // TODO: Set devTools to false in prod
   devTools: true,
 });
 
