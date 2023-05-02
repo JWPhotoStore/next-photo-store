@@ -1,11 +1,18 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
 import { SearchParamTypes } from "@/types/SearchParamsTypes";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
+import { ProductTypes } from "@/types/ProductTypes";
+import Quantity from "@/app/components/Quantity";
 
-export default async function Product({ searchParams }: SearchParamTypes) {
+type ProductType = {
+  params: { id: string };
+  searchParams: ProductTypes;
+};
+
+export default async function Product({ searchParams }: ProductType) {
   return (
     <div className={styles.productDetails}>
       <div>
@@ -27,7 +34,8 @@ export default async function Product({ searchParams }: SearchParamTypes) {
           </div>
           {/* TODO - Providers here to the children may not actually give access to updated store */}
           <Providers>
-            <AddToCart {...searchParams} />
+            <Quantity details={searchParams} />
+            {/* <AddToCart {...searchParams} /> */}
           </Providers>
         </div>
       </div>

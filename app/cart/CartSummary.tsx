@@ -1,6 +1,6 @@
 "use client";
 import { CartItemTypes } from "@/types/CartItemTypes";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import { useDispatch } from "react-redux";
 import { setCheckout } from "../store/cartSlice";
 import styles from "@/styles/Cart.module.css";

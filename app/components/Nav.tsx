@@ -7,7 +7,8 @@ import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setCheckout } from "../store/cartSlice";
+import { setCheckout, setPaymentIntent, updateCart } from "../store/cartSlice";
+import { useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
 
@@ -16,6 +17,22 @@ export default function Nav({ user }: Session) {
 
   const dispatch = useDispatch();
 
+  //Fetch current user's paymentIntent and cart Items
+  useEffect(() => {
+    fetch("/api/fetch-payment-intent")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.paymentIntentID) {
+          dispatch(setPaymentIntent(data.paymentIntentID));
+
+          //TODO: only doing this map to temporarily meet cartItem type - discuss to change
+          const allItems = data.products.map((product) => {
+            return { ...product, currency: data.currency };
+          });
+          dispatch(updateCart(allItems));
+        }
+      });
+  }, []);
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
 

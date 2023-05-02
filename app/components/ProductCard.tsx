@@ -1,6 +1,6 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import Link from "next/link";
 import { ProductTypes } from "@/types/ProductTypes";
 // import stewie from "@/public/stewie.gif";

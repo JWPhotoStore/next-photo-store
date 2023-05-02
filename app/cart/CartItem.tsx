@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import styles from "@/styles/Cart.module.css";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import { CartItemTypes } from "@/types/CartItemTypes";
 import {
   incrementQuantity,

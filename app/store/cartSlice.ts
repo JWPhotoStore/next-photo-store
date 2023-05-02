@@ -5,7 +5,7 @@ import { CartItemTypes } from "@/types/CartItemTypes";
 export interface CartState {
   isOpen: boolean;
   cartItems: CartItemTypes[];
-  paymentIntent: string;
+  paymentIntentID: string;
   onCheckout: string;
 }
 
@@ -25,7 +25,7 @@ const initialState: CartState = {
     //   quantity: 1,
     // },
   ],
-  paymentIntent: "",
+  paymentIntentID: "",
   onCheckout: "cart",
 };
 
@@ -71,13 +71,17 @@ export const cartSlice = createSlice({
       state.cartItems = filteredCartItems;
     },
     setPaymentIntent: (state, action: PayloadAction<string>) => {
-      state.paymentIntent = action.payload;
+      state.paymentIntentID = action.payload;
     },
     setCheckout: (state, action: PayloadAction<string>) => {
       state.onCheckout = action.payload;
     },
     clearCart: (state) => {
       state.cartItems = [];
+    },
+    //TODO: create a payloadAction type for this
+    updateCart: (state, action) => {
+      state.cartItems = action.payload;
     },
   },
 });
@@ -92,6 +96,7 @@ export const {
   setPaymentIntent,
   setCheckout,
   clearCart,
+  updateCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
