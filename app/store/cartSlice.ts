@@ -11,7 +11,20 @@ export interface CartState {
 
 const initialState: CartState = {
   isOpen: false,
-  cartItems: [],
+  cartItems: [
+    // TODO: Remove this before deploying to Prod.
+    // Purpose is to initialize with one item in cart for debugging
+    // {
+    //   id: "prod_NiQnnE5MIzmWI2",
+    //   name: "Container",
+    //   description: "Got it from the Container Store",
+    //   image:
+    //     "https://files.stripe.com/links/MDB8YWNjdF8xTXRjSXdLUUthaGFFR1hXfGZsX3Rlc3RfbjlUVjU0MzZhTFV6bVExR2NVMUY1S3FZ00pVXhmM2A",
+    //   currency: "usd",
+    //   unit_amount: 999,
+    //   quantity: 1,
+    // },
+  ],
   paymentIntentID: "",
   onCheckout: "cart",
 };
@@ -41,6 +54,7 @@ export const cartSlice = createSlice({
           if (cartItem.quantity > 1) {
             cartItem.quantity -= 1;
           } else {
+            //TODO: The experience of the item being removed (when decrementing from 1) from the cart feels very abrupt
             const updatedCart = state.cartItems.filter(
               (cartItem) => cartItem.id !== action.payload.id
             );

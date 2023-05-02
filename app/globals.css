@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&family=Work+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Work+Sans:wght@300&display=swap");
 
 :root {
@@ -7,15 +7,20 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-  --tertiary-color: #1a73e8;
-  --nav-bar-height: 4rem;
+  /* --tertiary-color: #1a73e8; */
+  --tertiary-color: black;
+  --nav-bar-height-mobile: 5rem;
+  --nav-bar-height: 3vw;
   /* TODO: Remove all unnecessary borders */
   /* COMMENT IN --debug-border: 1px; to debug CSS */
   /* --debug-border: 1px; */
   --debug-border: 0px;
   --primary-font: "Open Sans", sans-serif;
   --secondary-font: "Work Sans", sans-serif;
+  --header-weight: 500;
   --nav-top-bottom-padding: 3vw;
+  --nav-top-bottom-padding-mobile: 1.5rem;
+  --primary-background-color: white;
 }
 
 * {
@@ -32,16 +37,22 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--primary-font);
+}
+
+h1 {
+  font-weight: 300;
 }
 
 h2 {
   font-weight: 500;
 }
 
-h3 {
-  font-size: 1.25rem;
+h3,
+h4 {
+  font-weight: 400;
 }
 
 a {
@@ -49,11 +60,20 @@ a {
   text-decoration: none;
 }
 
-/* HACK: Refactor button */
 button {
-  background-color: inherit;
-  border: inherit;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  padding: 0.75rem 1.75rem;
+  font-weight: 500;
+  border-radius: 0.2rem;
+  background-color: var(--tertiary-color);
+  width: 100%;
+  height: 3.5rem;
+  border-style: none;
+  font-size: 1.15rem;
 }
+
 button:hover {
   cursor: pointer;
 }
@@ -64,17 +84,33 @@ li {
 
 nav {
   position: fixed;
+  height: var(--nav-bar-height-mobile);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   z-index: 100;
   width: 100%;
   left: 0;
   top: 0;
-  padding: var(--nav-top-bottom-padding) 4vw;
+  padding: var(--nav-top-bottom-padding-mobile) 6vw;
+  border: var(--debug-border) goldenrod solid;
+  background-color: var(--primary-background-color);
 }
 
 main {
   position: absolute;
-  top: calc(var(--nav-top-bottom-padding) * 2 + var(--nav-bar-height));
+  top: var(--nav-bar-height-mobile);
   width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  nav {
+    padding: var(--nav-top-bottom-padding) 4vw;
+    height: var(--nav-bar-height);
+  }
+  main {
+    top: calc(var(--nav-top-bottom-padding) + var(--nav-bar-height));
+  }
 }
 
 :global(.primaryButton) {

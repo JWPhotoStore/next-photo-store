@@ -36,4 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma script to query local database
 script.ts

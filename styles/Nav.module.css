@@ -1,22 +1,42 @@
+.navContentRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
 .navContentLeft {
+  display: none;
+}
+
+.authAction {
   display: none;
 }
 
 @media screen and (min-width: 640px) {
   /* TODO: Shrink the options from Nav bar */
-  .navContentContainer {
+  /* .navContentContainer {
     height: var(--nav-bar-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
+  } */
+  .mobileMenuIcon {
+    display: none;
   }
 
-  .navContentRight,
   .navContentLeft {
     display: flex;
     align-items: center;
+  }
+
+  .navContentLeft,
+  .navContentRight {
     gap: 1.5rem;
-    font-size: 0.875rem;
+  }
+
+  .authAction {
+    display: list-item;
   }
 }
 
@@ -24,16 +44,20 @@
   cursor: pointer;
 }
 
-.signIn {
-  background-color: var(--tertiary-color);
-  color: #fff;
-  padding-top: 0.5rem;
-  padding-right: 1rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  border-radius: 0.375rem;
+.authAction:hover {
+  cursor: pointer;
+}
+
+.authAction span:hover {
+  text-decoration: underline darkgrey;
+  text-underline-offset: 0.3rem;
 }
 
 .image {
   border-radius: 9999px;
+}
+
+.backToCart:hover {
+  text-decoration: underline darkgrey;
+  text-underline-offset: 0.3rem;
 }
