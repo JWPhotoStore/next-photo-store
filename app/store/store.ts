@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
+import uiReducer from "./uiSlice";
 
 export const store = configureStore({
   reducer: {
     cartReducer,
+    uiReducer,
   },
   // TODO: Set devTools to false in prod
   devTools: true,
