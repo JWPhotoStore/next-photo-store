@@ -1,18 +1,18 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
-import { SearchParamTypes } from "@/types/SearchParamsTypes";
+import { SearchParamsType } from "@/types/SearchParamsType";
 import { formatPrice } from "@/util/PriceFormat";
 import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
-import { ProductTypes } from "@/types/ProductTypes";
+import { ProductType } from "@/types/ProductType";
 import Quantity from "@/app/components/Quantity";
 
-type ProductType = {
+type ProductPropsType = {
   params: { id: string };
-  searchParams: ProductTypes;
+  searchParams: ProductType;
 };
 
-export default async function Product({ searchParams }: ProductType) {
+export default async function Product({ searchParams }: ProductPropsType) {
   return (
     <div className={styles.productDetails}>
       <div>

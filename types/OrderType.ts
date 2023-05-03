@@ -1,7 +1,7 @@
-import { CartItemTypes } from "./CartItemTypes";
+import { CartItemType } from "./CartItemType";
 
 export type OrderType = {
   currency: string;
-  paymentIntentId: string;
-  products: CartItemTypes[];
+  paymentIntentID: string;
+  cartItems: CartItemType[];
 };

@@ -35,7 +35,7 @@ export default function Checkout() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: data.products,
+          items: data.cartItems,
           payment_intent_id: paymentIntentID,
         }),
       })

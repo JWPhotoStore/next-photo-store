@@ -5,8 +5,7 @@ import { signIn } from "next-auth/react";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch } from "react-redux";
 import { setCheckout, updateCart } from "../store/cartSlice";
 import { setPaymentIntent } from "../store/stripeSlice";
 import { useEffect } from "react";
@@ -20,10 +19,11 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isSuccess && data.paymentIntentId) {
-      dispatch(setPaymentIntent(data.paymentIntentId));
+    if (isSuccess && data.paymentIntentID) {
+      dispatch(setPaymentIntent(data.paymentIntentID));
     }
-  }, [isSuccess]);
+    console.log(error);
+  }, [isSuccess, error]);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
@@ -54,7 +54,8 @@ export default function Nav({ user }: Session) {
         <Link href="/cart">
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={25} />
-            {isSuccess ? data.products.length : ""}
+            {/* TODO: Fix this hack. Guest users don't have cartItems so would cause app to crash. Doesn't rerender correctly*/}
+            {!isLoading && data ? data.cartItems.length : ""}
           </li>
         </Link>
         {width && width < mobileBreakpoint && (

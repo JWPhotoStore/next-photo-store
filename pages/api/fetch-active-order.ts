@@ -15,7 +15,7 @@ export default async function handler(
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
   } else {
-    //Fetch the active order and include the products
+    //Fetch the active order and include the cartItems
     const activeOrder = await prisma.order.findFirst({
       where: {
         userEmail: userSession.user?.email as string,
@@ -24,7 +24,7 @@ export default async function handler(
       select: {
         paymentIntentID: true,
         currency: true,
-        products: {
+        cartItems: {
           select: {
             name: true,
             description: true,
@@ -39,7 +39,7 @@ export default async function handler(
     if (activeOrder) {
       res.status(200).json(activeOrder);
     } else {
-      res.status(200).json({ message: "No active orders" });
+      res.status(404).json({ message: "No active orders" });
     }
   }
 }

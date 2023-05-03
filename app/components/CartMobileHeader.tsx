@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "@/styles/Cart.module.css";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 
 export default function CartMobileHeader({
   cartItems,
 }: {
-  cartItems: CartItemTypes[];
+  cartItems: CartItemType[];
 }) {
   return <div className={styles.mobileHeaderContainer}></div>;
 }
