@@ -6,7 +6,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Providers from "@/app/components/Providers";
 
 export const metadata = {
-  title: "Kushi Photos",
+  title: "kushi photos",
   description: "Online print store feature local artists.",
 };
 
