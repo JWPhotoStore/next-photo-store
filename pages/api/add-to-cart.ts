@@ -63,7 +63,7 @@ export default async function handler(
 
     const { cartItems } = order;
     //Get the cartItem that matches the name of the item being added
-    const cartItem = cart.find((cartItem) => cartItem.name === name);
+    const cartItem = cartItems.find((cartItem) => cartItem.name === name);
 
     //case when cartItem already exist in the customer's cart
     if (cartItem) {
