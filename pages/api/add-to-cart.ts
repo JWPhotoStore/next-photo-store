@@ -47,19 +47,10 @@ export default async function handler(
   };
 
   if (paymentIntentID) {
-    console.log("there is a paymentIntentID here", paymentIntentID);
-
-    //Fetch the Stripe intent object
-    // const current_intent = await stripe.paymentIntents.retrieve(
-    //   paymentIntentID
-    // );
-
-    //Update stripe total amount
-
-    //Fetch order with the paymentIntentID and include products
+    // console.log("there is a paymentIntentID here", paymentIntentID);
 
     //Fetch products with the paymentIntentID
-    const { products } = await prisma.order.findUnique({
+    const order = await prisma.order.findUnique({
       where: {
         paymentIntentID: paymentIntentID,
       },
@@ -68,39 +59,57 @@ export default async function handler(
       },
     });
 
-    //Find the ID of the item being added to cart
-    const productID = products.filter((product) => {
-      return product.name === name ? product.id : null;
-    });
+    if (!order) return res.status(404).json({ message: "Order not found" });
 
-    //If item can be found, use the ID of that item to update in the products table
-    // if (!productID) {
-    //   const addedItem = await prisma.product.create({
-    //     data: {
-    //       name,
-    //       description,
-    //       unit_amount: parseFloat(unit_amount),
-    //       image,
-    //       quantity,
-    //       order: { connect: { paymentIntentID: paymentIntentID } },
-    //     },
-    //   });
-    // } else {
-    //   const updatedItem = await prisma.product.update({
-    //     where: {
-    //       id: productID,
-    //     },
-    //     data: {
-    //       quantity: { increment: quantity },
-    //     },
-    //   });
+    const { products } = order;
+    //Get the product that matches the name of the item being added
+    const product = products.find((product) => product.name === name);
 
-    //   // update order total amount
-    // }
+    //case when product already exist in the customer's cart
+    if (product) {
+      const productID = product.id;
+      const addedTotal = quantity * parseFloat(unit_amount);
+      const updatedOrder = await prisma.order.update({
+        where: {
+          paymentIntentID: paymentIntentID,
+        },
+        data: {
+          amount: {
+            increment: addedTotal,
+          },
+          products: {
+            update: {
+              where: {
+                id: productID,
+              },
+              data: {
+                unit_amount: {
+                  increment: parseFloat(unit_amount),
+                },
+                quantity: {
+                  increment: quantity,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+    //case when adding a new product to the user's cart
+    else {
+      const newItem = await prisma.product.create({
+        data: {
+          name,
+          description,
+          unit_amount: parseFloat(unit_amount),
+          image,
+          quantity,
+          order: { connect: { paymentIntentID: paymentIntentID } },
+        },
+      });
+    }
 
-    //Else add a new product to the products table
-
-    // res.status(200).json(item);
+    //TODO: Return all the products back to the client
   } else {
     console.log("there is NO paymentIntentID yet");
 

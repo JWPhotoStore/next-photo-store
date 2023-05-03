@@ -4,6 +4,7 @@ import { ProductTypes } from "@/types/ProductTypes";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { setPaymentIntent } from "../store/stripeSlice";
+import { addCartItem } from "../store/cartSlice";
 
 interface AddToCart_newType extends ProductTypes {
   quantity: number;
@@ -20,6 +21,8 @@ export default function AddToCart_new({
   const { paymentIntentID } = useSelector(
     (state: RootState) => state.stripeReducer
   );
+  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+
   const dispatch = useDispatch();
 
   const handleAdd = (e) => {
@@ -40,9 +43,9 @@ export default function AddToCart_new({
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         dispatch(setPaymentIntent(data.id));
-        console.log(data.product);
+        dispatch(addCartItem(data.product));
+        //TODO: need to handle whether to update the whole cart when updating an existing cartItem and adding a new item to the cart
       });
   };
 
