@@ -2,17 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import uiReducer from "./uiSlice";
 import stripeReducer from "./stripeSlice";
-import { cartItemsApi } from "./apiSlice";
+import { api } from "./apiSlice";
 
 export const store = configureStore({
   reducer: {
     cartReducer,
     uiReducer,
     stripeReducer,
-    [cartItemsApi.reducerPath]: cartItemsApi.reducer,
+    [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat(cartItemsApi.middleware),
+    getDefaultMiddleware({}).concat(api.middleware),
   // TODO: Set devTools to false in prod
   devTools: true,
 });
