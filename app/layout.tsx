@@ -6,8 +6,8 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Providers from "@/app/components/Providers";
 
 export const metadata = {
-  title: "JW Photos",
-  description: "Online photo store",
+  title: "Kushi Photos",
+  description: "Online print store feature local artists.",
 };
 
 export default async function RootLayout({
