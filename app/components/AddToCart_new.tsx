@@ -44,7 +44,7 @@ export default function AddToCart_new({
       .then((res) => res.json())
       .then((data) => {
         dispatch(setPaymentIntent(data.id));
-        dispatch(addCartItem(data.product));
+        dispatch(addCartItem(data.cartItem));
         //TODO: need to handle whether to update the whole cart when updating an existing cartItem and adding a new item to the cart
       });
   };

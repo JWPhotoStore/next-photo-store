@@ -35,7 +35,7 @@ export default async function handler(
     currency: currency,
     status: "pending",
     paymentIntentID: paymentIntentID,
-    products: {
+    cart: {
       create: {
         name,
         description,
@@ -47,27 +47,27 @@ export default async function handler(
   };
 
   if (paymentIntentID) {
-    // console.log("there is a paymentIntentID here", paymentIntentID);
+    console.log("there is a paymentIntentID here", paymentIntentID);
 
-    //Fetch products with the paymentIntentID
+    //Fetch cartItems with the paymentIntentID
     const order = await prisma.order.findUnique({
       where: {
         paymentIntentID: paymentIntentID,
       },
       select: {
-        products: true,
+        cart: true,
       },
     });
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    const { products } = order;
-    //Get the product that matches the name of the item being added
-    const product = products.find((product) => product.name === name);
+    const { cart } = order;
+    //Get the cartItem that matches the name of the item being added
+    const cartItem = cart.find((cartItem) => cartItem.name === name);
 
-    //case when product already exist in the customer's cart
-    if (product) {
-      const productID = product.id;
+    //case when cartItem already exist in the customer's cart
+    if (cartItem) {
+      const itemID = cartItem.id;
       const addedTotal = quantity * parseFloat(unit_amount);
       const updatedOrder = await prisma.order.update({
         where: {
@@ -77,10 +77,10 @@ export default async function handler(
           amount: {
             increment: addedTotal,
           },
-          products: {
+          cart: {
             update: {
               where: {
-                id: productID,
+                id: itemID,
               },
               data: {
                 unit_amount: {
@@ -95,9 +95,9 @@ export default async function handler(
         },
       });
     }
-    //case when adding a new product to the user's cart
+    //case when adding a new cartItem to the user's cart
     else {
-      const newItem = await prisma.product.create({
+      const newItem = await prisma.cartItem.create({
         data: {
           name,
           description,
@@ -109,7 +109,7 @@ export default async function handler(
       });
     }
 
-    //TODO: Return all the products back to the client
+    //TODO: Return all the cartItems back to the client
   } else {
     console.log("there is NO paymentIntentID yet");
 
@@ -123,11 +123,11 @@ export default async function handler(
     //Updating the paymentIntentID on the order
     orderData.paymentIntentID = paymentIntent.id;
 
-    // Create a new order in prisma and returns the array of products
-    const { products } = await prisma.order.create({
+    // Create a new order in prisma and returns the array of cartItems
+    const { cart } = await prisma.order.create({
       data: orderData,
       select: {
-        products: {
+        cart: {
           select: {
             name: true,
             description: true,
@@ -139,15 +139,15 @@ export default async function handler(
       },
     });
 
-    //Store the newly added product and return to client
-    const addedItem = products[0];
+    //Store the newly added cartItem and return to client
+    const addedItem = cart[0];
     console.log(addedItem);
 
     res.status(200).json({
       client_secret: paymentIntent.client_secret,
       id: paymentIntent.id,
       //Added currency property for CartItemTypes requirement
-      product: { ...addedItem, currency: currency },
+      cartItem: { ...addedItem, currency: currency },
     });
   }
 }

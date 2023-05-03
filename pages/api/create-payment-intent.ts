@@ -39,7 +39,7 @@ export default async function handler(
     currency: "usd",
     status: "pending",
     paymentIntentID: payment_intent_id,
-    products: {
+    cart: {
       create: items.map((item) => ({
         name: item.name,
         description: item.description || null,
@@ -61,10 +61,10 @@ export default async function handler(
         payment_intent_id,
         { amount: calculateOrderAmount(items) }
       );
-      //Fetch order with product ids
+      //Fetch order with the cartItems
       const existing_order = await prisma.order.findFirst({
         where: { paymentIntentID: updated_intent.id },
-        include: { products: true },
+        include: { cart: true },
       });
       if (!existing_order) {
         res.status(400).json({ message: "Invalid Payment Intent" });
@@ -75,7 +75,7 @@ export default async function handler(
         where: { id: existing_order?.id },
         data: {
           amount: calculateOrderAmount(items),
-          products: {
+          cart: {
             deleteMany: {},
             create: items.map((item) => ({
               name: item.name,

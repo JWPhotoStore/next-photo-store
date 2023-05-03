@@ -27,12 +27,12 @@ model Order {
   status String
   createdDate DateTime @default(now())
   paymentIntentID String? @unique
-  products Product[]
+  cart CartItem[]
   
   user User @relation(fields: [userEmail], references: [email])
 }
 
-model Product {
+model CartItem {
   id String @id @default(cuid())
   name String
   description String?

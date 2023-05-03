@@ -1,4 +1,4 @@
-import { ProductTypes } from './ProductTypes';
+import { ProductTypes } from "./ProductTypes";
 
 type Params = {
   id: string;
