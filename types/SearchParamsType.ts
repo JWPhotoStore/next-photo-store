@@ -4,7 +4,7 @@ type Params = {
   id: string;
 };
 
-export type SearchParamTypes = {
+export type SearchParamsType = {
   params: Params;
   searchParams: ProductType;
 };

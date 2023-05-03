@@ -1,6 +1,6 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
-import { SearchParamTypes } from "@/types/SearchParamsTypes";
+import { SearchParamsType } from "@/types/SearchParamsType";
 import { formatPrice } from "@/util/PriceFormat";
 import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
