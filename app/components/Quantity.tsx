@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import AddToCart_new from "./AddToCart_new";
-import { ProductTypes } from "@/types/ProductTypes";
+import { ProductType } from "@/types/ProductType";
 
 type QuantityType = {
-  details: ProductTypes;
+  details: ProductType;
 };
 
 export default function Quantity({ details }: QuantityType) {

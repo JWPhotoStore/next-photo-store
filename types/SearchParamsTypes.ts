@@ -1,4 +1,4 @@
-import { ProductTypes } from "./ProductTypes";
+import { ProductType } from "./ProductType";
 
 type Params = {
   id: string;
@@ -6,5 +6,5 @@ type Params = {
 
 export type SearchParamTypes = {
   params: Params;
-  searchParams: ProductTypes;
+  searchParams: ProductType;
 };

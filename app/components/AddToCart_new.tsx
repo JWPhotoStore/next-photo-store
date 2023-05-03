@@ -1,12 +1,12 @@
 "use client";
 
-import { ProductTypes } from "@/types/ProductTypes";
+import { ProductType } from "@/types/ProductType";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { setPaymentIntent } from "../store/stripeSlice";
 import { addCartItem } from "../store/cartSlice";
 
-interface AddToCart_newType extends ProductTypes {
+interface AddToCart_newType extends ProductType {
   quantity: number;
 }
 
@@ -25,7 +25,7 @@ export default function AddToCart_new({
 
   const dispatch = useDispatch();
 
-  const handleAdd = (e) => {
+  const handleAdd = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     fetch("/api/add-to-cart", {
