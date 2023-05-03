@@ -36,7 +36,7 @@ export default function Nav({ user }: Session) {
         <Link href="/contact">contact</Link>
       </ul>
       <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
-        <h1>will ku photos</h1>
+        <h1>kushi photos</h1>
       </Link>
       <ul className={styles.navContentRight}>
         {width && width >= mobileBreakpoint && !user && (
