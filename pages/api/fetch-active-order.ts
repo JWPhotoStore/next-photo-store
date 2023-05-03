@@ -24,7 +24,7 @@ export default async function handler(
       select: {
         paymentIntentID: true,
         currency: true,
-        cart: {
+        cartItems: {
           select: {
             name: true,
             description: true,
@@ -39,7 +39,7 @@ export default async function handler(
     if (activeOrder) {
       res.status(200).json(activeOrder);
     } else {
-      res.status(200).json({ message: "No active orders" });
+      res.status(404).json({ message: "No active orders" });
     }
   }
 }

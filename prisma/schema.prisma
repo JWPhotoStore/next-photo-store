@@ -27,7 +27,7 @@ model Order {
   status String
   createdDate DateTime @default(now())
   paymentIntentID String? @unique
-  cart CartItem[]
+  cartItems CartItem[]
   
   user User @relation(fields: [userEmail], references: [email])
 }

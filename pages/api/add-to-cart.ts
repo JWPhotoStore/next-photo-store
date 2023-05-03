@@ -35,7 +35,7 @@ export default async function handler(
     currency: currency,
     status: "pending",
     paymentIntentID: paymentIntentID,
-    cart: {
+    cartItems: {
       create: {
         name,
         description,
@@ -55,13 +55,13 @@ export default async function handler(
         paymentIntentID: paymentIntentID,
       },
       select: {
-        cart: true,
+        cartItems: true,
       },
     });
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    const { cart } = order;
+    const { cartItems } = order;
     //Get the cartItem that matches the name of the item being added
     const cartItem = cart.find((cartItem) => cartItem.name === name);
 
@@ -77,7 +77,7 @@ export default async function handler(
           amount: {
             increment: addedTotal,
           },
-          cart: {
+          cartItems: {
             update: {
               where: {
                 id: itemID,
@@ -124,10 +124,10 @@ export default async function handler(
     orderData.paymentIntentID = paymentIntent.id;
 
     // Create a new order in prisma and returns the array of cartItems
-    const { cart } = await prisma.order.create({
+    const { cartItems } = await prisma.order.create({
       data: orderData,
       select: {
-        cart: {
+        cartItems: {
           select: {
             name: true,
             description: true,
@@ -140,7 +140,7 @@ export default async function handler(
     });
 
     //Store the newly added cartItem and return to client
-    const addedItem = cart[0];
+    const addedItem = cartItems[0];
     console.log(addedItem);
 
     res.status(200).json({

@@ -12,11 +12,11 @@ export default function Cart() {
   return (
     <>
       {/* TODO: This logic shows empty cart when initial load is in progress */}
-      {!isLoading && data && data.products.length > 0 ? (
+      {!isLoading && data && data.cartItems.length > 0 ? (
         <div className={styles.cartContainer}>
-          <CartMobileHeader cartItems={data.products} />
-          <CartItems cartItems={data.products} />
-          <CartSummary cartItems={data.products} />
+          <CartMobileHeader cartItems={data.cartItems} />
+          <CartItems cartItems={data.cartItems} />
+          <CartSummary cartItems={data.cartItems} />
         </div>
       ) : (
         <div className={styles.emptyCartContainer}>
