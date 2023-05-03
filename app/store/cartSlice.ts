@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 
 export interface CartState {
   isOpen: boolean;
-  cartItems: CartItemTypes[];
+  cartItems: CartItemType[];
   // paymentIntentID: string;
   onCheckout: string;
 }
@@ -37,10 +37,10 @@ export const cartSlice = createSlice({
     toggleCart: (state) => {
       state.isOpen = !state.isOpen;
     },
-    addCartItem: (state, action: PayloadAction<CartItemTypes>) => {
+    addCartItem: (state, action: PayloadAction<CartItemType>) => {
       state.cartItems.push(action.payload);
     },
-    incrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
+    incrementQuantity: (state, action: PayloadAction<CartItemType>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
           cartItem.quantity += 1;
@@ -48,7 +48,7 @@ export const cartSlice = createSlice({
         }
       }
     },
-    decrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
+    decrementQuantity: (state, action: PayloadAction<CartItemType>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
           if (cartItem.quantity > 1) {
@@ -64,7 +64,7 @@ export const cartSlice = createSlice({
         }
       }
     },
-    removeCartItem: (state, action: PayloadAction<CartItemTypes>) => {
+    removeCartItem: (state, action: PayloadAction<CartItemType>) => {
       const filteredCartItems = state.cartItems.filter(
         (cartItem) => cartItem.id !== action.payload.id
       );

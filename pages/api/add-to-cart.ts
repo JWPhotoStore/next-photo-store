@@ -146,7 +146,7 @@ export default async function handler(
     res.status(200).json({
       client_secret: paymentIntent.client_secret,
       id: paymentIntent.id,
-      //Added currency property for CartItemTypes requirement
+      //Added currency property for CartItemType requirement
       cartItem: { ...addedItem, currency: currency },
     });
   }

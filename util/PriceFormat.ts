@@ -1,4 +1,4 @@
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 
 export const formatPrice = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -7,7 +7,7 @@ export const formatPrice = (amount: number) => {
   }).format(amount / 100);
 };
 
-export const calculateOrderAmount = (items: CartItemTypes[]) => {
+export const calculateOrderAmount = (items: CartItemType[]) => {
   const totalPrice = items.reduce((acc, item) => {
     return acc + item.unit_amount * item.quantity;
   }, 0);

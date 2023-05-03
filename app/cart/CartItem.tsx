@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import styles from "@/styles/Cart.module.css";
 import { formatPrice } from "@/util/PriceFormat";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 import {
   incrementQuantity,
   decrementQuantity,
@@ -12,7 +12,7 @@ import {
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { CgClose } from "react-icons/cg";
 
-export default function CartItem({ cartItem }: { cartItem: CartItemTypes }) {
+export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   const { id, name, image, unit_amount, quantity } = cartItem;
   const dispatch = useDispatch();
 

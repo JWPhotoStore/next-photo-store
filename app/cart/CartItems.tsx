@@ -2,12 +2,12 @@
 import { useSelector } from "react-redux";
 import styles from "@/styles/Cart.module.css";
 import CartItem from "./CartItem";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 
 export default function CartItems({
   cartItems,
 }: {
-  cartItems: CartItemTypes[];
+  cartItems: CartItemType[];
 }) {
   return (
     <div className={styles.cartItemsContainer}>
