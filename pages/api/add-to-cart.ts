@@ -97,14 +97,25 @@ export default async function handler(
     }
     //case when adding a new cartItem to the user's cart
     else {
-      const newItem = await prisma.cartItem.create({
+      //Update the order total amount and create the new cartItems
+      const addedTotal = quantity * parseFloat(unit_amount);
+      const updatedOrder = await prisma.order.update({
+        where: {
+          paymentIntentID: paymentIntentID,
+        },
         data: {
-          name,
-          description,
-          unit_amount: parseFloat(unit_amount),
-          image,
-          quantity,
-          order: { connect: { paymentIntentID: paymentIntentID } },
+          amount: {
+            increment: addedTotal,
+          },
+          cartItems: {
+            create: {
+              name,
+              description,
+              unit_amount: parseFloat(unit_amount),
+              image,
+              quantity,
+            },
+          },
         },
       });
     }
