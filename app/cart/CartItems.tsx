@@ -13,7 +13,7 @@ export default function CartItems({
     <div className={styles.cartItemsContainer}>
       <h2>Shopping Cart</h2>
       {cartItems.map((cartItem, index) => (
-        <CartItem cartItem={cartItem} key={index} />
+        <CartItem cartItem={cartItem} key={`${cartItem.name}${index}`} />
       ))}
     </div>
   );

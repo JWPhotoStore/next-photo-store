@@ -15,7 +15,10 @@ export default function Quantity({ details }: QuantityType) {
   return (
     <div>
       <span>Quantity: </span>
-      <select value={quantity} onChange={(e) => setQuantity(e.target.value)}>
+      <select
+        value={quantity}
+        onChange={(e) => setQuantity(parseInt(e.target.value))}
+      >
         {quantityOptions.map((option) => (
           <option key={option} value={option}>
             {option}
