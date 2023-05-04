@@ -17,7 +17,6 @@ export default async function handler(
     //Get active order and include the cartItems
     const activeOrder = await prisma.order.findFirst({
       where: {
-        // userEmail: "jrhykushii@gmail.com",
         userEmail: userSession.user?.email as string,
         status: "pending",
       },
