@@ -1,5 +1,5 @@
 "use client";
-import { useSelector } from "react-redux";
+
 import styles from "@/styles/Cart.module.css";
 import CartItem from "./CartItem";
 import { CartItemType } from "@/types/CartItemType";
