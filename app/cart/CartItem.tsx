@@ -4,17 +4,23 @@ import { useDispatch } from "react-redux";
 import styles from "@/styles/Cart.module.css";
 import { formatPrice } from "@/util/PriceFormat";
 import { CartItemType } from "@/types/CartItemType";
-import {
-  incrementQuantity,
-  decrementQuantity,
-  removeCartItem,
-} from "@/app/store/cartSlice";
+import { incrementQuantity, decrementQuantity } from "@/app/store/cartSlice";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { CgClose } from "react-icons/cg";
+import { useDeleteCartItemMutation } from "../store/apiSlice";
 
 export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   const { id, name, image, unit_amount, quantity } = cartItem;
   const dispatch = useDispatch();
+  const [deleteCartItem, { isLoading }] = useDeleteCartItemMutation();
+
+  const onDeleteCartItemClicked = async () => {
+    try {
+      await deleteCartItem(name).unwrap();
+    } catch (err) {
+      console.error("Failed to delete cart item: ", err);
+    }
+  };
 
   return (
     <div className={styles.cartItemContainer} key={id}>
@@ -34,7 +40,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
         </div>
       </div>
       <div className={styles.cartItemPrice}>
-        <CgClose onClick={() => dispatch(removeCartItem(cartItem))} />
+        <CgClose onClick={() => onDeleteCartItemClicked()} />
         <p>{formatPrice(unit_amount * quantity)}</p>
       </div>
     </div>
