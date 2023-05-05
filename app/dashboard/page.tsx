@@ -10,15 +10,16 @@ import Image from "next/image";
 const fetchOrders = async () => {
   const prisma = new PrismaClient();
   const userSession = await getServerSession(authOptions);
-  if (!userSession) {
+  if (!userSession || !userSession.user) {
     return null;
   }
 
   //The Callback from our authOptions provides access to other properties like the user id
+  //TODO: Written by Will to fix TS errors but not tested. Check if this is correct
   const orders = await prisma.order.findMany({
-    where: { userId: userSession?.user?.id },
+    where: { userEmail: userSession.user?.email as string },
     include: {
-      products: true,
+      cartItems: true,
     },
   });
 
@@ -49,18 +50,18 @@ export default async function Dashboard() {
               </p>
               <p>Total: {formatPrice(order.amount)}</p>
               <div>
-                {order.products.map((product) => (
-                  <div key={product.id}>
-                    <h2>{product.name}</h2>
+                {order.cartItems.map((cartItem) => (
+                  <div key={cartItem.id}>
+                    <h2>{cartItem.name}</h2>
                     <div>
                       <Image
-                        src={product.image!}
+                        src={cartItem.image!}
                         width={36}
                         height={36}
-                        alt={product.name}
+                        alt={cartItem.name}
                       />
-                      <p>{formatPrice(product.unit_amount)}</p>
-                      <p>Quantity: {product.quantity}</p>
+                      <p>{formatPrice(cartItem.unit_amount)}</p>
+                      <p>Quantity: {cartItem.quantity}</p>
                     </div>
                   </div>
                 ))}
