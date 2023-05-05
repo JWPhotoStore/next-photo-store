@@ -35,11 +35,10 @@ export default async function handler(
         },
       },
     });
-
     const cartItemName = req.body;
 
     if (activeOrder) {
-      const cartItemToDelete = activeOrder.cartItems.findLast(
+      const cartItemToDelete = activeOrder.cartItems.find(
         (cI) => cI.name === cartItemName
       );
 

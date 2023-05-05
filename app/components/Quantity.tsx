@@ -25,9 +25,7 @@ export default function Quantity({ details }: QuantityType) {
           </option>
         ))}
       </select>
-      <div>
-        <AddToCart_new {...details} quantity={quantity} />
-      </div>
+      <AddToCart_new {...details} quantity={quantity} />
     </div>
   );
 }

@@ -32,13 +32,13 @@ export default function ProductCard({
             // blurDataURL={stewie.src}
           />
         </div>
-        <div className={styles.productCardDetails}>
-          <p className={styles.productCardName}>{name}</p>
-          <p className={styles.productCardPrice}>
-            {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
-          </p>
-        </div>
       </Link>
+      <div className={styles.productCardDetails}>
+        <p className={styles.productCardName}>{name}</p>
+        <p className={styles.productCardPrice}>
+          {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
+        </p>
+      </div>
     </div>
   );
 }
