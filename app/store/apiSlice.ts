@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { OrderType } from "@/types/OrderType";
-import { CartItemType } from "@/types/CartItemType";
+import { CartItemType, CartItemBareType } from "@/types/CartItemType";
 
 export const api = createApi({
   reducerPath: "api",
@@ -31,10 +31,10 @@ export const api = createApi({
       invalidatesTags: ["CartItems"],
     }),
     updateCartItem: builder.mutation({
-      query: ({ name, quantity }: { name: string; quantity: number }) => ({
+      query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
         url: "api/mutate-cart-item",
         method: "PATCH",
-        body: { name, quantity },
+        body: { name, unit_amount, quantity },
       }),
       invalidatesTags: ["CartItems"],
     }),

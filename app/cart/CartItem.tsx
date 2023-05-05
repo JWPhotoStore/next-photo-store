@@ -10,7 +10,7 @@ import {
 } from "../store/apiSlice";
 
 export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
-  const { id, name, image, unit_amount, quantity } = cartItem;
+  const { name, image, unit_amount, quantity } = cartItem;
   const [deleteCartItem] = useDeleteCartItemMutation();
   const [updateCartItem, { isLoading }] = useUpdateCartItemMutation();
 
@@ -23,7 +23,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   };
 
   return (
-    <div className={styles.cartItemContainer} key={id}>
+    <div className={styles.cartItemContainer}>
       <Image src={image} alt={name} width={100} height={100} />
       <div className={styles.cartItemDetails}>
         <h3>{name}</h3>
@@ -43,6 +43,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
             onChange={(e: React.SyntheticEvent) =>
               updateCartItem({
                 name,
+                unit_amount,
                 quantity: parseInt(e.target.value),
               }).unwrap()
             }
