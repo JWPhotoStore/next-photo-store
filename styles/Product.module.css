@@ -84,8 +84,13 @@
 
 @media screen and (min-width: 640px) {
   .singleProductContainer {
-    display: flex;
     flex-direction: row;
+    gap: 5rem;
+  }
+
+  .singleProductContainer > img {
+    height: 600px;
+    width: 600px;
   }
 }
 

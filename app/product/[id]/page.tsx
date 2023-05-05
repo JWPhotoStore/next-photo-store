@@ -19,8 +19,8 @@ export default async function Product({ searchParams }: ProductPropsType) {
         <Image
           src={searchParams.image}
           alt={searchParams.name}
-          width={600}
-          height={600}
+          width={300}
+          height={300}
         />
         <div className={styles.singleProductDetails}>
           <h2>{searchParams.name}</h2>
