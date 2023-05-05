@@ -8,7 +8,7 @@ export const api = createApi({
   refetchOnMountOrArgChange: true,
   //TODO: Tags weren't needed to re-render as expected (after implementing refetchOnMountOrArgChange).
   // Check again to understand what they do.
-  // tagTypes: ["CartItems"],
+  tagTypes: ["CartItems"],
   endpoints: (builder) => ({
     // NOTE: you get builder query directly in arguments for endpoints function
     // TODO: Add proper typing to query
@@ -20,7 +20,7 @@ export const api = createApi({
       transformResponse: (res: any) => {
         return res.cartItems;
       },
-      // providesTags: ["CartItems"],
+      providesTags: ["CartItems"],
     }),
     deleteCartItem: builder.mutation({
       query: (name: string) => ({
@@ -28,7 +28,15 @@ export const api = createApi({
         method: "DELETE",
         body: name,
       }),
-      // invalidatesTags: ["CartItems"],
+      invalidatesTags: ["CartItems"],
+    }),
+    updateCartItem: builder.mutation({
+      query: ({ name, quantity }: { name: string; quantity: number }) => ({
+        url: "api/mutate-cart-item",
+        method: "PATCH",
+        body: { name, quantity },
+      }),
+      invalidatesTags: ["CartItems"],
     }),
   }),
 });
@@ -37,4 +45,5 @@ export const {
   useGetActiveOrderQuery,
   useDeleteCartItemMutation,
   useGetCartItemsQuery,
+  useUpdateCartItemMutation,
 } = api;
