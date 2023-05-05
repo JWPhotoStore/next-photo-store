@@ -49,5 +49,5 @@ export default function AddToCart_new({
       });
   };
 
-  return <button onClick={handleAdd}>Add new</button>;
+  return <button onClick={handleAdd}>Add To Cart</button>;
 }
