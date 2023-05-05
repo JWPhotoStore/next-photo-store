@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { OrderType } from "@/types/OrderType";
-import { CartItemType } from "@/types/CartItemType";
+import { CartItemType, CartItemBareType } from "@/types/CartItemType";
 
 export const api = createApi({
   reducerPath: "api",
@@ -8,7 +8,7 @@ export const api = createApi({
   refetchOnMountOrArgChange: true,
   //TODO: Tags weren't needed to re-render as expected (after implementing refetchOnMountOrArgChange).
   // Check again to understand what they do.
-  // tagTypes: ["CartItems"],
+  tagTypes: ["CartItems"],
   endpoints: (builder) => ({
     // NOTE: you get builder query directly in arguments for endpoints function
     // TODO: Add proper typing to query
@@ -20,15 +20,23 @@ export const api = createApi({
       transformResponse: (res: any) => {
         return res.cartItems;
       },
-      // providesTags: ["CartItems"],
+      providesTags: ["CartItems"],
     }),
     deleteCartItem: builder.mutation({
-      query: (name: string) => ({
+      query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
         url: "api/mutate-cart-item",
         method: "DELETE",
-        body: name,
+        body: { name, unit_amount, quantity },
       }),
-      // invalidatesTags: ["CartItems"],
+      invalidatesTags: ["CartItems"],
+    }),
+    updateCartItem: builder.mutation({
+      query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
+        url: "api/mutate-cart-item",
+        method: "PATCH",
+        body: { name, unit_amount, quantity },
+      }),
+      invalidatesTags: ["CartItems"],
     }),
   }),
 });
@@ -37,4 +45,5 @@ export const {
   useGetActiveOrderQuery,
   useDeleteCartItemMutation,
   useGetCartItemsQuery,
+  useUpdateCartItemMutation,
 } = api;

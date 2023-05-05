@@ -7,3 +7,9 @@ export type CartItemType = {
   unit_amount: number;
   quantity: number;
 };
+
+export type CartItemBareType = {
+  name: string;
+  unit_amount: number;
+  quantity: number;
+};

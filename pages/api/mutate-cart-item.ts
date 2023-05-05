@@ -35,28 +35,50 @@ export default async function handler(
         },
       },
     });
-    const cartItemName = req.body;
 
     if (activeOrder) {
-      const cartItemToDelete = activeOrder.cartItems.find(
-        (cI) => cI.name === cartItemName
-      );
+      if (req.method === "DELETE") {
+        const { name } = req.body;
+        const cartItemToDelete = activeOrder.cartItems.find(
+          (cI) => cI.name === name
+        );
 
-      if (!cartItemToDelete)
-        throw new Error("Could not find matching cart item in active order.");
-      if (req.method === "DELETE")
+        if (!cartItemToDelete)
+          throw new Error("Could not find matching cart item in active order.");
+
         try {
           await prisma.cartItem.delete({
             where: {
               id: cartItemToDelete.id,
             },
           });
-          res.status(200).send("Nice. Deleted.");
+          res.status(200).json({ message: "Nice. Deleted." });
         } catch (e) {
           res
             .status(404)
             .json({ error: e, message: "Could not delete cart item." });
         }
+      }
+      if (req.method === "PATCH") {
+        const { name, quantity } = req.body;
+        const cartItemToUpdate = activeOrder.cartItems.find(
+          (cI) => cI.name === name
+        );
+        if (!cartItemToUpdate) throw new Error("No cart item found.");
+        try {
+          await prisma.cartItem.update({
+            where: {
+              id: cartItemToUpdate.id,
+            },
+            data: {
+              quantity: quantity,
+            },
+          });
+          res.status(200).json({ message: "Nice. Quantity Updated." });
+        } catch (err) {
+          res.status(404).json({ message: "No cart item found." });
+        }
+      }
     } else {
       res.status(404).json({ message: "No active orders" });
     }
