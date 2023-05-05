@@ -28,15 +28,6 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
       <div className={styles.cartItemDetails}>
         <h3>{name}</h3>
         <div className={styles.cartItemQuantity}>
-          {/* <AiOutlineMinus
-              className={styles.cartActionIcons}
-              onClick={() => dispatch(decrementQuantity(cartItem))}
-            />
-            <span>{quantity}</span>
-            <AiOutlinePlus
-              className={styles.cartActionIcons}
-              onClick={() => dispatch(incrementQuantity(cartItem))}
-            /> */}
           <span>Quantity: </span>
           <select
             value={quantity}
