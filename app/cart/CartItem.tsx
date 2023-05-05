@@ -31,7 +31,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
           <span>Quantity: </span>
           <select
             value={quantity}
-            onChange={(e: React.SyntheticEvent) =>
+            onChange={(e) =>
               updateCartItem({
                 name,
                 unit_amount,
