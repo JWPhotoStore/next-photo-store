@@ -16,7 +16,7 @@ export default function MobileMenu({ user }: Session) {
   );
 
   const closeMenuWithDelay = () => {
-    setTimeout(() => dispatch(closeMobileMenu()), 150);
+    setTimeout(() => dispatch(closeMobileMenu()), 250);
   };
 
   return (
