@@ -23,10 +23,10 @@ export const api = createApi({
       providesTags: ["CartItems"],
     }),
     deleteCartItem: builder.mutation({
-      query: (name: string) => ({
+      query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
         url: "api/mutate-cart-item",
         method: "DELETE",
-        body: name,
+        body: { name, unit_amount, quantity },
       }),
       invalidatesTags: ["CartItems"],
     }),

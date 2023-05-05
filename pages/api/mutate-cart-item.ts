@@ -38,9 +38,10 @@ export default async function handler(
 
     if (activeOrder) {
       if (req.method === "DELETE") {
-        const cartItemName = req.body;
+        console.log("request body ", req.body);
+        const { name } = req.body;
         const cartItemToDelete = activeOrder.cartItems.find(
-          (cI) => cI.name === cartItemName
+          (cI) => cI.name === name
         );
 
         if (!cartItemToDelete)

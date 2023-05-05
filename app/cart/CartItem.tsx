@@ -16,7 +16,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
 
   const onDeleteCartItemClicked = async () => {
     try {
-      await deleteCartItem(name).unwrap();
+      await deleteCartItem({ name, unit_amount, quantity }).unwrap();
     } catch (err) {
       console.error("Failed to delete cart item: ", err);
     }
