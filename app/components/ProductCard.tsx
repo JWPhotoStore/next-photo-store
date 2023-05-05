@@ -1,8 +1,8 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import Link from "next/link";
-import { ProductTypes } from "@/types/ProductTypes";
+import { ProductType } from "@/types/ProductType";
 // import stewie from "@/public/stewie.gif";
 
 export default function ProductCard({
@@ -12,7 +12,7 @@ export default function ProductCard({
   image,
   unit_amount,
   currency,
-}: ProductTypes) {
+}: ProductType) {
   return (
     <div className={styles.productCardContainer}>
       <Link
@@ -32,13 +32,13 @@ export default function ProductCard({
             // blurDataURL={stewie.src}
           />
         </div>
-        <div className={styles.productCardDetails}>
-          <p className={styles.productCardName}>{name}</p>
-          <p className={styles.productCardPrice}>
-            {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
-          </p>
-        </div>
       </Link>
+      <div className={styles.productCardDetails}>
+        <p className={styles.productCardName}>{name}</p>
+        <p className={styles.productCardPrice}>
+          {unit_amount !== null ? formatPrice(unit_amount) : "N/A"}
+        </p>
+      </div>
     </div>
   );
 }

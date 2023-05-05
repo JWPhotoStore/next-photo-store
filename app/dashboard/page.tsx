@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import formatPrice from "@/util/PriceFormat";
+import { formatPrice } from "@/util/PriceFormat";
 import Image from "next/image";
 
 //TODO: look into this since it currently updates with a refresh without this export

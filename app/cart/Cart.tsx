@@ -1,18 +1,18 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/store/store";
 import styles from "@/styles/Cart.module.css";
 import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import CartMobileHeader from "../components/CartMobileHeader";
 import Link from "next/link";
+import { useGetCartItemsQuery } from "../store/apiSlice";
 
 export default function Cart() {
-  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+  const { data: cartItems, isLoading } = useGetCartItemsQuery();
 
   return (
     <>
-      {cartItems.length > 0 ? (
+      {/* TODO: This logic shows empty cart when initial load is in progress */}
+      {!isLoading && cartItems && cartItems.length > 0 ? (
         <div className={styles.cartContainer}>
           <CartMobileHeader cartItems={cartItems} />
           <CartItems cartItems={cartItems} />

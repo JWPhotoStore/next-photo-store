@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/styles/Product.module.css";
-import { ProductTypes } from "@/types/ProductTypes";
+import { ProductType } from "@/types/ProductType";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { incrementQuantity, addCartItem } from "@/app/store/cartSlice";
@@ -13,7 +13,7 @@ function AddToCart({
   image,
   currency,
   unit_amount,
-}: ProductTypes) {
+}: ProductType) {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
   const dispatch = useDispatch();
 

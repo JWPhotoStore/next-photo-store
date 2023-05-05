@@ -1,33 +1,38 @@
 import styles from "@/styles/Product.module.css";
 import Image from "next/image";
-import { SearchParamTypes } from "@/types/SearchParamsTypes";
-import formatPrice from "@/util/PriceFormat";
+import { SearchParamsType } from "@/types/SearchParamsType";
+import { formatPrice } from "@/util/PriceFormat";
 import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
+import { ProductType } from "@/types/ProductType";
+import Quantity from "@/app/components/Quantity";
 
-export default async function Product({ searchParams }: SearchParamTypes) {
+type ProductPropsType = {
+  params: { id: string };
+  searchParams: ProductType;
+};
+
+export default async function Product({ searchParams }: ProductPropsType) {
   return (
-    <div className={styles.productDetails}>
-      <div>
+    <div className={styles.productPage}>
+      <div className={styles.singleProductContainer}>
         <Image
           src={searchParams.image}
           alt={searchParams.name}
-          width={600}
-          height={600}
+          width={300}
+          height={300}
         />
-        <div>
-          <h1>{searchParams.name}</h1>
+        <div className={styles.singleProductDetails}>
+          <h2>{searchParams.name}</h2>
           <p>{searchParams.description}</p>
-          <div>
-            <p>
-              {searchParams.unit_amount !== null
-                ? formatPrice(searchParams.unit_amount)
-                : "N/A"}
-            </p>
-          </div>
-          {/* TODO - Providers here to the children may not actually give access to updated store */}
+          <p>
+            {searchParams.unit_amount !== null
+              ? formatPrice(searchParams.unit_amount)
+              : "N/A"}
+          </p>
           <Providers>
-            <AddToCart {...searchParams} />
+            <Quantity details={searchParams} />
+            {/* <AddToCart {...searchParams} /> */}
           </Providers>
         </div>
       </div>

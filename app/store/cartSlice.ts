@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
+
+type CheckoutState = "cart" | "checkout" | "success";
 
 export interface CartState {
   isOpen: boolean;
-  cartItems: CartItemTypes[];
-  paymentIntent: string;
-  onCheckout: string;
+  cartItems: CartItemType[];
+  // paymentIntentID: string;
+  onCheckout: CheckoutState;
 }
 
 const initialState: CartState = {
@@ -25,7 +27,7 @@ const initialState: CartState = {
     //   quantity: 1,
     // },
   ],
-  paymentIntent: "",
+  // paymentIntentID: "",
   onCheckout: "cart",
 };
 
@@ -37,10 +39,10 @@ export const cartSlice = createSlice({
     toggleCart: (state) => {
       state.isOpen = !state.isOpen;
     },
-    addCartItem: (state, action: PayloadAction<CartItemTypes>) => {
+    addCartItem: (state, action: PayloadAction<CartItemType>) => {
       state.cartItems.push(action.payload);
     },
-    incrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
+    incrementQuantity: (state, action: PayloadAction<CartItemType>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
           cartItem.quantity += 1;
@@ -48,7 +50,7 @@ export const cartSlice = createSlice({
         }
       }
     },
-    decrementQuantity: (state, action: PayloadAction<CartItemTypes>) => {
+    decrementQuantity: (state, action: PayloadAction<CartItemType>) => {
       for (const cartItem of state.cartItems) {
         if (cartItem.id === action.payload.id) {
           if (cartItem.quantity > 1) {
@@ -64,20 +66,21 @@ export const cartSlice = createSlice({
         }
       }
     },
-    removeCartItem: (state, action: PayloadAction<CartItemTypes>) => {
+    removeCartItem: (state, action: PayloadAction<CartItemType>) => {
       const filteredCartItems = state.cartItems.filter(
         (cartItem) => cartItem.id !== action.payload.id
       );
       state.cartItems = filteredCartItems;
-    },
-    setPaymentIntent: (state, action: PayloadAction<string>) => {
-      state.paymentIntent = action.payload;
     },
     setCheckout: (state, action: PayloadAction<string>) => {
       state.onCheckout = action.payload;
     },
     clearCart: (state) => {
       state.cartItems = [];
+    },
+    //TODO: create a payloadAction type for this
+    updateCart: (state, action) => {
+      state.cartItems = action.payload;
     },
   },
 });
@@ -89,9 +92,9 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeCartItem,
-  setPaymentIntent,
   setCheckout,
   clearCart,
+  updateCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

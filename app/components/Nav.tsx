@@ -2,62 +2,70 @@
 
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
-// import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { setCheckout } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
+import { setCheckout, updateCart } from "../store/cartSlice";
+import { setPaymentIntent } from "../store/stripeSlice";
+import { useEffect } from "react";
+import { openMobileMenu } from "../store/uiSlice";
+import { useWindowSize } from "@/util/hooks";
+import { useGetActiveOrderQuery } from "../store/apiSlice";
 
 export default function Nav({ user }: Session) {
-  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+  const { data, error, isLoading, isSuccess } = useGetActiveOrderQuery();
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isSuccess && data.paymentIntentID) {
+      dispatch(setPaymentIntent(data.paymentIntentID));
+    }
+  }, [isSuccess, error]);
+
+  const { width } = useWindowSize();
+  const mobileBreakpoint = 640;
 
   return (
     <nav>
-      <div className={styles.navContentContainer}>
-        <ul className={styles.navContentLeft}>
-          {/* TODO: create new route for photos */}
-          <Link href="/">photos</Link>
-          <Link href="/contact">contact</Link>
-        </ul>
-        <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
-          <h1>will ku photos</h1>
-        </Link>
-        <ul className={styles.navContentRight}>
-          {!user && (
-            <li className={styles.authAction} onClick={() => signIn()}>
-              <span>Sign in</span>
-            </li>
-          )}
-          {user && (
-            <>
-              <li>
-                {/* <Image
-                  //TODO: Add a default image if the user doesn't have one
-                  src={user?.image as string}
-                  alt={user.name as string}
-                  width={48}
-                  height={48}
-                  className={styles.image}
-                /> */}
-                <Link href="/api/auth/signout">
-                  <li className={styles.authAction}>
-                    hello <span>{user.name}</span>
-                  </li>
-                </Link>
-              </li>
-            </>
-          )}
-          <Link href="/cart">
-            <li className={styles.cartIcon}>
-              <RiShoppingCartLine size={25} />
-              {cartItems.length}
+      <ul className={styles.navContentLeft}>
+        {/* TODO: create new route for photos */}
+        <Link href="/">prints</Link>
+        <Link href="/contact">contact</Link>
+      </ul>
+      <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
+        <h1>kushi photos</h1>
+      </Link>
+      <ul className={styles.navContentRight}>
+        {width && width >= mobileBreakpoint && !user && (
+          <li className={styles.authAction} onClick={() => signIn()}>
+            <span>Sign in</span>
+          </li>
+        )}
+        {user && (
+          <Link href="/api/auth/signout">
+            <li className={styles.authAction}>
+              hello <span>{user.name}</span>
             </li>
           </Link>
-        </ul>
-      </div>
+        )}
+        <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
+          <li className={styles.cartIcon}>
+            <RiShoppingCartLine size={25} />
+            {/* TODO: Fix this hack. Guest users don't have cartItems so would cause app to crash. Doesn't rerender correctly*/}
+            {!isLoading && data ? data.cartItems.length : ""}
+          </li>
+        </Link>
+        {width && width < mobileBreakpoint && (
+          <div
+            className={styles.mobileMenuIcon}
+            onClick={() => dispatch(openMobileMenu())}
+          >
+            =
+          </div>
+        )}
+      </ul>
     </nav>
   );
 }

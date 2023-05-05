@@ -21,24 +21,27 @@ model User {
 
 model Order {
   id String @id @default(cuid())
-  user User @relation(fields: [userId], references: [id])
-  userId String
+  userEmail String
   amount Float
   currency String
   status String
   createdDate DateTime @default(now())
   paymentIntentID String? @unique
-  products Product[]
+  cartItems CartItem[]
+  
+  user User @relation(fields: [userEmail], references: [email])
 }
 
-model Product {
+model CartItem {
   id String @id @default(cuid())
   name String
   description String?
   unit_amount Float
   image String?
   quantity Float @default(0)
-  order Order []
+  piID String
+
+  order Order @relation(fields: [piID], references: [paymentIntentID])
 }
 
 model Account {

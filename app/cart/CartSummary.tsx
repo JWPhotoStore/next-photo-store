@@ -1,6 +1,6 @@
 "use client";
-import { CartItemTypes } from "@/types/CartItemTypes";
-import formatPrice from "@/util/PriceFormat";
+import { CartItemType } from "@/types/CartItemType";
+import { formatPrice } from "@/util/PriceFormat";
 import { useDispatch } from "react-redux";
 import { setCheckout } from "../store/cartSlice";
 import styles from "@/styles/Cart.module.css";
@@ -8,12 +8,12 @@ import styles from "@/styles/Cart.module.css";
 export default function CartSummary({
   cartItems,
 }: {
-  cartItems: CartItemTypes[];
+  cartItems: CartItemType[];
 }) {
   const dispatch = useDispatch();
 
   const calculateSum = () => {
-    return cartItems.reduce((acc: number, item: CartItemTypes) => {
+    return cartItems.reduce((acc: number, item: CartItemType) => {
       return acc + item.unit_amount * item.quantity;
     }, 0);
   };

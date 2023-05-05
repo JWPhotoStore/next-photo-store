@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { CartItemTypes } from "@/types/CartItemTypes";
+import { CartItemType } from "@/types/CartItemType";
 import { PrismaClient } from "@prisma/client";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 const prisma = new PrismaClient();
 
-const calculateOrderAmount = (items: CartItemTypes[]) => {
+const calculateOrderAmount = (items: CartItemType[]) => {
   const totalPrice = items.reduce((acc, item) => {
     return acc + item.unit_amount * item.quantity;
   }, 0);
@@ -39,7 +39,7 @@ export default async function handler(
     currency: "usd",
     status: "pending",
     paymentIntentID: payment_intent_id,
-    products: {
+    cartItems: {
       create: items.map((item) => ({
         name: item.name,
         description: item.description || null,
@@ -61,10 +61,10 @@ export default async function handler(
         payment_intent_id,
         { amount: calculateOrderAmount(items) }
       );
-      //Fetch order with product ids
+      //Fetch order with the cartItems
       const existing_order = await prisma.order.findFirst({
         where: { paymentIntentID: updated_intent.id },
-        include: { products: true },
+        include: { cartItems: true },
       });
       if (!existing_order) {
         res.status(400).json({ message: "Invalid Payment Intent" });
@@ -75,7 +75,7 @@ export default async function handler(
         where: { id: existing_order?.id },
         data: {
           amount: calculateOrderAmount(items),
-          products: {
+          cartItems: {
             deleteMany: {},
             create: items.map((item) => ({
               name: item.name,
