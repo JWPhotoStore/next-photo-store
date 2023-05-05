@@ -14,25 +14,22 @@ type ProductPropsType = {
 
 export default async function Product({ searchParams }: ProductPropsType) {
   return (
-    <div className={styles.productDetails}>
-      <div>
+    <div className={styles.productPage}>
+      <div className={styles.singleProductContainer}>
         <Image
           src={searchParams.image}
           alt={searchParams.name}
           width={600}
           height={600}
         />
-        <div>
-          <h1>{searchParams.name}</h1>
+        <div className={styles.singleProductDetails}>
+          <h2>{searchParams.name}</h2>
           <p>{searchParams.description}</p>
-          <div>
-            <p>
-              {searchParams.unit_amount !== null
-                ? formatPrice(searchParams.unit_amount)
-                : "N/A"}
-            </p>
-          </div>
-          {/* TODO - Providers here to the children may not actually give access to updated store */}
+          <p>
+            {searchParams.unit_amount !== null
+              ? formatPrice(searchParams.unit_amount)
+              : "N/A"}
+          </p>
           <Providers>
             <Quantity details={searchParams} />
             {/* <AddToCart {...searchParams} /> */}
