@@ -10,7 +10,7 @@ type QuantityType = {
 
 export default function Quantity({ details }: QuantityType) {
   const [quantity, setQuantity] = useState(1);
-  const quantityOptions = [1, 2, 3, 4, 5];
+  const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div>
