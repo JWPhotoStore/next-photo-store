@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { CartItemType } from "@/types/CartItemType";
 
+type CheckoutState = "cart" | "checkout" | "success";
+
 export interface CartState {
   isOpen: boolean;
   cartItems: CartItemType[];
   // paymentIntentID: string;
-  onCheckout: string;
+  onCheckout: CheckoutState;
 }
 
 const initialState: CartState = {

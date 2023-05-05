@@ -51,7 +51,7 @@ export default function Nav({ user }: Session) {
             </li>
           </Link>
         )}
-        <Link href="/cart">
+        <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={25} />
             {/* TODO: Fix this hack. Guest users don't have cartItems so would cause app to crash. Doesn't rerender correctly*/}
