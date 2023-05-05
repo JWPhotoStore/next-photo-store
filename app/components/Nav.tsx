@@ -22,7 +22,6 @@ export default function Nav({ user }: Session) {
     if (isSuccess && data.paymentIntentID) {
       dispatch(setPaymentIntent(data.paymentIntentID));
     }
-    console.log(error);
   }, [isSuccess, error]);
 
   const { width } = useWindowSize();
