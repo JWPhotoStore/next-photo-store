@@ -72,7 +72,7 @@ export const cartSlice = createSlice({
       );
       state.cartItems = filteredCartItems;
     },
-    setCheckout: (state, action: PayloadAction<string>) => {
+    setCheckout: (state, action: PayloadAction<CheckoutState>) => {
       state.onCheckout = action.payload;
     },
     clearCart: (state) => {

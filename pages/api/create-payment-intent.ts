@@ -4,6 +4,7 @@ import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { CartItemType } from "@/types/CartItemType";
 import { PrismaClient } from "@prisma/client";
+import { UserSessionType } from "@/types/UserSessionType";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-11-15",
@@ -24,8 +25,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   //GET user
-  const userSession = await getServerSession(req, res, authOptions);
-  if (!userSession?.user) {
+  const userSession: UserSessionType | null = await getServerSession(
+    req,
+    res,
+    authOptions
+  );
+
+  if (!userSession || !userSession.user) {
     res.status(403).json({ message: "Not logged in" });
     return;
   }
@@ -34,16 +40,16 @@ export default async function handler(
 
   //Create the order data
   const orderData = {
-    user: { connect: { id: userSession.user?.id } },
+    user: { connect: { id: userSession.user.id } },
     amount: calculateOrderAmount(items),
     currency: "usd",
     status: "pending",
     paymentIntentID: payment_intent_id,
     cartItems: {
-      create: items.map((item) => ({
+      create: items.map((item: CartItemType) => ({
         name: item.name,
         description: item.description || null,
-        unit_amount: parseFloat(item.unit_amount),
+        unit_amount: item.unit_amount, // TODO: @Jason, check if this is ok. parseFloat() on a number causes TS error bc parseFloat only takes string
         image: item.image,
         quantity: item.quantity,
       })),
@@ -77,10 +83,10 @@ export default async function handler(
           amount: calculateOrderAmount(items),
           cartItems: {
             deleteMany: {},
-            create: items.map((item) => ({
+            create: items.map((item: CartItemType) => ({
               name: item.name,
               description: item.description || null,
-              unit_amount: parseFloat(item.unit_amount),
+              unit_amount: item.unit_amount, //TODO: check this too
               image: item.image,
               quantity: item.quantity,
             })),
