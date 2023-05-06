@@ -83,9 +83,6 @@ export default async function handler(
                 id: itemID,
               },
               data: {
-                unit_amount: {
-                  increment: parseFloat(unit_amount),
-                },
                 quantity: {
                   increment: quantity,
                 },
