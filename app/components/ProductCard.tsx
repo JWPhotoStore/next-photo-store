@@ -27,6 +27,9 @@ export default function ProductCard({
             alt={name}
             fill
             className={styles.productCardImage}
+            sizes="(max-width: 768px) 100vw,
+            (max-width: 1200px) 50vw,
+            33vw"
             // TODO: Figure out how to use blurDataURL
             // placeholder="blur"
             // blurDataURL={stewie.src}
