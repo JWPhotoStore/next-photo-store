@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { UserSessionType } from "@/types/UserSessionType";
 
 const prisma = new PrismaClient();
 
@@ -9,7 +10,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const userSession = await getServerSession(req, res, authOptions);
+  const userSession: UserSessionType | null = await getServerSession(
+    req,
+    res,
+    authOptions
+  );
 
   //TODO: discuss whether we need this for user thats not signed in
   if (!userSession?.user) {

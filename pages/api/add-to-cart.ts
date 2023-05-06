@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { UserSessionType } from "@/types/UserSessionType";
 
 const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -13,7 +14,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const userSession = await getServerSession(req, res, authOptions);
+  const userSession: UserSessionType | null = await getServerSession(
+    req,
+    res,
+    authOptions
+  );
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
     return;
