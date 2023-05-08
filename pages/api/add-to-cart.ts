@@ -1,11 +1,10 @@
 import Stripe from "stripe";
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/util/prisma";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { UserSessionType } from "@/types/UserSessionType";
 
-const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-11-15",
 });
@@ -32,6 +31,7 @@ export default async function handler(
     currency,
     quantity,
     paymentIntentID,
+    stripeProductId,
   } = req.body;
 
   const orderData = {
@@ -47,6 +47,7 @@ export default async function handler(
         unit_amount: parseFloat(unit_amount),
         image,
         quantity,
+        stripeProductId,
       },
     },
   };
@@ -116,6 +117,7 @@ export default async function handler(
               unit_amount: parseFloat(unit_amount),
               image,
               quantity,
+              stripeProductId,
             },
           },
         },
@@ -147,6 +149,7 @@ export default async function handler(
             unit_amount: true,
             image: true,
             quantity: true,
+            stripeProductId: true,
           },
         },
       },
@@ -154,7 +157,7 @@ export default async function handler(
 
     //Store the newly added cartItem and return to client
     const addedItem = cartItems[0];
-    console.log(addedItem);
+    // console.log(addedItem);
 
     res.status(200).json({
       client_secret: paymentIntent.client_secret,

@@ -1,8 +1,8 @@
 # next-photo-store 🎞️
 
-Online print store, branded as "Kushi Photos". This is a fullstack project written primarily in TypeScript. The primary technologies used can be seen below. More details, including a link to the live site, to come.
+Online photo store, branded as "Kushi Photos". This is a fullstack project written in TypeScript.
 
-# Technologies Used
+## Technologies Used
 
 - Next.js
 - React
@@ -10,3 +10,5 @@ Online print store, branded as "Kushi Photos". This is a fullstack project writt
 - Prisma
 - PostgreSQL
 - Stripe API
+
+### 🚧 We are currently still under construction. More details, including a link to the live site, will be posted here shortly! 🚧

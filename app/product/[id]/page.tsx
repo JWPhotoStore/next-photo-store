@@ -21,6 +21,7 @@ export default async function Product({ searchParams }: ProductPropsType) {
           alt={searchParams.name}
           width={300}
           height={300}
+          priority={true}
         />
         <div className={styles.singleProductDetails}>
           <h2>{searchParams.name}</h2>

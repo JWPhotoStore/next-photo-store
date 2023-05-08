@@ -1,10 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/util/prisma";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { UserSessionType } from "@/types/UserSessionType";
-
-const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,

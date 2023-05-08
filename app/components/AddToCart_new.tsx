@@ -11,6 +11,7 @@ interface AddToCart_newType extends ProductType {
 }
 
 export default function AddToCart_new({
+  id,
   name,
   description,
   image,
@@ -32,6 +33,7 @@ export default function AddToCart_new({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        stripeProductId: id,
         name,
         description,
         image,

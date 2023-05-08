@@ -6,6 +6,7 @@ export type CartItemType = {
   currency: string;
   unit_amount: number;
   quantity: number;
+  stripeProductId: string;
 };
 
 export type CartItemBareType = {
