@@ -153,7 +153,7 @@ export default async function handler(
 
     //Store the newly added cartItem and return to client
     const addedItem = cartItems[0];
-    console.log(addedItem);
+    // console.log(addedItem);
 
     res.status(200).json({
       client_secret: paymentIntent.client_secret,
