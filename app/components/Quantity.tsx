@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AddToCart_new from "./AddToCart_new";
+import AddToCart from "./AddToCart";
 import { ProductType } from "@/types/ProductType";
 
 type QuantityType = {
@@ -25,7 +25,7 @@ export default function Quantity({ details }: QuantityType) {
           </option>
         ))}
       </select>
-      <AddToCart_new {...details} quantity={quantity} />
+      <AddToCart {...details} quantity={quantity} />
     </div>
   );
 }

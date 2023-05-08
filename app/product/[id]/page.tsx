@@ -2,17 +2,10 @@ import styles from "@/styles/Product.module.css";
 import Image from "next/image";
 import { SearchParamsType } from "@/types/SearchParamsType";
 import { formatPrice } from "@/util/PriceFormat";
-import AddToCart from "@/app/components/AddToCart";
 import Providers from "@/app/components/Providers";
-import { ProductType } from "@/types/ProductType";
 import Quantity from "@/app/components/Quantity";
 
-type ProductPropsType = {
-  params: { id: string };
-  searchParams: ProductType;
-};
-
-export default async function Product({ searchParams }: ProductPropsType) {
+export default async function Product({ searchParams }: SearchParamsType) {
   return (
     <div className={styles.productPage}>
       <div className={styles.singleProductContainer}>
@@ -33,7 +26,6 @@ export default async function Product({ searchParams }: ProductPropsType) {
           </p>
           <Providers>
             <Quantity details={searchParams} />
-            {/* <AddToCart {...searchParams} /> */}
           </Providers>
         </div>
       </div>

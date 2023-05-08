@@ -1,55 +1,55 @@
 "use client";
 
-import styles from "@/styles/Product.module.css";
 import { ProductType } from "@/types/ProductType";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { incrementQuantity, addCartItem } from "@/app/store/cartSlice";
+import { setPaymentIntent } from "../store/stripeSlice";
+import { addCartItem } from "../store/cartSlice";
 
-function AddToCart({
+interface AddToCartType extends ProductType {
+  quantity: number;
+}
+
+export default function AddToCart({
   id,
   name,
   description,
   image,
-  currency,
   unit_amount,
-}: ProductType) {
+  currency,
+  quantity,
+}: AddToCartType) {
+  const { paymentIntentID } = useSelector(
+    (state: RootState) => state.stripeReducer
+  );
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
-    let cartItemToAdd = null;
-    let isProductInCart = false;
-    for (const cartItem of cartItems) {
-      if (cartItem.id === id) {
-        isProductInCart = true;
-        cartItemToAdd = cartItem;
-        break;
-      }
-    }
+  const handleAdd = (e: React.SyntheticEvent) => {
+    e.preventDefault();
 
-    if (isProductInCart && cartItemToAdd !== null) {
-      dispatch(incrementQuantity(cartItemToAdd));
-    } else {
-      dispatch(
-        addCartItem({
-          id,
-          name,
-          description,
-          image,
-          currency,
-          unit_amount,
-          quantity: 1,
-        })
-      );
-    }
+    fetch("/api/add-to-cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        stripeProductId: id,
+        name,
+        description,
+        image,
+        unit_amount,
+        currency,
+        quantity,
+        paymentIntentID,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(setPaymentIntent(data.id));
+        dispatch(addCartItem(data.cartItem));
+        //TODO: need to handle whether to update the whole cart when updating an existing cartItem and adding a new item to the cart
+      });
   };
 
-  return (
-    <button onClick={handleAddToCart} className={styles.primaryButton}>
-      Add to Cart
-    </button>
-  );
+  return <button onClick={handleAdd}>Add To Cart</button>;
 }
-
-export default AddToCart;
