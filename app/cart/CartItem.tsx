@@ -8,9 +8,18 @@ import {
   useDeleteCartItemMutation,
   useUpdateCartItemMutation,
 } from "../store/apiSlice";
+import Link from "next/link";
 
 export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
-  const { name, image, unit_amount, quantity } = cartItem;
+  const {
+    name,
+    image,
+    unit_amount,
+    quantity,
+    description,
+    currency,
+    stripeProductId,
+  } = cartItem;
   const [deleteCartItem] = useDeleteCartItemMutation();
   const [updateCartItem, { isLoading }] = useUpdateCartItemMutation();
 
@@ -26,7 +35,21 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
     <div className={styles.cartItemContainer}>
       <Image src={image} alt={name} width={100} height={100} />
       <div className={styles.cartItemDetails}>
-        <h3>{name}</h3>
+        <Link
+          href={{
+            pathname: `/product/${stripeProductId}`,
+            query: {
+              name,
+              image,
+              unit_amount,
+              stripeProductId,
+              description,
+              currency,
+            },
+          }}
+        >
+          <h3>{name}</h3>
+        </Link>
         <div className={styles.cartItemQuantity}>
           <span>Quantity: </span>
           <select

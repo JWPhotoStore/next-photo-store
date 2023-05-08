@@ -31,6 +31,7 @@ export default async function handler(
     currency,
     quantity,
     paymentIntentID,
+    stripeProductId,
   } = req.body;
 
   const orderData = {
@@ -46,6 +47,7 @@ export default async function handler(
         unit_amount: parseFloat(unit_amount),
         image,
         quantity,
+        stripeProductId,
       },
     },
   };
@@ -115,6 +117,7 @@ export default async function handler(
               unit_amount: parseFloat(unit_amount),
               image,
               quantity,
+              stripeProductId,
             },
           },
         },
@@ -146,6 +149,7 @@ export default async function handler(
             unit_amount: true,
             image: true,
             quantity: true,
+            stripeProductId: true,
           },
         },
       },

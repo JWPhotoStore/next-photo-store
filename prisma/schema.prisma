@@ -39,6 +39,7 @@ model CartItem {
   unit_amount Float
   image String?
   quantity Float @default(0)
+  stripeProductId String
   piID String
 
   order Order @relation(fields: [piID], references: [paymentIntentID])
