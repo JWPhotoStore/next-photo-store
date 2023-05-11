@@ -12,9 +12,10 @@ import { useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
+import { CartItemType } from "@/types/CartItemType";
 
 export default function Nav({ user }: Session) {
-  const { data, isError, isLoading, isSuccess, error } =
+  const { data, isError, isFetching, isSuccess, error } =
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
 
@@ -30,6 +31,21 @@ export default function Nav({ user }: Session) {
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
+
+  const sumItemsAndQuantity = (cartItems: CartItemType[]) => {
+    return cartItems.reduce((acc, cartItem) => {
+      return acc + cartItem.quantity;
+    }, 0);
+  };
+
+  let cartItemsLen: string | number = "";
+
+  if (isFetching) {
+    cartItemsLen = "";
+  } else if (isSuccess) {
+    cartItemsLen =
+      data.cartItems.length === 0 ? "" : sumItemsAndQuantity(data.cartItems);
+  }
 
   return (
     <nav>
@@ -57,13 +73,7 @@ export default function Nav({ user }: Session) {
         <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={25} />
-            {/* TODO: Fix this hack. Guest users don't have cartItems so would cause app to crash. Doesn't rerender correctly*/}
-            {/* {!isLoading && data?.cartItems ? data.cartItems.length : ""} */}
-            {!isLoading && data?.cartItems
-              ? data.cartItems.reduce((acc, cart) => {
-                  return acc + cart.quantity;
-                }, 0)
-              : ""}
+            {cartItemsLen}
           </li>
         </Link>
         {width && width < mobileBreakpoint && (
