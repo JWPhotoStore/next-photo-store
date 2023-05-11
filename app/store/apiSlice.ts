@@ -16,6 +16,14 @@ export const api = createApi({
       query: () => "api/fetch-active-order",
       providesTags: ["CartItems"],
     }),
+    addCartItem: builder.mutation({
+      query: (body) => ({
+        url: "api/add-to-cart",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["CartItems"],
+    }),
     deleteCartItem: builder.mutation({
       query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
         url: "api/mutate-cart-item",
@@ -37,6 +45,7 @@ export const api = createApi({
 
 export const {
   useGetActiveOrderQuery,
+  useAddCartItemMutation,
   useDeleteCartItemMutation,
   useUpdateCartItemMutation,
 } = api;
