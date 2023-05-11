@@ -6,7 +6,7 @@ import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { setCheckout, updateCart } from "../store/cartSlice";
+import { setCheckout } from "../store/cartSlice";
 import { setPaymentIntent } from "../store/stripeSlice";
 import { useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
@@ -20,8 +20,8 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isSuccess && data.paymentIntentID) {
-      dispatch(setPaymentIntent(data.paymentIntentID));
+    if (isSuccess && data.paymentIntentId) {
+      dispatch(setPaymentIntent(data.paymentIntentId));
     }
 
     if (isError) {
@@ -42,7 +42,7 @@ export default function Nav({ user }: Session) {
 
   if (isFetching) {
     cartItemsLen = "";
-  } else if (isSuccess) {
+  } else if (isSuccess && data.cartItems) {
     cartItemsLen =
       data.cartItems.length === 0 ? "" : sumItemsAndQuantity(data.cartItems);
   }

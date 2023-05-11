@@ -2,6 +2,6 @@ import { CartItemType } from "./CartItemType";
 
 export type OrderType = {
   currency: string;
-  paymentIntentID: string;
+  paymentIntentId: string;
   cartItems: CartItemType[];
 };

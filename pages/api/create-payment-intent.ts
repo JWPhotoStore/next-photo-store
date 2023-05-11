@@ -42,7 +42,7 @@ export default async function handler(
     amount: calculateOrderAmount(items),
     currency: "usd",
     status: "pending",
-    paymentIntentID: payment_intent_id,
+    paymentIntentId: payment_intent_id,
     cartItems: {
       create: items.map((item: CartItemType) => ({
         name: item.name,
@@ -67,7 +67,7 @@ export default async function handler(
       );
       //Fetch order with the cartItems
       const existing_order = await prisma.order.findFirst({
-        where: { paymentIntentID: updated_intent.id },
+        where: { paymentIntentId: updated_intent.id },
         include: { cartItems: true },
       });
       if (!existing_order) {
@@ -102,7 +102,7 @@ export default async function handler(
       automatic_payment_methods: { enabled: true },
     });
 
-    orderData.paymentIntentID = paymentIntent.id;
+    orderData.paymentIntentId = paymentIntent.id;
     const newOrder = await prisma.order.create({
       data: orderData,
     });
