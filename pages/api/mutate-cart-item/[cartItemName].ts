@@ -14,7 +14,6 @@ export default async function handler(
     return;
   }
   const { cartItemName } = req.query;
-  console.log("cartItemName is ", cartItemName);
 
   //Get active order and include the cartItems
   const activeOrder = await prisma.order.findFirst({
