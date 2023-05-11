@@ -20,8 +20,8 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isSuccess && data.paymentIntentID) {
-      dispatch(setPaymentIntent(data.paymentIntentID));
+    if (isSuccess && data.paymentIntentId) {
+      dispatch(setPaymentIntent(data.paymentIntentId));
     }
 
     if (isError) {

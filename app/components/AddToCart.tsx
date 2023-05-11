@@ -19,7 +19,7 @@ export default function AddToCart({
   currency,
   quantity,
 }: AddToCartType) {
-  const { paymentIntentID } = useSelector(
+  const { paymentIntentId } = useSelector(
     (state: RootState) => state.stripeReducer
   );
 
@@ -35,7 +35,7 @@ export default function AddToCart({
           unit_amount,
           currency,
           quantity,
-          paymentIntentID,
+          paymentIntentId,
           stripeProductId: id,
         })
       }

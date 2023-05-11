@@ -48,7 +48,7 @@ export default async function handler(
       //Check the type of the payment intent since Prisma excepts this field to be either a string or undefined
       if (typeof charge.payment_intent === "string") {
         const order = await prisma.order.update({
-          where: { paymentIntentID: charge.payment_intent },
+          where: { paymentIntentId: charge.payment_intent },
           data: { status: "completed" },
         });
       }

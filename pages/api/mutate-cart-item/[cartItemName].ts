@@ -22,7 +22,7 @@ export default async function handler(
       status: "pending",
     },
     select: {
-      paymentIntentID: true,
+      paymentIntentId: true,
       currency: true,
       cartItems: {
         select: {

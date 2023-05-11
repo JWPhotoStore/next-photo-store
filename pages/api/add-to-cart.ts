@@ -31,7 +31,7 @@ export default async function handler(
     unit_amount,
     currency,
     quantity,
-    paymentIntentID,
+    paymentIntentId,
     stripeProductId,
   } = req.body;
 
@@ -40,7 +40,7 @@ export default async function handler(
     amount: quantity * parseFloat(unit_amount),
     currency: currency,
     status: "pending",
-    paymentIntentID: paymentIntentID,
+    paymentIntentId: paymentIntentId,
     cartItems: {
       create: {
         name,
@@ -53,13 +53,13 @@ export default async function handler(
     },
   };
 
-  if (paymentIntentID) {
-    console.log("there is a paymentIntentID here", paymentIntentID);
+  if (paymentIntentId) {
+    console.log("there is a paymentIntentId here", paymentIntentId);
 
-    //Fetch cartItems with the paymentIntentID
+    //Fetch cartItems with the paymentIntentId
     const order = await prisma.order.findUnique({
       where: {
-        paymentIntentID: paymentIntentID,
+        paymentIntentId: paymentIntentId,
       },
       select: {
         cartItems: true,
@@ -78,7 +78,7 @@ export default async function handler(
       const itemID = cartItem?.id;
       const updatedOrder = await prisma.order.update({
         where: {
-          paymentIntentID: paymentIntentID,
+          paymentIntentId: paymentIntentId,
         },
         data: {
           amount: {
@@ -105,7 +105,7 @@ export default async function handler(
       //Update the order total amount and create the new cartItems
       const updatedOrder = await prisma.order.update({
         where: {
-          paymentIntentID: paymentIntentID,
+          paymentIntentId: paymentIntentId,
         },
         data: {
           amount: {
@@ -127,7 +127,7 @@ export default async function handler(
     }
     //TODO: Return all the cartItems back to the client
   } else {
-    console.log("there is NO paymentIntentID yet");
+    console.log("there is NO paymentIntentId yet");
 
     //Create a paymentIntent in Stripe
     const paymentIntent = await stripe.paymentIntents.create({
@@ -136,8 +136,8 @@ export default async function handler(
       automatic_payment_methods: { enabled: true },
     });
 
-    //Updating the paymentIntentID on the order
-    orderData.paymentIntentID = paymentIntent.id;
+    //Updating the paymentIntentId on the order
+    orderData.paymentIntentId = paymentIntent.id;
 
     // Create a new order in prisma and returns the array of cartItems
     const { cartItems } = await prisma.order.create({
@@ -162,7 +162,7 @@ export default async function handler(
 
     res.status(200).json({
       client_secret: paymentIntent.client_secret,
-      id: paymentIntent.id,
+      paymentIntentId: paymentIntent.id,
       //Added currency property for CartItemType requirement
       cartItem: { ...addedItem, currency: currency },
     });
