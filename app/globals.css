@@ -78,6 +78,17 @@ button:hover {
   cursor: pointer;
 }
 
+button:disabled,
+button[disabled] {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+button:disabled:hover,
+button[disabled]:hover {
+  cursor: not-allowed;
+}
+
 li {
   list-style: none;
 }
