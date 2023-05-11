@@ -35,28 +35,6 @@ export default async function handler(
     });
 
     if (activeOrder) {
-      if (req.method === "DELETE") {
-        const { name } = req.body;
-        const cartItemToDelete = activeOrder.cartItems.find(
-          (cI) => cI.name === name
-        );
-
-        if (!cartItemToDelete)
-          throw new Error("Could not find matching cart item in active order.");
-
-        try {
-          await prisma.cartItem.delete({
-            where: {
-              id: cartItemToDelete.id,
-            },
-          });
-          res.status(200).json({ message: "Nice. Deleted." });
-        } catch (e) {
-          res
-            .status(404)
-            .json({ error: e, message: "Could not delete cart item." });
-        }
-      }
       if (req.method === "PATCH") {
         const { name, quantity } = req.body;
         const cartItemToUpdate = activeOrder.cartItems.find(

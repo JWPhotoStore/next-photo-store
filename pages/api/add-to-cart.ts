@@ -18,6 +18,7 @@ export default async function handler(
     res,
     authOptions
   );
+
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
     return;
@@ -97,6 +98,7 @@ export default async function handler(
           },
         },
       });
+      res.status(200).send({ message: "Existing cart item updated in order." });
     }
     //case when adding a new cartItem to the user's cart
     else {
@@ -123,7 +125,7 @@ export default async function handler(
         },
       });
     }
-
+    res.status(200).send({ message: "New cart item added to order." });
     //TODO: Return all the cartItems back to the client
   } else {
     console.log("there is NO paymentIntentID yet");

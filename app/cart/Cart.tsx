@@ -4,15 +4,16 @@ import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import CartMobileHeader from "../components/CartMobileHeader";
 import Link from "next/link";
-import { useGetCartItemsQuery } from "../store/apiSlice";
+import { useGetActiveOrderQuery } from "../store/apiSlice";
 
 export default function Cart() {
-  const { data: cartItems, isLoading } = useGetCartItemsQuery();
+  const { data, isLoading } = useGetActiveOrderQuery();
+  const cartItems = data?.cartItems;
 
   return (
     <>
       {/* TODO: This logic shows empty cart when initial load is in progress */}
-      {!isLoading && cartItems && cartItems.length > 0 ? (
+      {!isLoading && data && cartItems && cartItems.length > 0 ? (
         <div className={styles.cartContainer}>
           <CartMobileHeader cartItems={cartItems} />
           <CartItems cartItems={cartItems} />
