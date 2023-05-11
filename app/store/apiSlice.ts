@@ -25,10 +25,9 @@ export const api = createApi({
       invalidatesTags: ["CartItems"],
     }),
     deleteCartItem: builder.mutation({
-      query: ({ name, quantity, unit_amount }: CartItemBareType) => ({
-        url: "api/mutate-cart-item",
+      query: (cartItemName: string) => ({
+        url: `api/mutate-cart-item/${cartItemName}`,
         method: "DELETE",
-        body: { name, unit_amount, quantity },
       }),
       invalidatesTags: ["CartItems"],
     }),
