@@ -7,7 +7,6 @@ type CheckoutState = "cart" | "checkout" | "success";
 export interface CartState {
   isOpen: boolean;
   cartItems: CartItemType[];
-  // paymentIntentID: string;
   onCheckout: CheckoutState;
 }
 
@@ -27,7 +26,6 @@ const initialState: CartState = {
     //   quantity: 1,
     // },
   ],
-  // paymentIntentID: "",
   onCheckout: "cart",
 };
 

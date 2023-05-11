@@ -18,6 +18,7 @@ export default async function handler(
     res,
     authOptions
   );
+
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
     return;

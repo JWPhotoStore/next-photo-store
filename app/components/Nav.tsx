@@ -14,15 +14,19 @@ import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
 
 export default function Nav({ user }: Session) {
-  const { data, error, isLoading, isSuccess } = useGetActiveOrderQuery();
-
+  const { data, isError, isLoading, isSuccess, error } =
+    useGetActiveOrderQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess && data.paymentIntentID) {
       dispatch(setPaymentIntent(data.paymentIntentID));
     }
-  }, [isSuccess, error]);
+
+    if (isError) {
+      console.error(error);
+    }
+  }, [isSuccess, isError]);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
@@ -54,7 +58,12 @@ export default function Nav({ user }: Session) {
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={25} />
             {/* TODO: Fix this hack. Guest users don't have cartItems so would cause app to crash. Doesn't rerender correctly*/}
-            {!isLoading && data ? data.cartItems.length : ""}
+            {/* {!isLoading && data?.cartItems ? data.cartItems.length : ""} */}
+            {!isLoading && data?.cartItems
+              ? data.cartItems.reduce((acc, cart) => {
+                  return acc + cart.quantity;
+                }, 0)
+              : ""}
           </li>
         </Link>
         {width && width < mobileBreakpoint && (
