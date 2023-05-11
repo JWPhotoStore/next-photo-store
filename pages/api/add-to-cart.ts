@@ -98,6 +98,7 @@ export default async function handler(
           },
         },
       });
+      res.status(200).send({ message: "Existing cart item updated in order." });
     }
     //When adding a new cartItem to the user's cart
     else {
@@ -123,9 +124,7 @@ export default async function handler(
         },
       });
     }
-
-    res.status(200).json({ message: "Order has been updated" });
-
+    res.status(200).send({ message: "New cart item added to order." });
     //TODO: Return all the cartItems back to the client
   } else {
     console.log("there is NO paymentIntentID yet");
