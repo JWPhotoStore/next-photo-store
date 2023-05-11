@@ -71,11 +71,11 @@ export default async function handler(
     const { cartItems } = order;
     //Get the cartItem that matches the name of the item being added
     const cartItem = cartItems.find((cartItem) => cartItem.name === name);
+    const addedTotal = quantity * parseFloat(unit_amount);
 
     //case when cartItem already exist in the customer's cart
     if (cartItem) {
-      const itemID = cartItem.id;
-      const addedTotal = quantity * parseFloat(unit_amount);
+      const itemID = cartItem?.id;
       const updatedOrder = await prisma.order.update({
         where: {
           paymentIntentID: paymentIntentID,
@@ -99,10 +99,9 @@ export default async function handler(
         },
       });
     }
-    //case when adding a new cartItem to the user's cart
+    //When adding a new cartItem to the user's cart
     else {
       //Update the order total amount and create the new cartItems
-      const addedTotal = quantity * parseFloat(unit_amount);
       const updatedOrder = await prisma.order.update({
         where: {
           paymentIntentID: paymentIntentID,
@@ -124,6 +123,8 @@ export default async function handler(
         },
       });
     }
+
+    res.status(200).json({ message: "Order has been updated" });
 
     //TODO: Return all the cartItems back to the client
   } else {
