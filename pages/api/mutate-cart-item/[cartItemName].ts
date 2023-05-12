@@ -21,24 +21,14 @@ export default async function handler(
       userEmail: userSession.user?.email as string,
       status: "pending",
     },
-    select: {
-      paymentIntentId: true,
-      currency: true,
-      cartItems: {
-        select: {
-          id: true,
-          name: true,
-          description: true,
-          unit_amount: true,
-          image: true,
-          quantity: true,
-        },
-      },
+    include: {
+      cartItems: true,
     },
   });
 
+  // TODO: Will only need to handle this scenario if we allow users to add items to a cart before they're logged in
   if (!activeOrder) {
-    res.status(404).json({ message: "No active orders" });
+    res.status(200).json({ message: "No active orders" });
     return;
   }
 
@@ -51,11 +41,26 @@ export default async function handler(
       throw new Error("Could not find matching cart item in active order.");
 
     try {
-      await prisma.cartItem.delete({
+      const { unit_amount, quantity } = cartItemToDelete;
+      const subtractAmount = unit_amount * quantity;
+
+      //Updates order total amount and then removes the item in the order
+      await prisma.order.update({
         where: {
-          id: cartItemToDelete.id,
+          id: activeOrder.id,
+        },
+        data: {
+          amount: {
+            decrement: subtractAmount,
+          },
+          cartItems: {
+            delete: {
+              id: cartItemToDelete.id,
+            },
+          },
         },
       });
+
       res.status(200).json({ message: "Cart item deleted." });
     } catch (e) {
       res
