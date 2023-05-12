@@ -6,13 +6,14 @@ import styles from "@/styles/Nav.module.css";
 import Link from "next/link";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { setCheckout, updateCart } from "../store/cartSlice";
+import { setCheckout } from "../store/cartSlice";
 import { setPaymentIntent } from "../store/stripeSlice";
 import { useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Nav({ user }: Session) {
   const { data, isError, isFetching, isSuccess, error } =
@@ -20,8 +21,8 @@ export default function Nav({ user }: Session) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isSuccess && data.paymentIntentID) {
-      dispatch(setPaymentIntent(data.paymentIntentID));
+    if (isSuccess && data.paymentIntentId) {
+      dispatch(setPaymentIntent(data.paymentIntentId));
     }
 
     if (isError) {
@@ -42,7 +43,7 @@ export default function Nav({ user }: Session) {
 
   if (isFetching) {
     cartItemsLen = "";
-  } else if (isSuccess) {
+  } else if (isSuccess && data.cartItems) {
     cartItemsLen =
       data.cartItems.length === 0 ? "" : sumItemsAndQuantity(data.cartItems);
   }
@@ -72,7 +73,7 @@ export default function Nav({ user }: Session) {
         )}
         <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
-            <RiShoppingCartLine size={25} />
+            <RiShoppingCartLine size={24} />
             {cartItemsLen}
           </li>
         </Link>
@@ -81,7 +82,7 @@ export default function Nav({ user }: Session) {
             className={styles.mobileMenuIcon}
             onClick={() => dispatch(openMobileMenu())}
           >
-            =
+            <RxHamburgerMenu size={25} />
           </div>
         )}
       </ul>

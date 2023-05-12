@@ -3,12 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface StripeState {
   clientSecret: string;
-  paymentIntentID: string;
+  paymentIntentId: string;
 }
 
 const initialState: StripeState = {
   clientSecret: "",
-  paymentIntentID: "",
+  paymentIntentId: "",
 };
 
 //TODO: potentially break out certain reducers into their own slice
@@ -17,7 +17,7 @@ export const stripeSlice = createSlice({
   initialState,
   reducers: {
     setPaymentIntent: (state, action: PayloadAction<string>) => {
-      state.paymentIntentID = action.payload;
+      state.paymentIntentId = action.payload;
     },
     setClientSecret: (state, action: PayloadAction<string>) => {
       state.clientSecret = action.payload;

@@ -26,7 +26,7 @@ model Order {
   currency String
   status String
   createdDate DateTime @default(now())
-  paymentIntentID String? @unique
+  paymentIntentId String? @unique
   cartItems CartItem[]
   
   user User @relation(fields: [userEmail], references: [email])
@@ -40,9 +40,9 @@ model CartItem {
   image String?
   quantity Float @default(0)
   stripeProductId String
-  piID String
+  piId String
 
-  order Order @relation(fields: [piID], references: [paymentIntentID])
+  order Order @relation(fields: [piId], references: [paymentIntentId])
 }
 
 model Account {

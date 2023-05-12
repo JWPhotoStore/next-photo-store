@@ -21,7 +21,7 @@ const stripePromise = loadStripe(
 export default function Checkout() {
   const { data, isSuccess } = useGetActiveOrderQuery();
 
-  const { clientSecret, paymentIntentID } = useSelector(
+  const { clientSecret, paymentIntentId } = useSelector(
     (state: RootState) => state.stripeReducer
   );
 
@@ -36,7 +36,7 @@ export default function Checkout() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: data.cartItems,
-          payment_intent_id: paymentIntentID,
+          payment_intent_id: paymentIntentId,
         }),
       })
         .then((res) => {
