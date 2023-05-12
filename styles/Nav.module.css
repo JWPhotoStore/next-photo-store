@@ -40,6 +40,10 @@
   }
 }
 
+.cartIcon {
+  width: 42px;
+}
+
 .cartIcon:hover {
   cursor: pointer;
 }

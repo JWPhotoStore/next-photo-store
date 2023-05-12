@@ -74,7 +74,7 @@ export default function Nav({ user }: Session) {
         <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={24} />
-            {cartItemsLen}
+            <span>{cartItemsLen}</span>
           </li>
         </Link>
         {width && width < mobileBreakpoint && (
