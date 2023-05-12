@@ -8,6 +8,7 @@ import { RootState } from "../store/store";
 import { closeMobileMenu } from "../store/uiSlice";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { TfiClose } from "react-icons/tfi";
 
 export default function MobileMenu({ user }: Session) {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ export default function MobileMenu({ user }: Session) {
           transition={{ duration: 0.1 }}
           className={styles.mobileMenuContainer}
         >
-          <span onClick={() => dispatch(closeMobileMenu())}>X</span>
+          <span onClick={() => dispatch(closeMobileMenu())}>
+            <TfiClose />
+          </span>
           <div className={styles.linksContainer}>
             <Link href="/" onClick={closeMenuWithDelay}>
               <span>Prints</span>

@@ -13,6 +13,7 @@ import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Nav({ user }: Session) {
   const { data, isError, isFetching, isSuccess, error } =
@@ -81,7 +82,7 @@ export default function Nav({ user }: Session) {
             className={styles.mobileMenuIcon}
             onClick={() => dispatch(openMobileMenu())}
           >
-            =
+            <RxHamburgerMenu size={25} />
           </div>
         )}
       </ul>
