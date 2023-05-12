@@ -28,7 +28,7 @@ export default function Nav({ user }: Session) {
     if (isError) {
       console.error(error);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, data]);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
