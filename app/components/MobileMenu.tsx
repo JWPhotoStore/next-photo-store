@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { signIn } from "next-auth/react";
 import styles from "@/styles/MobileMenu.module.css";
 import { Session } from "next-auth";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,9 +29,18 @@ export default function MobileMenu({ user }: Session) {
           transition={{ duration: 0.1 }}
           className={styles.mobileMenuContainer}
         >
-          <span onClick={() => dispatch(closeMobileMenu())}>
-            <TfiClose />
-          </span>
+          <div className={styles.mobileHeaderContainer}>
+            {user ? (
+              <span className={styles.authAction}>
+                hello <span>{user.name}</span>
+              </span>
+            ) : (
+              ""
+            )}
+            <span onClick={() => dispatch(closeMobileMenu())}>
+              <TfiClose />
+            </span>
+          </div>
           <div className={styles.linksContainer}>
             <Link href="/" onClick={closeMenuWithDelay}>
               <span>Prints</span>
@@ -42,6 +51,17 @@ export default function MobileMenu({ user }: Session) {
             <Link href="/contact" onClick={closeMenuWithDelay}>
               Contact
             </Link>
+            {user ? (
+              <Link href="/api/auth/signout">
+                <span className={styles.authAction}>
+                  <span>Sign Out</span>
+                </span>
+              </Link>
+            ) : (
+              <span className={styles.authAction} onClick={() => signIn()}>
+                <span className={styles.signInLink}>Sign in</span>
+              </span>
+            )}
           </div>
         </motion.div>
       )}

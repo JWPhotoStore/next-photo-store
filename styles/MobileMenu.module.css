@@ -11,6 +11,12 @@
   gap: 5rem;
 }
 
+.mobileHeaderContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .linksContainer {
   width: 100%;
   display: flex;
@@ -20,7 +26,8 @@
   text-align: center;
 }
 
-.mobileMenuContainer a {
+.mobileMenuContainer a,
+.signInLink {
   width: 100%;
   font-size: 3rem;
 }
