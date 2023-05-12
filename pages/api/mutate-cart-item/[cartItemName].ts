@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/util/prisma";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { UpdateMethodType } from "@/types/UpdateMethodType";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +14,6 @@ export default async function handler(
     res.status(403).json({ message: "Not logged in" });
     return;
   }
-  const { cartItemName } = req.query;
 
   //Get active order and include the cartItems
   const activeOrder = await prisma.order.findFirst({
@@ -26,23 +26,25 @@ export default async function handler(
     },
   });
 
-  // TODO: Will only need to handle this scenario if we allow users to add items to a cart before they're logged in
+  // TODO: Discuss this - Will only need to handle this scenario if we allow users to add items to a cart before they're logged in
   if (!activeOrder) {
     res.status(200).json({ message: "No active orders" });
     return;
   }
 
-  if (req.method === "DELETE") {
-    const cartItemToDelete = activeOrder.cartItems.find(
-      (cI) => cI.name === cartItemName
-    );
+  //When deleting a cartItem
+  const { cartItemName } = req.query;
+  const updateAmountMethod: UpdateMethodType = {};
 
-    if (!cartItemToDelete)
-      throw new Error("Could not find matching cart item in active order.");
+  const cartItemToDelete = activeOrder.cartItems.find(
+    (cI) => cI.name === cartItemName
+  );
 
+  if (cartItemToDelete) {
     try {
       const { unit_amount, quantity } = cartItemToDelete;
-      const subtractAmount = unit_amount * quantity;
+      const updateAmount = unit_amount * quantity;
+      updateAmountMethod.decrement = updateAmount;
 
       //Updates order total amount and then removes the item in the order
       await prisma.order.update({
@@ -50,9 +52,7 @@ export default async function handler(
           id: activeOrder.id,
         },
         data: {
-          amount: {
-            decrement: subtractAmount,
-          },
+          amount: updateAmountMethod,
           cartItems: {
             delete: {
               id: cartItemToDelete.id,
@@ -60,12 +60,13 @@ export default async function handler(
           },
         },
       });
-
-      res.status(200).json({ message: "Cart item deleted." });
+      return res.status(200).json({ message: "Cart item deleted." });
     } catch (e) {
-      res
+      return res
         .status(404)
         .json({ error: e, message: "Could not delete cart item." });
     }
   }
+
+  return res.status(404).json({ message: "No cart item found." });
 }
