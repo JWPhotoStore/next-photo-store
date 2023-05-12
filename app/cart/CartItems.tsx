@@ -3,6 +3,7 @@
 import styles from "@/styles/Cart.module.css";
 import CartItem from "./CartItem";
 import { CartItemType } from "@/types/CartItemType";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CartItems({
   cartItems,
@@ -12,9 +13,17 @@ export default function CartItems({
   return (
     <div className={styles.cartItemsContainer}>
       <h2>Shopping Cart</h2>
-      {cartItems.map((cartItem, index) => (
-        <CartItem cartItem={cartItem} key={`${cartItem.name}${index}`} />
-      ))}
+      <AnimatePresence>
+        {cartItems.map((cartItem, index) => (
+          <motion.div
+            key={`${cartItem.name}${index}`}
+            exit={{ opacity: 0 }}
+            className={styles.cartItemContainer}
+          >
+            <CartItem cartItem={cartItem} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }

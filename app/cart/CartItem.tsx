@@ -20,7 +20,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   const [updateCartItem, { isLoading }] = useUpdateCartItemMutation();
 
   return (
-    <div className={styles.cartItemContainer}>
+    <>
       <Image src={image} alt={name} width={100} height={100} />
       <div className={styles.cartItemDetails}>
         <Link
@@ -63,6 +63,6 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
         <DeleteItem itemToDelete={name} />
         <p>{formatPrice(unit_amount * quantity)}</p>
       </div>
-    </div>
+    </>
   );
 }
