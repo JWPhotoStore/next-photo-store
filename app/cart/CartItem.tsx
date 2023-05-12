@@ -3,12 +3,9 @@ import Image from "next/image";
 import styles from "@/styles/Cart.module.css";
 import { formatPrice } from "@/util/PriceFormat";
 import { CartItemType } from "@/types/CartItemType";
-import { CgClose } from "react-icons/cg";
-import {
-  useDeleteCartItemMutation,
-  useUpdateCartItemMutation,
-} from "../store/apiSlice";
+import { useUpdateCartItemMutation } from "../store/apiSlice";
 import Link from "next/link";
+import DeleteItem from "../components/DeleteCartItem";
 
 export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   const {
@@ -20,16 +17,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
     currency,
     stripeProductId,
   } = cartItem;
-  const [deleteCartItem] = useDeleteCartItemMutation();
   const [updateCartItem, { isLoading }] = useUpdateCartItemMutation();
-
-  const onDeleteCartItemClicked = async () => {
-    try {
-      await deleteCartItem(name).unwrap();
-    } catch (err) {
-      console.error("Failed to delete cart item: ", err);
-    }
-  };
 
   return (
     <div className={styles.cartItemContainer}>
@@ -72,7 +60,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
         </div>
       </div>
       <div className={styles.cartItemPrice}>
-        <CgClose onClick={() => onDeleteCartItemClicked()} />
+        <DeleteItem itemToDelete={name} />
         <p>{formatPrice(unit_amount * quantity)}</p>
       </div>
     </div>
