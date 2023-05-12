@@ -8,7 +8,7 @@ const getProducts = async () => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2022-11-15",
   });
-  const products = await stripe.products.list();
+  const products = await stripe.products.list({ active: true });
   const productsWithPrices = await Promise.all(
     products.data.map(async (product) => {
       const prices = await stripe.prices.list({ product: product.id });
