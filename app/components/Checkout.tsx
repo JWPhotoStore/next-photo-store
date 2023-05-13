@@ -28,30 +28,30 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    //Create a payment intent as soon as the page loads up
-    if (isSuccess) {
-      fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: data.cartItems,
-          payment_intent_id: paymentIntentId,
-        }),
-      })
-        .then((res) => {
-          if (res.status === 403) {
-            return router.push("/api/auth/signin");
-          }
-          return res.json();
-        })
-        .then((data: PaymentIntentResType) => {
-          // SET CLIENT SECRET and the payment intent associated with it
-          dispatch(setClientSecret(data.client_secret));
-          dispatch(setPaymentIntent(data.id));
-        });
-    }
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   //Create a payment intent as soon as the page loads up
+  //   if (isSuccess) {
+  //     fetch("/api/update-stripe", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         // items: data.cartItems,
+  //         paymentIntentId,
+  //       }),
+  //     })
+  //       .then((res) => {
+  //         if (res.status === 403) {
+  //           return router.push("/api/auth/signin");
+  //         }
+  //         return res.json();
+  //       })
+  //       .then((data: PaymentIntentResType) => {
+  //         // SET CLIENT SECRET and the payment intent associated with it
+  //         dispatch(setClientSecret(data.client_secret));
+  //         // dispatch(setPaymentIntent(data.id));
+  //       });
+  //   }
+  // }, [isSuccess]);
 
   const options: StripeElementsOptions = {
     clientSecret,

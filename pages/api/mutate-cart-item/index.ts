@@ -31,21 +31,26 @@ export default async function handler(
     return;
   }
 
-  //When deleting a cartItem
-  const { cartItemName } = req.query;
+  const { name, unit_amount, quantity } = req.body;
   const updateAmountMethod: UpdateMethodType = {};
+  const updateQuantityMethod: UpdateMethodType = {};
 
-  const cartItemToDelete = activeOrder.cartItems.find(
-    (cI) => cI.name === cartItemName
-  );
+  const cartItemToUpdate = activeOrder.cartItems.find((cI) => cI.name === name);
 
-  if (cartItemToDelete) {
+  if (cartItemToUpdate) {
+    const quantityChange = quantity - cartItemToUpdate.quantity;
+    const updateAmount = Math.abs(quantityChange) * unit_amount;
+
     try {
-      const { unit_amount, quantity } = cartItemToDelete;
-      const updateAmount = unit_amount * quantity;
-      updateAmountMethod.decrement = updateAmount;
+      if (quantityChange > 0) {
+        updateAmountMethod.increment = updateAmount;
+        updateQuantityMethod.increment = Math.abs(quantityChange);
+      }
+      if (quantityChange < 0) {
+        updateAmountMethod.decrement = updateAmount;
+        updateQuantityMethod.decrement = Math.abs(quantityChange);
+      }
 
-      //Updates order total amount and then removes the item in the order
       await prisma.order.update({
         where: {
           id: activeOrder.id,
@@ -53,17 +58,23 @@ export default async function handler(
         data: {
           amount: updateAmountMethod,
           cartItems: {
-            delete: {
-              id: cartItemToDelete.id,
+            update: {
+              where: {
+                id: cartItemToUpdate.id,
+              },
+              data: {
+                quantity: updateQuantityMethod,
+              },
             },
           },
         },
       });
-      return res.status(200).json({ message: "Cart item deleted." });
-    } catch (e) {
+
+      return res.status(200).json({ message: "Quantity has been updated" });
+    } catch (err) {
       return res
         .status(404)
-        .json({ error: e, message: "Could not delete cart item." });
+        .json({ message: "Could not update cart item quantity" });
     }
   }
 

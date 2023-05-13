@@ -16,7 +16,7 @@ import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Nav({ user }: Session) {
-  const { data, isError, isFetching, isSuccess, error } =
+  const { data, isFetching, isSuccess, isError, error } =
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export default function Nav({ user }: Session) {
     if (isError) {
       console.error(error);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, data]);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
