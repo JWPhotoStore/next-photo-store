@@ -4,12 +4,17 @@ import { formatPrice } from "@/util/PriceFormat";
 import { useDispatch } from "react-redux";
 import { setCheckout } from "../store/cartSlice";
 import styles from "@/styles/Cart.module.css";
+import { useGetClientSecretQuery } from "../store/apiSlice";
+import { useEffect } from "react";
+import { setClientSecret } from "../store/stripeSlice";
 
 export default function CartSummary({
   cartItems,
 }: {
   cartItems: CartItemType[];
 }) {
+  const { data, isSuccess, isFetching, isLoading, isError, error } =
+    useGetClientSecretQuery();
   const dispatch = useDispatch();
 
   const calculateSum = () => {
@@ -17,6 +22,16 @@ export default function CartSummary({
       return acc + item.unit_amount * item.quantity;
     }, 0);
   };
+
+  useEffect(() => {
+    if (isSuccess && data.clientSecret) {
+      dispatch(setClientSecret(data.clientSecret));
+    }
+
+    if (isError) {
+      console.error(error);
+    }
+  }, [isSuccess, isError, data]);
 
   return (
     <div className={styles.cartSummaryContainer}>

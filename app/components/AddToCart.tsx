@@ -1,7 +1,7 @@
 "use client";
 
 import { ProductType } from "@/types/ProductType";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { useAddCartItemMutation } from "../store/apiSlice";
 import React from "react";
