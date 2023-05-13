@@ -9,8 +9,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   //TODO: discuss whether we need this for user thats not signed in
-
-  console.log("did this hit?");
   const userSession = await getServerSession(req, res, authOptions);
   if (!userSession?.user) {
     res.status(403).json({ message: "Not logged in" });
@@ -28,7 +26,6 @@ export default async function handler(
     },
   });
 
-  //TODO: Discuss this - Will only need to handle this scenario if we allow users to add items to a cart before they're logged in
   if (!activeOrder) {
     res.status(200).json({ message: "No active orders" });
     return;
@@ -53,9 +50,6 @@ export default async function handler(
         updateAmountMethod.decrement = updateAmount;
         updateQuantityMethod.decrement = Math.abs(quantityChange);
       }
-
-      console.log("updateAmountMethod", updateAmountMethod);
-      console.log("updateQuantityMethod", updateQuantityMethod);
 
       await prisma.order.update({
         where: {

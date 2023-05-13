@@ -26,7 +26,6 @@ export default async function handler(
     },
   });
 
-  // TODO: Discuss this - Will only need to handle this scenario if we allow users to add items to a cart before they're logged in
   if (!activeOrder) {
     res.status(200).json({ message: "No active orders" });
     return;
