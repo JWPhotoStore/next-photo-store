@@ -7,6 +7,7 @@ import styles from "@/styles/Cart.module.css";
 import { useGetClientSecretQuery } from "../store/apiSlice";
 import { useEffect } from "react";
 import { setClientSecret } from "../store/stripeSlice";
+import { calculateCartItemsSum } from "@/util/cart-item-utils";
 
 export default function CartSummary({
   cartItems,
@@ -16,12 +17,6 @@ export default function CartSummary({
   const { data, isSuccess, isFetching, isLoading, isError, error } =
     useGetClientSecretQuery();
   const dispatch = useDispatch();
-
-  const calculateSum = () => {
-    return cartItems.reduce((acc: number, item: CartItemType) => {
-      return acc + item.unit_amount * item.quantity;
-    }, 0);
-  };
 
   useEffect(() => {
     if (isSuccess && data.clientSecret) {
@@ -38,7 +33,7 @@ export default function CartSummary({
       <h2>Summary</h2>
       <div className={styles.inlinePriceContainer}>
         <h3>Subtotal: </h3>
-        <h3>{formatPrice(calculateSum())}</h3>
+        <h3>{formatPrice(calculateCartItemsSum(cartItems))}</h3>
       </div>
       <button onClick={() => dispatch(setCheckout("checkout"))}>
         Checkout

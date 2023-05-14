@@ -6,6 +6,12 @@ export const sumItemsAndQuantity = (cartItems: CartItemType[]) => {
   }, 0);
 };
 
+export const calculateCartItemsSum = (cartItems: CartItemType[]) => {
+  return cartItems.reduce((acc: number, item: CartItemType) => {
+    return acc + item.unit_amount * item.quantity;
+  }, 0);
+};
+
 const updateLocalStorageAndAddListener = (cartItems: CartItemType[]) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
   window.dispatchEvent(new Event("cartItemLocalStorage"));
