@@ -21,18 +21,19 @@ export default function Cart() {
         setCartItems(data.cartItems);
       }
     }
-
-    const cartItemsLS = getCartItemsLS();
-    setCartItems(cartItemsLS);
-
-    const renderCartItemsLS = () => {
+    if (session.status === "unauthenticated") {
       const cartItemsLS = getCartItemsLS();
       setCartItems(cartItemsLS);
-    };
-    window.addEventListener("cartItemLocalStorage", renderCartItemsLS);
 
-    return () =>
-      window.removeEventListener("cartItemLocalStorage", renderCartItemsLS);
+      const renderCartItemsLS = () => {
+        const cartItemsLS = getCartItemsLS();
+        setCartItems(cartItemsLS);
+      };
+      window.addEventListener("cartItemLocalStorage", renderCartItemsLS);
+
+      return () =>
+        window.removeEventListener("cartItemLocalStorage", renderCartItemsLS);
+    }
   }, [session.status, isFetching, isSuccess]);
 
   return (
