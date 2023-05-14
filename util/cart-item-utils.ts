@@ -1,23 +1,23 @@
 import { CartItemBareType, CartItemType } from "@/types/CartItemType";
 
-export const sumItemsAndQuantity = (cartItems: CartItemType[]) => {
+export const sumItemsAndQuantity = (cartItems: CartItemType[]): number => {
   return cartItems.reduce((acc, cartItem) => {
     return acc + cartItem.quantity;
   }, 0);
 };
 
-export const calculateCartItemsSum = (cartItems: CartItemType[]) => {
+export const calculateCartItemsSum = (cartItems: CartItemType[]): number => {
   return cartItems.reduce((acc: number, item: CartItemType) => {
     return acc + item.unit_amount * item.quantity;
   }, 0);
 };
 
-const updateLocalStorageAndAddListener = (cartItems: CartItemType[]) => {
+const updateLocalStorageAndAddListener = (cartItems: CartItemType[]): void => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
   window.dispatchEvent(new Event("cartItemLocalStorage"));
 };
 
-export const addCartItemToLocalStorage = (targetItem: CartItemType) => {
+export const addCartItemToLocalStorage = (targetItem: CartItemType): void => {
   const localStorageCartItems = localStorage.getItem("cartItems");
 
   if (!localStorageCartItems) {
@@ -39,7 +39,7 @@ export const addCartItemToLocalStorage = (targetItem: CartItemType) => {
   }
 };
 
-export const deleteCartItemToLocalStorage = (targetItemName: string) => {
+export const deleteCartItemToLocalStorage = (targetItemName: string): void => {
   const cartItems: CartItemType[] = getCartItemsLS();
   const targetItemIdx = cartItems.findIndex((ci) => ci.name === targetItemName);
   cartItems.splice(targetItemIdx, 1);
@@ -48,7 +48,7 @@ export const deleteCartItemToLocalStorage = (targetItemName: string) => {
 
 export const updateCartItemInLocalStorage = (
   cartItemToUpdate: CartItemBareType
-) => {
+): void => {
   const cartItems: CartItemType[] = getCartItemsLS();
   for (const cI of cartItems) {
     if (cI.name === cartItemToUpdate.name)
@@ -57,13 +57,13 @@ export const updateCartItemInLocalStorage = (
   updateLocalStorageAndAddListener(cartItems);
 };
 
-export const getCartItemsLS = () => {
+export const getCartItemsLS = (): CartItemType[] => {
   const localStorageCartItems = localStorage.getItem("cartItems");
   if (!localStorageCartItems) return [];
   return JSON.parse(localStorageCartItems);
 };
 
-export const getCartItemsTotalQuantityLS = () => {
+export const getCartItemsTotalQuantityLS = (): number => {
   const lsCartItems = getCartItemsLS();
   return sumItemsAndQuantity(lsCartItems);
 };
