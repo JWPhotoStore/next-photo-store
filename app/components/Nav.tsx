@@ -14,7 +14,11 @@ import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { getCartItemsLS, sumItemsAndQuantity } from "@/util/cart-item-utils";
+import {
+  getCartItemsLS,
+  getCartItemsTotalQuantityLS,
+  sumItemsAndQuantity,
+} from "@/util/cart-item-utils";
 
 declare global {
   interface WindowEventMap {
@@ -26,10 +30,28 @@ export default function Nav({ user }: Session) {
   const { data, isFetching, isSuccess, isError, error } =
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
-  const [length, setLength] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
-    if (isSuccess && data.cartItems) setLength(data.cartItems.length);
+    if (user) return; // handles guest users only
+    const totalQuantityLS = getCartItemsTotalQuantityLS();
+    setTotalQuantity(totalQuantityLS);
+
+    const renderCartItemsLSLength = () => {
+      const totalQuantity = getCartItemsTotalQuantityLS();
+      setTotalQuantity(totalQuantity);
+    };
+    window.addEventListener("cartItemLocalStorage", renderCartItemsLSLength);
+
+    return () =>
+      window.removeEventListener(
+        "cartItemLocalStorage",
+        renderCartItemsLSLength
+      );
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess && data.cartItems) setTotalQuantity(data.cartItems.length);
     if (isSuccess && data.paymentIntentId) {
       dispatch(setPaymentIntent(data.paymentIntentId));
     }
@@ -40,35 +62,11 @@ export default function Nav({ user }: Session) {
 
     if (!user) return;
     if (isFetching) {
-      setLength(0);
+      setTotalQuantity(0);
     } else if (isSuccess && data.cartItems) {
-      setLength(sumItemsAndQuantity(data.cartItems));
+      setTotalQuantity(sumItemsAndQuantity(data.cartItems));
     }
   }, [isFetching, isSuccess, isError, data]);
-
-  useEffect(() => {
-    const renderCartItemsLSLength = () => {
-      if (!user) {
-        const lsCartItems = getCartItemsLS();
-        const totalQuantity = sumItemsAndQuantity(lsCartItems);
-        setLength(totalQuantity);
-      }
-    };
-    window.addEventListener("cartItemLocalStorage", renderCartItemsLSLength);
-
-    return () =>
-      window.removeEventListener(
-        "cartItemLocalStorage",
-        renderCartItemsLSLength
-      );
-  }, [length, user]);
-
-  useEffect(() => {
-    if (!user) {
-      const totalQuantity = sumItemsAndQuantity(getCartItemsLS());
-      setLength(totalQuantity);
-    }
-  }, []);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
@@ -99,7 +97,7 @@ export default function Nav({ user }: Session) {
         <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={24} />
-            <span>{length === 0 ? "" : length}</span>
+            <span>{totalQuantity === 0 ? "" : totalQuantity}</span>
           </li>
         </Link>
         {width && width < mobileBreakpoint && (

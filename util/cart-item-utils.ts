@@ -38,3 +38,8 @@ export const getCartItemsLS = () => {
   if (!localStorageCartItems) return [];
   return JSON.parse(localStorageCartItems);
 };
+
+export const getCartItemsTotalQuantityLS = () => {
+  const lsCartItems = getCartItemsLS();
+  return sumItemsAndQuantity(lsCartItems);
+};
