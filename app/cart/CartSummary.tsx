@@ -4,17 +4,21 @@ import { formatPrice } from "@/util/PriceFormat";
 import { useDispatch } from "react-redux";
 import { setCheckout } from "../store/cartSlice";
 import styles from "@/styles/Cart.module.css";
-import { useGetClientSecretQuery } from "../store/apiSlice";
+import {
+  useGetClientSecretQuery,
+  useGetActiveOrderQuery,
+} from "../store/apiSlice";
 import { useEffect } from "react";
 import { setClientSecret } from "../store/stripeSlice";
+import { BeatLoader } from "react-spinners";
 
 export default function CartSummary({
   cartItems,
 }: {
   cartItems: CartItemType[];
 }) {
-  const { data, isSuccess, isFetching, isLoading, isError, error } =
-    useGetClientSecretQuery();
+  const { data, isSuccess, isError, error } = useGetClientSecretQuery();
+  const { isLoading, isFetching } = useGetActiveOrderQuery();
   const dispatch = useDispatch();
 
   const calculateSum = () => {
@@ -38,7 +42,13 @@ export default function CartSummary({
       <h2>Summary</h2>
       <div className={styles.inlinePriceContainer}>
         <h3>Subtotal: </h3>
-        <h3>{formatPrice(calculateSum())}</h3>
+        <h3>
+          {isLoading || isFetching ? (
+            <BeatLoader size={6} />
+          ) : (
+            formatPrice(calculateSum())
+          )}
+        </h3>
       </div>
       <button onClick={() => dispatch(setCheckout("checkout"))}>
         Checkout

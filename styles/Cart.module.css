@@ -58,9 +58,17 @@
     gap: 5rem;
   }
 
-  .cartItemsContainer {
+  .cartItemsContainer,
+  .cartLoaderContainer {
     border: var(--debug-border) grey solid;
     flex-grow: 2;
+  }
+
+  .cartLoaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
   }
 
   .cartItemContainer {

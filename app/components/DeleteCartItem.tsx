@@ -1,6 +1,6 @@
 import { useDeleteCartItemMutation } from "../store/apiSlice";
-import { TailSpin } from "react-loader-spinner";
 import { CgClose } from "react-icons/cg";
+import { MoonLoader } from "react-spinners";
 
 export default function DeleteCartItem({
   itemToDelete,
@@ -20,7 +20,7 @@ export default function DeleteCartItem({
   return (
     <>
       {isLoading ? (
-        <TailSpin height="1em" width="1em" color="grey" />
+        <MoonLoader size="15" color="grey" />
       ) : (
         <CgClose onClick={() => handleDelete(itemToDelete)} />
       )}
