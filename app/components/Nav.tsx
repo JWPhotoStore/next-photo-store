@@ -15,7 +15,6 @@ import { useGetActiveOrderQuery } from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
 import {
-  getCartItemsLS,
   getCartItemsTotalQuantityLS,
   sumItemsAndQuantity,
 } from "@/util/cart-item-utils";
