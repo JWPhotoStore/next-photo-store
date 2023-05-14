@@ -5,10 +5,13 @@ import CartSummary from "./CartSummary";
 import CartMobileHeader from "../components/CartMobileHeader";
 import Link from "next/link";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
+import { useSession } from "next-auth/react";
 
 export default function Cart() {
   const { data, isLoading } = useGetActiveOrderQuery();
   const cartItems = data?.cartItems;
+
+  const sessionData = useSession();
 
   return (
     <>
