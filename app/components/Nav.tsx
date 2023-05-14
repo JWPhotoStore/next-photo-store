@@ -8,19 +8,28 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { setCheckout } from "../store/cartSlice";
 import { setPaymentIntent } from "../store/stripeSlice";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
 import { useGetActiveOrderQuery } from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { getCartItemsLS, sumItemsAndQuantity } from "@/util/cart-item-utils";
+
+declare global {
+  interface WindowEventMap {
+    cartItemLocalStorage: CustomEvent;
+  }
+}
 
 export default function Nav({ user }: Session) {
   const { data, isFetching, isSuccess, isError, error } =
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
+  const [length, setLength] = useState(0);
 
   useEffect(() => {
+    if (isSuccess && data.cartItems) setLength(data.cartItems.length);
     if (isSuccess && data.paymentIntentId) {
       dispatch(setPaymentIntent(data.paymentIntentId));
     }
@@ -30,14 +39,33 @@ export default function Nav({ user }: Session) {
     }
   }, [isSuccess, isError, data]);
 
+  useEffect(() => {
+    const renderCartItemsLSLength = () => {
+      if (!user) {
+        const lsCartItems = getCartItemsLS();
+        const totalQuantity = sumItemsAndQuantity(lsCartItems);
+        setLength(totalQuantity);
+      }
+    };
+    window.addEventListener("cartItemLocalStorage", renderCartItemsLSLength);
+
+    return () =>
+      window.removeEventListener(
+        "cartItemLocalStorage",
+        renderCartItemsLSLength
+      );
+  }, [length, user]);
+
+  useEffect(() => {
+    if (!user) {
+      const lsCartItems = getCartItemsLS();
+      const totalQuantity = sumItemsAndQuantity(lsCartItems);
+      setLength(totalQuantity);
+    }
+  }, []);
+
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
-
-  const sumItemsAndQuantity = (cartItems: CartItemType[]) => {
-    return cartItems.reduce((acc, cartItem) => {
-      return acc + cartItem.quantity;
-    }, 0);
-  };
 
   let cartItemsLen: string | number = "";
 
@@ -74,7 +102,7 @@ export default function Nav({ user }: Session) {
         <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={24} />
-            <span>{cartItemsLen}</span>
+            <span>{length === 0 ? "" : length}</span>
           </li>
         </Link>
         {width && width < mobileBreakpoint && (
