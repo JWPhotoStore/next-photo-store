@@ -38,5 +38,3 @@ export const getCartItemsLS = () => {
   if (!localStorageCartItems) return [];
   return JSON.parse(localStorageCartItems);
 };
-
-export const getCartItemsLSTotalQuantity = (cartItems: []) => {};

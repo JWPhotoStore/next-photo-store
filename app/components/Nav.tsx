@@ -37,7 +37,14 @@ export default function Nav({ user }: Session) {
     if (isError) {
       console.error(error);
     }
-  }, [isSuccess, isError, data]);
+
+    if (!user) return;
+    if (isFetching) {
+      setLength(0);
+    } else if (isSuccess && data.cartItems) {
+      setLength(sumItemsAndQuantity(data.cartItems));
+    }
+  }, [isFetching, isSuccess, isError, data]);
 
   useEffect(() => {
     const renderCartItemsLSLength = () => {
@@ -58,23 +65,13 @@ export default function Nav({ user }: Session) {
 
   useEffect(() => {
     if (!user) {
-      const lsCartItems = getCartItemsLS();
-      const totalQuantity = sumItemsAndQuantity(lsCartItems);
+      const totalQuantity = sumItemsAndQuantity(getCartItemsLS());
       setLength(totalQuantity);
     }
   }, []);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;
-
-  let cartItemsLen: string | number = "";
-
-  if (isFetching) {
-    cartItemsLen = "";
-  } else if (isSuccess && data.cartItems) {
-    cartItemsLen =
-      data.cartItems.length === 0 ? "" : sumItemsAndQuantity(data.cartItems);
-  }
 
   return (
     <nav>
