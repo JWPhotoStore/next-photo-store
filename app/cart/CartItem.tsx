@@ -2,10 +2,12 @@
 import Image from "next/image";
 import styles from "@/styles/Cart.module.css";
 import { formatPrice } from "@/util/PriceFormat";
-import { CartItemType } from "@/types/CartItemType";
+import { CartItemBareType, CartItemType } from "@/types/CartItemType";
 import { useUpdateCartItemMutation } from "../store/apiSlice";
 import Link from "next/link";
 import DeleteItem from "../components/DeleteCartItem";
+import { useSession } from "next-auth/react";
+import { updateCartItemInLocalStorage } from "@/util/cart-item-utils";
 
 export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
   const {
@@ -18,6 +20,21 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
     stripeProductId,
   } = cartItem;
   const [updateCartItem, { isLoading }] = useUpdateCartItemMutation();
+  const { status } = useSession();
+
+  const handleUpdate = async (e: React.SyntheticEvent) => {
+    const cartItem: CartItemBareType = {
+      name,
+      unit_amount,
+      quantity: parseInt(e.target.value),
+    };
+    try {
+      if (status === "unauthenticated") updateCartItemInLocalStorage(cartItem);
+      if (status === "authenticated") await updateCartItem(cartItem).unwrap();
+    } catch (err) {
+      console.error("Failed to update cart quantity: ", err);
+    }
+  };
 
   return (
     <>
@@ -42,13 +59,7 @@ export default function CartItem({ cartItem }: { cartItem: CartItemType }) {
           <span>Quantity: </span>
           <select
             value={quantity}
-            onChange={(e) =>
-              updateCartItem({
-                name,
-                unit_amount,
-                quantity: parseInt(e.target.value),
-              }).unwrap()
-            }
+            onChange={(e: React.SyntheticEvent) => handleUpdate(e)}
             disabled={isLoading}
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((option) => (

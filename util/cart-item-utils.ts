@@ -1,4 +1,4 @@
-import { CartItemType } from "@/types/CartItemType";
+import { CartItemBareType, CartItemType } from "@/types/CartItemType";
 
 export const sumItemsAndQuantity = (cartItems: CartItemType[]) => {
   return cartItems.reduce((acc, cartItem) => {
@@ -37,6 +37,17 @@ export const deleteCartItemToLocalStorage = (targetItemName: string) => {
   const cartItems: CartItemType[] = getCartItemsLS();
   const targetItemIdx = cartItems.findIndex((ci) => ci.name === targetItemName);
   cartItems.splice(targetItemIdx, 1);
+  updateLocalStorageAndAddListener(cartItems);
+};
+
+export const updateCartItemInLocalStorage = (
+  cartItemToUpdate: CartItemBareType
+) => {
+  const cartItems: CartItemType[] = getCartItemsLS();
+  for (const cI of cartItems) {
+    if (cI.name === cartItemToUpdate.name)
+      cI.quantity = cartItemToUpdate.quantity;
+  }
   updateLocalStorageAndAddListener(cartItems);
 };
 
