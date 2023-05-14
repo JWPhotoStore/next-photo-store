@@ -12,15 +12,27 @@ import { CartItemType } from "@/types/CartItemType";
 export default function Cart() {
   const { data, isLoading, isFetching, isSuccess } = useGetActiveOrderQuery();
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-
   const session = useSession();
+
   useEffect(() => {
-    if (session.status === "unauthenticated") {
+    if (session.status === "loading") return;
+    if (session.status === "authenticated") {
+      if (isSuccess && data?.cartItems) {
+        setCartItems(data.cartItems);
+      }
+    }
+
+    const cartItemsLS = getCartItemsLS();
+    setCartItems(cartItemsLS);
+
+    const renderCartItemsLS = () => {
       const cartItemsLS = getCartItemsLS();
       setCartItems(cartItemsLS);
-    } else if (isSuccess && data?.cartItems) {
-      setCartItems(data.cartItems);
-    }
+    };
+    window.addEventListener("cartItemLocalStorage", renderCartItemsLS);
+
+    return () =>
+      window.removeEventListener("cartItemLocalStorage", renderCartItemsLS);
   }, [session.status, isFetching, isSuccess]);
 
   return (

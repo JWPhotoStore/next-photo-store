@@ -33,6 +33,13 @@ export const addCartItemToLocalStorage = (targetItem: CartItemType) => {
   }
 };
 
+export const deleteCartItemToLocalStorage = (targetItemName: string) => {
+  const cartItems: CartItemType[] = getCartItemsLS();
+  const targetItemIdx = cartItems.findIndex((ci) => ci.name === targetItemName);
+  cartItems.splice(targetItemIdx, 1);
+  updateLocalStorageAndAddListener(cartItems);
+};
+
 export const getCartItemsLS = () => {
   const localStorageCartItems = localStorage.getItem("cartItems");
   if (!localStorageCartItems) return [];
