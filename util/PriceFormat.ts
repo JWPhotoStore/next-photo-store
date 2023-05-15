@@ -7,8 +7,8 @@ export const formatPrice = (amount: number) => {
   }).format(amount / 100);
 };
 
-export const calculateOrderAmount = (items: CartItemType[]) => {
-  const totalPrice = items.reduce((acc, item) => {
+export const calculateOrderAmount = (cartItems: CartItemType[]) => {
+  const totalPrice = cartItems.reduce((acc, item) => {
     return acc + item.unit_amount * item.quantity;
   }, 0);
 
