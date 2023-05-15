@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { useAddCartItemMutation } from "../store/apiSlice";
 import React from "react";
-import { CartItemType } from "@/types/CartItemType";
+import { CartItemBackendType, CartItemType } from "@/types/CartItemType";
 import { addCartItemToLocalStorage } from "@/util/cart-item-utils";
 
 interface AddToCartType extends ProductType {
@@ -38,9 +38,12 @@ export default function AddToCart({
       stripeProductId: id,
     };
 
-    const dataToSend = { ...cartItem, paymentIntentId };
+    const cartItemBackend: CartItemBackendType = {
+      ...cartItem,
+      paymentIntentId,
+    };
     try {
-      await addCartItem(dataToSend).unwrap();
+      await addCartItem(cartItemBackend).unwrap();
     } catch (err) {
       if (err.status === 403) {
         // TODO: 403 = not logged in. Add TS typing

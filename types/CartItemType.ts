@@ -14,3 +14,7 @@ export type CartItemBareType = {
   unit_amount: number;
   quantity: number;
 };
+
+export interface CartItemBackendType extends CartItemType {
+  paymentIntentId: string;
+}
