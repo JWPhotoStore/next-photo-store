@@ -67,3 +67,8 @@ export const getCartItemsTotalQuantityLS = (): number => {
   const lsCartItems = getCartItemsLS();
   return sumItemsAndQuantity(lsCartItems);
 };
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem("cartItems");
+  window.dispatchEvent(new Event("cartItemLocalStorage"));
+};

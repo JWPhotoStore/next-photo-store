@@ -4,21 +4,46 @@ import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import CartMobileHeader from "../components/CartMobileHeader";
 import Link from "next/link";
-import { useGetActiveOrderQuery } from "../store/apiSlice";
+import {
+  useGetActiveOrderQuery,
+  useAddCartItemsLSMutation,
+} from "../store/apiSlice";
 import { useSession } from "next-auth/react";
-import { getCartItemsLS } from "@/util/cart-item-utils";
+import { getCartItemsLS, clearLocalStorage } from "@/util/cart-item-utils";
 import { CartItemType } from "@/types/CartItemType";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export default function Cart() {
   const { data, isLoading, isFetching, isSuccess } = useGetActiveOrderQuery();
+  const [addCartItems] = useAddCartItemsLSMutation();
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const session = useSession();
+  const { paymentIntentId } = useSelector(
+    (state: RootState) => state.stripeReducer
+  );
 
   useEffect(() => {
     if (session.status === "loading") return;
     if (session.status === "authenticated") {
       if (isSuccess && data?.cartItems) {
-        setCartItems(data.cartItems);
+        const cartItemsLS = getCartItemsLS();
+
+        // Add the LS items to Database
+        if (cartItemsLS.length !== 0) {
+          try {
+            // Validate if it makes sense to delete cartItems from local storage first or use mutation
+            addCartItems({ cartItemsLS, paymentIntentId });
+            clearLocalStorage();
+          } catch (err) {
+            if (err) console.error(err);
+          }
+        }
+
+        // const allCartItems = data.cartItems.concat(cartItemsLS);
+        // setCartItems(allCartItems);
+
+        // setCartItems(data.cartItems);
       }
     }
     if (session.status === "unauthenticated") {
@@ -29,8 +54,8 @@ export default function Cart() {
         const cartItemsLS = getCartItemsLS();
         setCartItems(cartItemsLS);
       };
-      window.addEventListener("cartItemLocalStorage", renderCartItemsLS);
 
+      window.addEventListener("cartItemLocalStorage", renderCartItemsLS);
       return () =>
         window.removeEventListener("cartItemLocalStorage", renderCartItemsLS);
     }

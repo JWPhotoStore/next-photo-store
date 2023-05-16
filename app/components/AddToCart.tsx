@@ -7,6 +7,7 @@ import { useAddCartItemMutation } from "../store/apiSlice";
 import React from "react";
 import { CartItemBackendType, CartItemType } from "@/types/CartItemType";
 import { addCartItemToLocalStorage } from "@/util/cart-item-utils";
+import { useSession } from "next-auth/react";
 
 interface AddToCartType extends ProductType {
   quantity: number;
@@ -24,6 +25,8 @@ export default function AddToCart({
   const { paymentIntentId } = useSelector(
     (state: RootState) => state.stripeReducer
   );
+  //TODO: implement the use of session rather than send a request to back-end to response an error response
+  const session = useSession();
 
   const [addCartItem, { isLoading }] = useAddCartItemMutation();
 
@@ -32,8 +35,8 @@ export default function AddToCart({
       name,
       description,
       image,
-      unit_amount,
       currency,
+      unit_amount,
       quantity,
       stripeProductId: id,
     };
