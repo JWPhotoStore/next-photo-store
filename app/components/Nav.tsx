@@ -11,13 +11,17 @@ import { setPaymentIntent } from "../store/stripeSlice";
 import { useState, useEffect } from "react";
 import { openMobileMenu } from "../store/uiSlice";
 import { useWindowSize } from "@/util/hooks";
-import { useGetActiveOrderQuery } from "../store/apiSlice";
+import {
+  useGetActiveOrderQuery,
+  useAddCartItemsLSMutation,
+} from "../store/apiSlice";
 import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
 import {
   getCartItemsTotalQuantityLS,
   sumItemsAndQuantity,
 } from "@/util/cart-item-utils";
+import { getCartItemsLS, clearLocalStorage } from "@/util/cart-item-utils";
 
 declare global {
   interface WindowEventMap {
@@ -30,6 +34,8 @@ export default function Nav({ user }: Session) {
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
   const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const [addCartItems] = useAddCartItemsLSMutation();
 
   useEffect(() => {
     if (user) return; // handles guest users only
@@ -75,10 +81,25 @@ export default function Nav({ user }: Session) {
     // Refactored the above to be cleaner
     if (!user) return;
     if (isSuccess) {
+      // if (data.cartItems) {
+      //   setTotalQuantity(
+      //     sumItemsAndQuantity(data.cartItems) + getCartItemsTotalQuantityLS()
+      //   );
+      // }
+      const cartItemsLS = getCartItemsLS();
+
+      // Add the LS cart items to Database and then remove from LS
+      if (cartItemsLS.length !== 0) {
+        try {
+          addCartItems({ cartItemsLS });
+          clearLocalStorage();
+        } catch (err) {
+          if (err) console.error(err);
+        }
+      }
+
       if (data.cartItems) {
-        setTotalQuantity(
-          sumItemsAndQuantity(data.cartItems) + getCartItemsTotalQuantityLS()
-        );
+        setTotalQuantity(sumItemsAndQuantity(data.cartItems));
       }
 
       if (data.paymentIntentId) {
@@ -89,7 +110,7 @@ export default function Nav({ user }: Session) {
     if (isError) {
       console.error(error);
     }
-  }, [isFetching, isSuccess, isError, data]);
+  }, [isFetching, isSuccess, isError, data, user]);
 
   const { width } = useWindowSize();
   const mobileBreakpoint = 640;

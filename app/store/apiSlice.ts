@@ -46,11 +46,11 @@ export const api = createApi({
     }),
     addCartItemsLS: builder.mutation({
       query: (body) => ({
-        url: "api/add-cart-items-ls",
+        url: "api/add-ls-cart-items",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["CartItems"],
+      invalidatesTags: ["CartItems", "ClientSecret"],
     }),
   }),
 });

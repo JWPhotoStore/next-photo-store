@@ -23,6 +23,8 @@ export default function CartSummary({
       dispatch(setClientSecret(data.clientSecret));
     }
 
+    console.log("this is the cartItems: ", cartItems);
+
     if (isError) {
       console.error(error);
     }

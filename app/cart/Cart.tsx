@@ -11,39 +11,33 @@ import {
 import { useSession } from "next-auth/react";
 import { getCartItemsLS, clearLocalStorage } from "@/util/cart-item-utils";
 import { CartItemType } from "@/types/CartItemType";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 
 export default function Cart() {
   const { data, isLoading, isFetching, isSuccess } = useGetActiveOrderQuery();
   const [addCartItems] = useAddCartItemsLSMutation();
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const session = useSession();
-  const { paymentIntentId } = useSelector(
-    (state: RootState) => state.stripeReducer
-  );
 
   useEffect(() => {
     if (session.status === "loading") return;
     if (session.status === "authenticated") {
-      if (isSuccess && data?.cartItems) {
-        const cartItemsLS = getCartItemsLS();
+      // if (isSuccess && data?.cartItems) {
+      //   const cartItemsLS = getCartItemsLS();
 
-        // Add the LS items to Database
-        if (cartItemsLS.length !== 0) {
-          try {
-            // Validate if it makes sense to delete cartItems from local storage first or use mutation
-            addCartItems({ cartItemsLS, paymentIntentId });
-            clearLocalStorage();
-          } catch (err) {
-            if (err) console.error(err);
-          }
-        }
+      //   // Add the LS cart items to Database and then remove from LS
+      //   if (cartItemsLS.length !== 0) {
+      //     try {
+      //       addCartItems({ cartItemsLS });
+      //       clearLocalStorage();
+      //     } catch (err) {
+      //       if (err) console.error(err);
+      //     }
+      //   }
 
-        // const allCartItems = data.cartItems.concat(cartItemsLS);
-        // setCartItems(allCartItems);
-
-        // setCartItems(data.cartItems);
+      //   setCartItems(data.cartItems);
+      // }
+      if (data?.cartItems) {
+        setCartItems(data.cartItems);
       }
     }
     if (session.status === "unauthenticated") {
