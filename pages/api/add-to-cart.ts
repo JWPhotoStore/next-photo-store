@@ -161,9 +161,7 @@ export default async function handler(
     // console.log(addedItem);
 
     res.status(200).json({
-      client_secret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
-      //Added currency property for CartItemType requirement
       cartItem: { ...addedItem, currency: currency },
     });
   }

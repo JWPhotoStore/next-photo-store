@@ -7,14 +7,14 @@ import styles from "@/styles/Cart.module.css";
 import { useGetClientSecretQuery } from "../store/apiSlice";
 import { useEffect } from "react";
 import { setClientSecret } from "../store/stripeSlice";
-import { calculateCartItemsSum } from "@/util/cart-item-utils";
+import { calculateOrderAmount } from "@/util/PriceFormat";
 
 export default function CartSummary({
   cartItems,
 }: {
   cartItems: CartItemType[];
 }) {
-  const { data, isSuccess, isFetching, isLoading, isError, error } =
+  const { data, isSuccess, isLoading, isError, error } =
     useGetClientSecretQuery();
   const dispatch = useDispatch();
 
@@ -23,10 +23,9 @@ export default function CartSummary({
       dispatch(setClientSecret(data.clientSecret));
     }
 
-    console.log("this is the cartItems: ", cartItems);
-
+    //TODO: implemented this because currently the checkoutForm sets onCheckout to cart and it
     if (isError) {
-      console.error(error);
+      console.log(error);
     }
   }, [isSuccess, isError, data]);
 
@@ -35,9 +34,12 @@ export default function CartSummary({
       <h2>Summary</h2>
       <div className={styles.inlinePriceContainer}>
         <h3>Subtotal: </h3>
-        <h3>{formatPrice(calculateCartItemsSum(cartItems))}</h3>
+        <h3>{formatPrice(calculateOrderAmount(cartItems))}</h3>
       </div>
-      <button onClick={() => dispatch(setCheckout("checkout"))}>
+      <button
+        onClick={() => dispatch(setCheckout("checkout"))}
+        disabled={isLoading}
+      >
         Checkout
       </button>
     </div>

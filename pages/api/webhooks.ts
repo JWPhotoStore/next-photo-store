@@ -52,6 +52,7 @@ export default async function handler(
           data: { status: "completed" },
         });
       }
+      console.log("Order status has been marked complete in Prisma");
       break;
     default:
       console.log(`Unhandled event type: ${event.type}`);

@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { UserSessionType } from "@/types/UserSessionType";
-import { CartItemType } from "@/types/CartItemType";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2022-11-15",
@@ -31,8 +30,6 @@ export default async function handler(
       },
     });
 
-    console.log("current Order", activeOrder);
-
     //Update Stripe with the total amount in our database
     if (activeOrder && activeOrder.paymentIntentId) {
       const { paymentIntentId, amount } = activeOrder;
@@ -44,6 +41,6 @@ export default async function handler(
       return res.status(200).json({ clientSecret: stripeObj.client_secret });
     }
 
-    return res.status(404).json({ message: "No active order was found" });
+    return res.status(200).json({ message: "No active order was found" });
   }
 }
