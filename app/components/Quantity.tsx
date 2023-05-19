@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AddToCart from "./AddToCart";
 import { ProductType } from "@/types/ProductType";
+import { SessionProvider } from "next-auth/react";
 
 type QuantityType = {
   details: ProductType;
@@ -25,7 +26,9 @@ export default function Quantity({ details }: QuantityType) {
           </option>
         ))}
       </select>
-      <AddToCart {...details} quantity={quantity} />
+      <SessionProvider>
+        <AddToCart {...details} quantity={quantity} />
+      </SessionProvider>
     </div>
   );
 }

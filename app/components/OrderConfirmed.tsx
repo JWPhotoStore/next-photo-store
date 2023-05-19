@@ -3,20 +3,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import stewie from "@/public/stewie.gif";
-import { useEffect } from "react";
-import { clearCart, setCheckout } from "../store/cartSlice";
-import { setPaymentIntent } from "../store/stripeSlice";
 import styles from "@/styles/Cart.module.css";
+import { useDispatch } from "react-redux";
+import { setCheckout } from "../store/cartSlice";
 
 export default function OrderConfirmed() {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(clearCart());
-    dispatch(setPaymentIntent(""));
-  }, []);
 
   return (
     <motion.div

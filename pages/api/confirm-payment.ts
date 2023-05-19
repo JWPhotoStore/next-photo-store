@@ -22,25 +22,19 @@ export default async function handler(
   if (!userSession?.user) {
     res.status(200).json({ message: "Not logged in" });
   } else {
-    //Fetch the active order
-    const activeOrder = await prisma.order.findFirst({
+    const paymentIntentId = req.body;
+
+    const order = await prisma.order.findFirst({
       where: {
-        userEmail: userSession.user?.email as string,
-        status: "pending",
+        paymentIntentId: paymentIntentId,
+        status: "completed",
       },
     });
 
-    //Update Stripe with the total amount in our database
-    if (activeOrder && activeOrder.paymentIntentId) {
-      const { paymentIntentId, amount } = activeOrder;
-
-      const stripeObj = await stripe.paymentIntents.update(paymentIntentId, {
-        amount: amount,
-      });
-
-      return res.status(200).json({ clientSecret: stripeObj.client_secret });
+    if (order) {
+      return res.status(200).json({ orderComplete: true });
     }
-
-    return res.status(200).json({ message: "No active order was found" });
   }
+
+  return res.status(200).json({ message: "Order did not successfully update" });
 }

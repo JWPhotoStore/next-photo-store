@@ -1,5 +1,6 @@
 export type CartItemType = {
-  id: string | null;
+  // id: string | null;
+  id?: string;
   name: string;
   description: string | null;
   image: string;
@@ -14,3 +15,7 @@ export type CartItemBareType = {
   unit_amount: number;
   quantity: number;
 };
+
+export interface CartItemBackendType extends CartItemType {
+  paymentIntentId: string;
+}

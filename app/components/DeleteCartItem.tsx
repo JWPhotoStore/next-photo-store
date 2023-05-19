@@ -1,6 +1,8 @@
 import { useDeleteCartItemMutation } from "../store/apiSlice";
 import { TailSpin } from "react-loader-spinner";
 import { CgClose } from "react-icons/cg";
+import { useSession } from "next-auth/react";
+import { deleteCartItemToLocalStorage } from "@/util/cart-item-utils";
 
 export default function DeleteCartItem({
   itemToDelete,
@@ -8,10 +10,12 @@ export default function DeleteCartItem({
   itemToDelete: string;
 }) {
   const [deleteCartItem, { isLoading }] = useDeleteCartItemMutation();
+  const { status } = useSession();
 
   const handleDelete = async (name: string) => {
     try {
-      await deleteCartItem(name).unwrap();
+      if (status === "unauthenticated") deleteCartItemToLocalStorage(name);
+      if (status === "authenticated") await deleteCartItem(name).unwrap();
     } catch (err) {
       console.error("Failed to delete cart item: ", err);
     }

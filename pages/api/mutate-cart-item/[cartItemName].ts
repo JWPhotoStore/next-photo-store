@@ -11,7 +11,7 @@ export default async function handler(
   //TODO: discuss whether we need this for user thats not signed in
   const userSession = await getServerSession(req, res, authOptions);
   if (!userSession?.user) {
-    res.status(403).json({ message: "Not logged in" });
+    res.status(200).json({ message: "Not logged in" });
     return;
   }
 
