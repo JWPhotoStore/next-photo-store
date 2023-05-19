@@ -21,21 +21,6 @@ export default function Cart() {
   useEffect(() => {
     if (session.status === "loading") return;
     if (session.status === "authenticated") {
-      // if (isSuccess && data?.cartItems) {
-      //   const cartItemsLS = getCartItemsLS();
-
-      //   // Add the LS cart items to Database and then remove from LS
-      //   if (cartItemsLS.length !== 0) {
-      //     try {
-      //       addCartItems({ cartItemsLS });
-      //       clearLocalStorage();
-      //     } catch (err) {
-      //       if (err) console.error(err);
-      //     }
-      //   }
-
-      //   setCartItems(data.cartItems);
-      // }
       if (data?.cartItems) {
         setCartItems(data.cartItems);
       }
@@ -57,7 +42,6 @@ export default function Cart() {
 
   return (
     <>
-      {/* TODO: This logic shows empty cart when initial load is in progress */}
       {!isLoading && cartItems && cartItems.length > 0 ? (
         <div className={styles.cartContainer}>
           <CartMobileHeader cartItems={cartItems} />

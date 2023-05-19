@@ -8,6 +8,7 @@ import React from "react";
 import { CartItemBackendType, CartItemType } from "@/types/CartItemType";
 import { addCartItemToLocalStorage } from "@/util/cart-item-utils";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 interface AddToCartType extends ProductType {
   quantity: number;
@@ -27,7 +28,6 @@ export default function AddToCart({
   );
   //TODO: implement the use of session rather than send a request to back-end to response an error response
   const session = useSession();
-
   const [addCartItem, { isLoading }] = useAddCartItemMutation();
 
   const handleAddToCart = async () => {
@@ -46,12 +46,13 @@ export default function AddToCart({
       paymentIntentId,
     };
     try {
-      await addCartItem(cartItemBackend).unwrap();
-    } catch (err) {
-      if (err.status === 403) {
-        // TODO: 403 = not logged in. Add TS typing
+      if (session.status === "unauthenticated") {
         addCartItemToLocalStorage(cartItem);
+      } else {
+        await addCartItem(cartItemBackend).unwrap();
       }
+    } catch (err) {
+      if (err) console.error(err);
     }
   };
 

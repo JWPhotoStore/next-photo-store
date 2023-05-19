@@ -9,9 +9,13 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
+import { setClientSecret, setPaymentIntent } from "../store/stripeSlice";
 import { formatPrice, calculateOrderAmount } from "@/util/PriceFormat";
 import styles from "@/styles/Cart.module.css";
-import { useGetActiveOrderQuery } from "../store/apiSlice";
+import {
+  useGetActiveOrderQuery,
+  useConfirmPaymentMutation,
+} from "../store/apiSlice";
 
 export default function CheckoutForm({
   clientSecret,
@@ -21,9 +25,13 @@ export default function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
+  const { paymentIntentId } = useSelector(
+    (state: RootState) => state.stripeReducer
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const { data, isSuccess } = useGetActiveOrderQuery();
+  const [confirmPayment] = useConfirmPaymentMutation();
 
   useEffect(() => {
     if (!stripe || !clientSecret) {
@@ -55,12 +63,22 @@ export default function CheckoutForm({
         if (!result.error) {
           //send a RDK query to webhooks to invalidate cartItems (fetch-active-orders) then send to OrderConfirmed page
           // Within that component, setpaymentIntent back to an empty string
-          dispatch(setCheckout("success"));
+          setTimeout(() => {
+            confirmPayment(paymentIntentId)
+              .unwrap()
+              .then((res) => {
+                if (res.orderComplete) {
+                  dispatch(setClientSecret(""));
+                  dispatch(setPaymentIntent(""));
+                  dispatch(setCheckout("success"));
+                  setIsLoading(false);
+                }
+              });
+          }, 1000);
         } else {
           // TODO: validate how to handle errors
           throw Error(result.error.message);
         }
-        setIsLoading(false);
       })
       // TODO: validate how to handle errors
       .catch((err) => {

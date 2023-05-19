@@ -23,7 +23,6 @@ export default function CartSummary({
       dispatch(setClientSecret(data.clientSecret));
     }
 
-    //TODO: implemented this because currently the checkoutForm sets onCheckout to cart and it
     if (isError) {
       console.log(error);
     }

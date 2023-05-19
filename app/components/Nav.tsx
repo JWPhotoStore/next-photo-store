@@ -15,7 +15,6 @@ import {
   useGetActiveOrderQuery,
   useAddCartItemsLSMutation,
 } from "../store/apiSlice";
-import { CartItemType } from "@/types/CartItemType";
 import { RxHamburgerMenu } from "react-icons/rx";
 import {
   getCartItemsTotalQuantityLS,
@@ -34,11 +33,11 @@ export default function Nav({ user }: Session) {
     useGetActiveOrderQuery();
   const dispatch = useDispatch();
   const [totalQuantity, setTotalQuantity] = useState(0);
-  // const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [addCartItems] = useAddCartItemsLSMutation();
 
   useEffect(() => {
-    if (user) return; // handles guest users only
+    // handles guest users only
+    if (user) return;
     const totalQuantityLS = getCartItemsTotalQuantityLS();
     setTotalQuantity(totalQuantityLS);
 
@@ -56,36 +55,8 @@ export default function Nav({ user }: Session) {
   }, []);
 
   useEffect(() => {
-    // if (isSuccess && data.cartItems) setTotalQuantity(data.cartItems.length);
-    // if (isSuccess && data.paymentIntentId) {
-    //   dispatch(setPaymentIntent(data.paymentIntentId));
-    // }
-
-    // if (isError) {
-    //   console.error(error);
-    // }
-
-    // if (!user) return;
-    // if (isFetching) {
-    //   setTotalQuantity(0);
-    // } else if (isSuccess && data.cartItems) {
-    //   setTotalQuantity(
-    //     // Adds the database quantity with the quantity from LocalStorage
-    //     sumItemsAndQuantity(data.cartItems) + getCartItemsTotalQuantityLS()
-    //     //TODO: need to remove from LS afterwards and also add the cart items from LS to database when we click cart?
-
-    //     // sumItemsAndQuantity(data.cartItems)
-    //   );
-    // }
-
-    // Refactored the above to be cleaner
     if (!user) return;
     if (isSuccess) {
-      // if (data.cartItems) {
-      //   setTotalQuantity(
-      //     sumItemsAndQuantity(data.cartItems) + getCartItemsTotalQuantityLS()
-      //   );
-      // }
       const cartItemsLS = getCartItemsLS();
 
       // Add the LS cart items to Database and then remove from LS
@@ -100,6 +71,8 @@ export default function Nav({ user }: Session) {
 
       if (data.cartItems) {
         setTotalQuantity(sumItemsAndQuantity(data.cartItems));
+      } else {
+        setTotalQuantity(0);
       }
 
       if (data.paymentIntentId) {

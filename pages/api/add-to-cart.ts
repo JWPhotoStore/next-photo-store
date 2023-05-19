@@ -20,7 +20,7 @@ export default async function handler(
   );
 
   if (!userSession?.user) {
-    res.status(403).json({ message: "Not logged in" });
+    res.status(200).json({ message: "Not logged in" });
     return;
   }
 

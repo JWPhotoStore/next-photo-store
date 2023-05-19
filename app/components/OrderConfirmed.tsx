@@ -3,32 +3,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import stewie from "@/public/stewie.gif";
-import { useEffect } from "react";
-import { setCheckout } from "../store/cartSlice";
-import { setPaymentIntent, setClientSecret } from "../store/stripeSlice";
 import styles from "@/styles/Cart.module.css";
-import { useGetActiveOrderQuery } from "../store/apiSlice";
+import { useDispatch } from "react-redux";
+import { setCheckout } from "../store/cartSlice";
 
 export default function OrderConfirmed() {
   const dispatch = useDispatch();
-  const { data, isSuccess, isError, error, refetch } = useGetActiveOrderQuery();
-
-  useEffect(() => {
-    dispatch(setPaymentIntent(""));
-    dispatch(setClientSecret(""));
-
-    refetch();
-
-    if (isSuccess) {
-      console.log("is this refetching after prisma updates order?: ", data);
-    }
-
-    if (isError) {
-      console.log(error);
-    }
-  }, [data, isSuccess, isError]);
 
   return (
     <motion.div
