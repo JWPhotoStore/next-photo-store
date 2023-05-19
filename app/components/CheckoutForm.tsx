@@ -61,8 +61,7 @@ export default function CheckoutForm({
       })
       .then((result) => {
         if (!result.error) {
-          //send a RDK query to webhooks to invalidate cartItems (fetch-active-orders) then send to OrderConfirmed page
-          // Within that component, setpaymentIntent back to an empty string
+          //TODO: Figure out how to get our webhook to send a response back to the client before we render the confirmation page
           setTimeout(() => {
             confirmPayment(paymentIntentId)
               .unwrap()
