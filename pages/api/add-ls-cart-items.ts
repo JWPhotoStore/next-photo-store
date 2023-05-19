@@ -21,7 +21,7 @@ export default async function handler(
   );
 
   if (!userSession?.user) {
-    res.status(403).json({ message: "Not logged in" });
+    return res.status(200).json({ message: "Not logged in" });
   } else {
     const { cartItemsLS } = req.body;
 
@@ -143,7 +143,7 @@ export default async function handler(
       if (err) {
         console.log(err);
         return res
-          .status(403)
+          .status(200)
           .json({ message: "Could not add the items from LS to database" });
       }
     }
