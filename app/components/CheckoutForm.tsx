@@ -9,8 +9,13 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { setCheckout } from "../store/cartSlice";
-import { formatPrice } from "@/util/PriceFormat";
+import { setClientSecret, setPaymentIntent } from "../store/stripeSlice";
+import { formatPrice, calculateOrderAmount } from "@/util/PriceFormat";
 import styles from "@/styles/Cart.module.css";
+import {
+  useGetActiveOrderQuery,
+  useConfirmPaymentMutation,
+} from "../store/apiSlice";
 
 export default function CheckoutForm({
   clientSecret,
@@ -20,22 +25,22 @@ export default function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
+  const { paymentIntentId } = useSelector(
+    (state: RootState) => state.stripeReducer
+  );
   const [isLoading, setIsLoading] = useState(false);
-
-  const { cartItems } = useSelector((state: RootState) => state.cartReducer);
-
-  // TODO - can include this function in our util folder
-  const totalPrice = cartItems.reduce((acc, item) => {
-    return acc + item.unit_amount * item.quantity;
-  }, 0);
-
-  const formattedPrice = formatPrice(totalPrice);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { data, isSuccess } = useGetActiveOrderQuery();
+  const [confirmPayment] = useConfirmPaymentMutation();
 
   useEffect(() => {
     if (!stripe || !clientSecret) {
       return;
     }
-  }, [stripe]);
+
+    if (isSuccess && data.cartItems)
+      setTotalPrice(calculateOrderAmount(data.cartItems));
+  }, [stripe, data]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,12 +61,24 @@ export default function CheckoutForm({
       })
       .then((result) => {
         if (!result.error) {
-          dispatch(setCheckout("success"));
+          //send a RDK query to webhooks to invalidate cartItems (fetch-active-orders) then send to OrderConfirmed page
+          // Within that component, setpaymentIntent back to an empty string
+          setTimeout(() => {
+            confirmPayment(paymentIntentId)
+              .unwrap()
+              .then((res) => {
+                if (res.orderComplete) {
+                  dispatch(setClientSecret(""));
+                  dispatch(setPaymentIntent(""));
+                  dispatch(setCheckout("success"));
+                  setIsLoading(false);
+                }
+              });
+          }, 1000);
         } else {
           // TODO: validate how to handle errors
           throw Error(result.error.message);
         }
-        setIsLoading(false);
       })
       // TODO: validate how to handle errors
       .catch((err) => {
@@ -78,7 +95,7 @@ export default function CheckoutForm({
         id="payment-form"
       >
         <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
-        <h2>Total: {formattedPrice}</h2>
+        <h2>Total: {formatPrice(totalPrice)}</h2>
         <button
           className={styles.checkoutFormSubmit}
           id="submit"

@@ -44,6 +44,22 @@ export const api = createApi({
       query: () => "api/stripe-secret",
       providesTags: ["ClientSecret"],
     }),
+    addCartItemsLS: builder.mutation({
+      query: (body) => ({
+        url: "api/add-ls-cart-items",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["CartItems"],
+    }),
+    confirmPayment: builder.mutation({
+      query: (body) => ({
+        url: "api/confirm-payment",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["CartItems"],
+    }),
   }),
 });
 
@@ -53,4 +69,6 @@ export const {
   useDeleteCartItemMutation,
   useUpdateCartItemMutation,
   useGetClientSecretQuery,
+  useAddCartItemsLSMutation,
+  useConfirmPaymentMutation,
 } = api;
