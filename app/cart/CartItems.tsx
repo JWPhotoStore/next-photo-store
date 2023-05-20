@@ -14,6 +14,7 @@ export default function CartItems({
     <div className={styles.cartItemsContainer}>
       <h2>Shopping Cart</h2>
       <AnimatePresence>
+        {/* TODO: Re-renders on cartItems are buggy */}
         {cartItems.map((cartItem, index) => (
           <motion.div
             key={`${cartItem.name}${index}`}
