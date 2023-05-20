@@ -8,6 +8,8 @@ import { useGetClientSecretQuery } from "../store/apiSlice";
 import { useEffect } from "react";
 import { setClientSecret } from "../store/stripeSlice";
 import { calculateOrderAmount } from "@/util/PriceFormat";
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function CartSummary({
   cartItems,
@@ -17,6 +19,7 @@ export default function CartSummary({
   const { data, isSuccess, isLoading, isError, error } =
     useGetClientSecretQuery();
   const dispatch = useDispatch();
+  const session = useSession();
 
   useEffect(() => {
     if (isSuccess && data.clientSecret) {
@@ -35,12 +38,18 @@ export default function CartSummary({
         <h3>Subtotal: </h3>
         <h3>{formatPrice(calculateOrderAmount(cartItems))}</h3>
       </div>
-      <button
-        onClick={() => dispatch(setCheckout("checkout"))}
-        disabled={isLoading}
-      >
-        Checkout
-      </button>
+      {session.data?.user ? (
+        <button
+          onClick={() => dispatch(setCheckout("checkout"))}
+          disabled={isLoading}
+        >
+          Checkout
+        </button>
+      ) : (
+        <button onClick={() => signIn()} disabled={isLoading}>
+          Sign in to Checkout
+        </button>
+      )}
     </div>
   );
 }
