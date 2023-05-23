@@ -34,6 +34,10 @@ For guests, we use local storage to store the items in your cart. Upon logging i
 
 We used EmailJS to implement the contact form. Feel free to reach out to us there, or through Github if you have any suggestions or comments!
 
+### Next.js 13 App Directory (Developer Feature)
+
+This project uses Next.js version 13.4+, which allows us to take advantage of the /app directory, now that it is finally out of beta.
+
 ## Known Issues
 
 ### Stripe Checkout
