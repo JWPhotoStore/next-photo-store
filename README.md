@@ -18,6 +18,8 @@ Online photo store, branded as "Kushi Photos". This is a fullstack project writt
 
 The homepage features all six of our products in a fully responsive and mobile-friendly UI.
 
+![Mobile Homepage](https://github.com/JWPhotoStore/next-photo-store/blob/dev/public/kushiphotos-home-mobile.gif)
+
 ### Integration with Stripe Products
 
 We rely heavily on Stripe for our application. All our products and product information are stored in Stripe.
@@ -31,8 +33,6 @@ For guests, we use local storage to store the items in your cart. Upon logging i
 ### Contact form
 
 We used EmailJS to implement the contact form. Feel free to reach out to us there, or through Github if you have any suggestions or comments!
-
-###
 
 ## Known Issues
 
