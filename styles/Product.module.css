@@ -3,7 +3,9 @@
   display: grid;
   height: 100%;
   row-gap: 1rem;
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 1rem;
+  max-width: 1300px; /* Ensure a max-width is set */
+  margin: 0 auto; /* Center the grid */
   border: var(--debug-border) red solid;
 }
 
@@ -16,21 +18,15 @@
   .productsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 3vw 5vw;
-    max-width: 1300px;
     padding: 3vw 4vw;
-    margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 800px) {
   .productsGrid {
     grid-template-columns: repeat(3, 1fr);
-  }
-  .productCardContainer {
-    /* TODO: productCards get smaller after window gets too big. 
-    Probably has to do with the growing gap size (based on vw) 
-    + restricted width set above + hard coded aspect ratio */
-    aspect-ratio: 4/5;
+    gap: 3vw 5vw;
+    padding: 3vw 4vw;
   }
 
   .productCardImageContainer {
@@ -54,13 +50,14 @@
   padding-bottom: 0.5rem;
 }
 
-@media screen and (min-width: 768px),
+/* TODO: remove this if not necessary */
+/* @media screen and (min-width: 768px),
   screen and (max-width: calc(1943px)) and (orientation: landscape) {
   .productCardName,
   .productCardPrice {
     font-size: calc((1.2 - 1) * 1.2vw + 0.75rem);
   }
-}
+} */
 
 .productCardImage {
   position: absolute;
