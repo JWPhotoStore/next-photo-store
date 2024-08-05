@@ -1,13 +1,13 @@
-import "./globals.css";
-import Nav from "./components/Nav";
-import MobileMenu from "./components/MobileMenu";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import Providers from "@/app/components/Providers";
+import './globals.css';
+import Nav from './components/Nav';
+import MobileMenu from './components/MobileMenu';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import Providers from '@/app/components/Providers';
 
 export const metadata = {
-  title: "kushi photos",
-  description: "Online print store feature local artists.",
+  title: 'kushi photos',
+  description: 'Online print store feature local artists.',
 };
 
 export default async function RootLayout({

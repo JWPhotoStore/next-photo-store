@@ -1,13 +1,14 @@
-import Stripe from "stripe";
-import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@/util/prisma";
-import { authOptions } from "./auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-import { UserSessionType } from "@/types/UserSessionType";
-import { calculateCartItemsSum } from "@/util/cart-item-utils";
+import Stripe from 'stripe';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '@/util/prisma';
+import { authOptions } from './auth/[...nextauth]';
+import { getServerSession } from 'next-auth';
+import { UserSessionType } from '@/types/UserSessionType';
+import { calculateCartItemsSum } from '@/util/cart-item-utils';
+import { CartItemBareType, CartItemType } from '@/types/CartItemType';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2022-11-15",
+  apiVersion: '2022-11-15',
 });
 
 export default async function handler(
@@ -21,7 +22,7 @@ export default async function handler(
   );
 
   if (!userSession?.user) {
-    return res.status(200).json({ message: "Not logged in" });
+    return res.status(200).json({ message: 'Not logged in' });
   } else {
     const { cartItemsLS } = req.body;
 
@@ -30,7 +31,7 @@ export default async function handler(
       const activeOrder = await prisma.order.findFirst({
         where: {
           userEmail: userSession.user?.email as string,
-          status: "pending",
+          status: 'pending',
         },
         select: {
           paymentIntentId: true,
@@ -49,7 +50,7 @@ export default async function handler(
 
       if (activeOrder) {
         const { paymentIntentId, cartItems } = activeOrder;
-        const currentCartItems = {};
+        const currentCartItems: { [key: string]: CartItemBareType } = {};
 
         for (const cartItem of cartItems) {
           currentCartItems[cartItem.name] = cartItem;
@@ -67,7 +68,7 @@ export default async function handler(
             cI.quantity += cartItem.quantity;
           } else {
             const cI = { ...cartItem, unit_amount: unit_amount };
-            delete cI["currency"];
+            delete cI['currency'];
             updatedCartItems.push(cI);
           }
         }
@@ -76,7 +77,7 @@ export default async function handler(
           updatedCartItems.push(currentCartItems[cartItem]);
         }
 
-        console.log("updateCartItems array: ", updatedCartItems);
+        console.log('updateCartItems array: ', updatedCartItems);
 
         if (paymentIntentId) {
           const updatedOrder = await prisma.order.update({
@@ -96,14 +97,14 @@ export default async function handler(
             },
           });
 
-          console.log("updated Order: ", updatedOrder);
+          console.log('updated Order: ', updatedOrder);
         }
       } else {
         try {
           const { cartItemsLS } = req.body;
           const sanitizedCartItems = cartItemsLS.map((cI) => {
             cI.unit_amount = parseFloat(cI.unit_amount);
-            delete cI["currency"];
+            delete cI['currency'];
             return cI;
           });
 
@@ -111,15 +112,15 @@ export default async function handler(
 
           const paymentIntent = await stripe.paymentIntents.create({
             amount: totalOrderAmount,
-            currency: "usd",
+            currency: 'usd',
             automatic_payment_methods: { enabled: true },
           });
 
           const orderData = {
             user: { connect: { email: userSession.user?.email! } },
             amount: totalOrderAmount,
-            currency: "usd",
-            status: "pending",
+            currency: 'usd',
+            status: 'pending',
             paymentIntentId: paymentIntent.id,
             cartItems: {
               createMany: {
@@ -134,7 +135,7 @@ export default async function handler(
 
           return res
             .status(200)
-            .json({ message: "cart items from LS has been added" });
+            .json({ message: 'cart items from LS has been added' });
         } catch (err) {
           if (err) console.error(err);
         }
@@ -144,12 +145,12 @@ export default async function handler(
         console.log(err);
         return res
           .status(200)
-          .json({ message: "Could not add the items from LS to database" });
+          .json({ message: 'Could not add the items from LS to database' });
       }
     }
   }
 
   return res
     .status(200)
-    .json({ message: "LS cart items have been successfully added" });
+    .json({ message: 'LS cart items have been successfully added' });
 }

@@ -1,26 +1,27 @@
-"use client";
+'use client';
 
-import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
-import styles from "@/styles/Nav.module.css";
-import Link from "next/link";
-import { RiShoppingCartLine } from "react-icons/ri";
-import { useDispatch } from "react-redux";
-import { setCheckout } from "../store/cartSlice";
-import { setPaymentIntent } from "../store/stripeSlice";
-import { useState, useEffect } from "react";
-import { openMobileMenu } from "../store/uiSlice";
-import { useWindowSize } from "@/util/hooks";
+import { Session } from 'next-auth';
+import { signIn } from 'next-auth/react';
+import styles from '@/styles/Nav.module.css';
+import Link from 'next/link';
+import { RiShoppingCartLine } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { setCheckout } from '../store/cartSlice';
+import { setPaymentIntent } from '../store/stripeSlice';
+import { useState, useEffect } from 'react';
+import { openMobileMenu } from '../store/uiSlice';
+import { useWindowSize } from '@/util/hooks';
 import {
   useGetActiveOrderQuery,
   useAddCartItemsLSMutation,
-} from "../store/apiSlice";
-import { RxHamburgerMenu } from "react-icons/rx";
+} from '../store/apiSlice';
+import { RxHamburgerMenu } from 'react-icons/rx';
 import {
   getCartItemsTotalQuantityLS,
   sumItemsAndQuantity,
-} from "@/util/cart-item-utils";
-import { getCartItemsLS, clearLocalStorage } from "@/util/cart-item-utils";
+  getCartItemsLS,
+  clearLocalStorage,
+} from '@/util/cart-item-utils';
 
 declare global {
   interface WindowEventMap {
@@ -45,11 +46,11 @@ export default function Nav({ user }: Session) {
       const totalQuantity = getCartItemsTotalQuantityLS();
       setTotalQuantity(totalQuantity);
     };
-    window.addEventListener("cartItemLocalStorage", renderCartItemsLSLength);
+    window.addEventListener('cartItemLocalStorage', renderCartItemsLSLength);
 
     return () =>
       window.removeEventListener(
-        "cartItemLocalStorage",
+        'cartItemLocalStorage',
         renderCartItemsLSLength
       );
   }, []);
@@ -59,7 +60,7 @@ export default function Nav({ user }: Session) {
     if (isSuccess) {
       const cartItemsLS = getCartItemsLS();
 
-      // Add the LS cart items to Database and then remove from LS
+      // Add the LS cart items to Database and then clear the local storage
       if (cartItemsLS.length !== 0) {
         try {
           addCartItems({ cartItemsLS });
@@ -95,8 +96,8 @@ export default function Nav({ user }: Session) {
         <Link href="/">prints</Link>
         <Link href="/contact">contact</Link>
       </ul>
-      <Link href="/" onClick={() => dispatch(setCheckout("cart"))}>
-        <h1>kushi photos</h1>
+      <Link href="/" onClick={() => dispatch(setCheckout('cart'))}>
+        <h1>Kushi photos</h1>
       </Link>
       <ul className={styles.navContentRight}>
         {width && width >= mobileBreakpoint && !user && (
@@ -111,10 +112,10 @@ export default function Nav({ user }: Session) {
             </li>
           </Link>
         )}
-        <Link href="/cart" onClick={() => dispatch(setCheckout("cart"))}>
+        <Link href="/cart" onClick={() => dispatch(setCheckout('cart'))}>
           <li className={styles.cartIcon}>
             <RiShoppingCartLine size={24} />
-            <span>{totalQuantity === 0 ? "" : totalQuantity}</span>
+            <span>{totalQuantity === 0 ? '' : totalQuantity}</span>
           </li>
         </Link>
         {width && width < mobileBreakpoint && (
