@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   PaymentElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { setCheckout } from "../store/cartSlice";
-import { setClientSecret, setPaymentIntent } from "../store/stripeSlice";
-import { formatPrice, calculateOrderAmount } from "@/util/PriceFormat";
-import styles from "@/styles/Cart.module.css";
+} from '@stripe/react-stripe-js';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
+import { setCheckout } from '../store/cartSlice';
+import { setClientSecret, setPaymentIntent } from '../store/stripeSlice';
+import { formatPrice, calculateOrderAmount } from '@/util/PriceFormat';
+import styles from '@/styles/Cart.module.css';
 import {
   useGetActiveOrderQuery,
   useConfirmPaymentMutation,
-} from "../store/apiSlice";
+} from '../store/apiSlice';
 
 export default function CheckoutForm({
   clientSecret,
@@ -53,7 +53,7 @@ export default function CheckoutForm({
     stripe
       .confirmPayment({
         elements,
-        redirect: "if_required",
+        redirect: 'if_required',
         //TODO: fix this redirect link
         // confirmParams: {
         //   return_url: "http://localhost:3000/success",
@@ -67,21 +67,21 @@ export default function CheckoutForm({
               .unwrap()
               .then((res) => {
                 if (res.orderComplete) {
-                  dispatch(setClientSecret(""));
-                  dispatch(setPaymentIntent(""));
-                  dispatch(setCheckout("success"));
+                  dispatch(setClientSecret(''));
+                  dispatch(setPaymentIntent(''));
+                  dispatch(setCheckout('success'));
                   setIsLoading(false);
                 }
               });
           }, 1000);
         } else {
           // TODO: validate how to handle errors
-          throw Error(result.error.message);
+          throw new Error(result.error.message);
         }
       })
       // TODO: validate how to handle errors
       .catch((err) => {
-        console.log(err);
+        console.log(`Error in the Checkout Form: ${err}`);
         setIsLoading(false);
       });
   };
@@ -93,7 +93,7 @@ export default function CheckoutForm({
         onSubmit={handleSubmit}
         id="payment-form"
       >
-        <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
+        <PaymentElement id="payment-element" options={{ layout: 'tabs' }} />
         <h2>Total: {formatPrice(totalPrice)}</h2>
         <button
           className={styles.checkoutFormSubmit}

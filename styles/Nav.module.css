@@ -4,7 +4,7 @@
   gap: 1rem;
   font-size: 0.875rem;
   min-width: 150px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .navContentLeft {
